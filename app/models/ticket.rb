@@ -5,4 +5,5 @@ class Ticket < ApplicationRecord
     has_many :attachments 
     has_many :comments
     has_many :responses
+    #Poner un validator que vea que la fecha de resolution sea mayor a la de creation (si no, no tendría sentido)
 end
