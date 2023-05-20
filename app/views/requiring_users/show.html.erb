@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @requiring_user %>
+
+<div>
+  <%= link_to "Edit this requiring user", edit_requiring_user_path(@requiring_user) %> |
+  <%= link_to "Back to requiring users", requiring_users_path %>
+
+  <%= button_to "Destroy this requiring user", @requiring_user, method: :delete %>
+</div>

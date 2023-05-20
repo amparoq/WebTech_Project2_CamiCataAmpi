@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Executive metrics</h1>
+
+<div id="executive_metrics">
+  <% @executive_metrics.each do |executive_metric| %>
+    <%= render executive_metric %>
+    <p>
+      <%= link_to "Show this executive metric", executive_metric %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New executive metric", new_executive_metric_path %>

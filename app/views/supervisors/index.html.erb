@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Supervisors</h1>
+
+<div id="supervisors">
+  <% @supervisors.each do |supervisor| %>
+    <%= render supervisor %>
+    <p>
+      <%= link_to "Show this supervisor", supervisor %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New supervisor", new_supervisor_path %>

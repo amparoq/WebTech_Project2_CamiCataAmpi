@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Requiring users</h1>
+
+<div id="requiring_users">
+  <% @requiring_users.each do |requiring_user| %>
+    <%= render requiring_user %>
+    <p>
+      <%= link_to "Show this requiring user", requiring_user %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New requiring user", new_requiring_user_path %>

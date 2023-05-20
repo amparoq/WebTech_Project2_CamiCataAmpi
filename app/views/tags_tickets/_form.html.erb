@@ -1,0 +1,17 @@
+<%= form_with(model: tags_ticket) do |form| %>
+  <% if tags_ticket.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(tags_ticket.errors.count, "error") %> prohibited this tags_ticket from being saved:</h2>
+
+      <ul>
+        <% tags_ticket.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
