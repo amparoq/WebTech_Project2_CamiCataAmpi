@@ -1,5 +1,5 @@
 class Executive < ApplicationRecord
-    belongs_to :executive_metrics
+    has_many :executive_metrics
     belongs_to :user
     has_many :comments
     has_many :tickets

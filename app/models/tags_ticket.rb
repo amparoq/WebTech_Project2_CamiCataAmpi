@@ -1,0 +1,3 @@
+class TagsTicket < ApplicationRecord
+end
+  
