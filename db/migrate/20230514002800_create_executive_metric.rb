@@ -3,7 +3,7 @@ class CreateExecutiveMetric < ActiveRecord::Migration[7.0]
     create_table :executive_metrics do |t|
       t.date :date
       t.string :type_of_metric
-      t.integer :evaluation
+      t.float :evaluation
 
       t.timestamps
     end

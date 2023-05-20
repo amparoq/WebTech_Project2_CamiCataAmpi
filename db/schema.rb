@@ -36,7 +36,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_14_052359) do
   create_table "executive_metrics", force: :cascade do |t|
     t.date "date"
     t.string "type_of_metric"
-    t.integer "evaluation"
+    t.float "evaluation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "executive_id", null: false
@@ -61,7 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_14_052359) do
   create_table "responses", force: :cascade do |t|
     t.string "response"
     t.boolean "acceptance"
-    t.integer "evaluation"
+    t.float "evaluation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "ticket_id", null: false

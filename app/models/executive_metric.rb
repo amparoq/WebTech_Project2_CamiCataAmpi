@@ -1,3 +1,3 @@
 class ExecutiveMetric < ApplicationRecord
-    belongs_to: executive
+    belongs_to :executive
 end
