@@ -8,6 +8,7 @@ class ExecutivesController < ApplicationController
 
   # GET /executives/1 or /executives/1.json
   def show
+    @executive = Executive.find(params[:id])
   end
 
   # GET /executives/new

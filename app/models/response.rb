@@ -15,9 +15,15 @@ class Response < ApplicationRecord
         end
     end
 
+    after_edit do
+        if evaluation.present?
+            create_executive_metric
+        end
+    end
+
     private
     def create_executive_metric
-        ExecutiveMetric.create(date: Date.today, type_of_metric: "Evaluation", evaluation: self.evaluation, executive_id: self.executive_id)
+        ExecutiveMetric.create(date: Date.today, type_of_metric: "Evaluation", evaluation: self.evaluation, executive_id: self.executive_id, ticket_id: self.ticket_id)
     end
 
 end

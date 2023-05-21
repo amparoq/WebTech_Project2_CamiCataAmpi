@@ -8,6 +8,7 @@ class TagsTicketsController < ApplicationController
 
   # GET /tags_tickets/1 or /tags_tickets/1.json
   def show
+    @tagsticket = TagsTicket.find(params[:id])
   end
 
   # GET /tags_tickets/new

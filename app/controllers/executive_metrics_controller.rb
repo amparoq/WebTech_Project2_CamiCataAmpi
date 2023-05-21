@@ -8,6 +8,7 @@ class ExecutiveMetricsController < ApplicationController
 
   # GET /executive_metrics/1 or /executive_metrics/1.json
   def show
+    @executive_metric = ExecutiveMetric.find(params[:id])
   end
 
   # GET /executive_metrics/new

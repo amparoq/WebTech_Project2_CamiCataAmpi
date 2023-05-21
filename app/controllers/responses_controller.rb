@@ -8,6 +8,7 @@ class ResponsesController < ApplicationController
 
   # GET /responses/1 or /responses/1.json
   def show
+    @response = Response.find(params[:id])
   end
 
   # GET /responses/new

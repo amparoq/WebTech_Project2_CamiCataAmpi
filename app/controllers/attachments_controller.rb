@@ -8,6 +8,7 @@ class AttachmentsController < ApplicationController
 
   # GET /attachments/1 or /attachments/1.json
   def show
+    @attachment = Attachment.find(params[:id])
   end
 
   # GET /attachments/new

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_14_052359) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_21_051123) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,7 +40,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_14_052359) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "executive_id", null: false
+    t.bigint "ticket_id", null: false
     t.index ["executive_id"], name: "index_executive_metrics_on_executive_id"
+    t.index ["ticket_id"], name: "index_executive_metrics_on_ticket_id"
   end
 
   create_table "executives", force: :cascade do |t|
@@ -121,6 +123,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_14_052359) do
   add_foreign_key "comments", "executives"
   add_foreign_key "comments", "tickets"
   add_foreign_key "executive_metrics", "executives"
+  add_foreign_key "executive_metrics", "tickets"
   add_foreign_key "executives", "users"
   add_foreign_key "requiring_users", "users"
   add_foreign_key "responses", "executives"
