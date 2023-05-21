@@ -8,7 +8,7 @@ class SupervisorsController < ApplicationController
 
   # GET /supervisors/1 or /supervisors/1.json
   def show
-    @supervisor = SUpervisor.find(params[:id])
+    @supervisor = Supervisor.find(params[:id])
   end
 
   # GET /supervisors/new

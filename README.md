@@ -2,6 +2,8 @@ IDEAS:
 
 SOLO FALTAN VIEWS (creo)
 
+PONER QUE CUANDO SE APRETA EL TITULO DE LO QUE ES SE PUEDA IR A LA PAGINA DE EXECUTIVES, SUPERVISORS ETC.
+
 -En la home page mostrar todos los usuarios, separados por rol (de alguna forma bonita)
 -Hacer que cuando se muestre se vea su "Perfil" (poner un boton de show profile)
 -Diseñar bien el perfil (para que se vea bonito y sea organizado según el rol)
@@ -16,3 +18,4 @@ SOLO FALTAN VIEWS (creo)
 -A los tickets se puede acceder desde cada user o executive profile (aunque tmb puede haber una página de todos los tickets). Cuando se muestra un ticket, entra a una página en la que están los comentarios del ticket, los tags, los attachments y los responses (de haber). También se muestra toda la info de un ticket (creador, fecha de creación, executive, prioridad, etc).
 -Se puede hacer un update de una response. Que tenga botón de accept o rechazar response, si se acepta, nosotras por detrás tenemos que actualizar la respuesta y decir que se acepto (poner acceptance en true) y además, actualizar el ticket y poner que su state es "closed" (eso va a crear executive metrics automaticamente).
 -Hay una página para mostrar las métricas de executives (quizás en gráficos o algo), que los supervisores y el admin puedan ver eso (más adelante)
+-Editar perfil (cambiar nombre, last_name, email o numero de telefono, ahí hacemos que pueda updatear por si es que necesita cambiar esos parámetros)

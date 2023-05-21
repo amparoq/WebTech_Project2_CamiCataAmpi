@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :supervisors, only: [:index, :show, :create, :destroy, :update, :new, :edit]
   resources :responses, only: [:index, :show, :create, :destroy, :update, :new, :edit]
   resources :executives, only: [:index, :show, :create, :destroy, :update, :new, :edit]
+  resources :requiring_users, only: [:index, :show, :create, :destroy, :update, :new, :edit]
   resources :executive_metrics, only: [:index, :show, :create, :destroy, :update, :new, :edit]
   # Defines the root path route ("/")
   # root "articles#index"

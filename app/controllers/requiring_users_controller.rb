@@ -9,6 +9,7 @@ class RequiringUsersController < ApplicationController
   # GET /requiring_users/1 or /requiring_users/1.json
   def show
     @requiring_user = RequiringUser.find(params[:id])
+    @user = @requiring_user.user
   end
 
   # GET /requiring_users/new
