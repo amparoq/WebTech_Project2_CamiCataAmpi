@@ -24,15 +24,6 @@ class Ticket < ApplicationRecord
         end
     end
 
-    before_edit do
-        if state_changed? && state_was == "open" && state == "closed"
-            change_metric
-        end
-        if state_changed? && state_was == "closed" && state == "reopened"
-            change_metric_reopened
-        end
-    end
-
     private
     def resolution_date_greater_than_creation_date
         return unless resolution_date && creation_date
