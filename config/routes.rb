@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root "pages#home"
+
   resources :users
   resources :tickets
   resources :tags_tickets
