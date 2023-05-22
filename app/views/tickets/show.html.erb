@@ -25,6 +25,11 @@
   margin-right: 10px;
   margin-left: 10px;
 }
+
+.tags{
+  display: flex;
+  align-items: center;
+}
 </style>
 
 <div class = "ticket-info">
@@ -48,6 +53,20 @@
   <% end %>
 </div>
 
+<div class="tags">
+  <sep>
+  <% @ticket.tags.each do |tag| %>
+    <span class="badge text-bg-secondary""><%= tag.name %></span>
+  <% end %>
+  </sep>
+</div>
+
+<p></p>
+
+<div>
+  <h4>Creado por: <%= @ticket.requiring_user.user.name %> <%= @ticket.requiring_user.user.last_name %></h6> 
+</div>
+
 <div>
   <h4>Ejecutivo a cargo: <%= @ticket.executive.user.name %> <%= @ticket.executive.user.last_name %></h6> 
 </div>
@@ -68,6 +87,18 @@
 <div>
   <h4>Descripción</h4>
   <h5><%= @ticket.description %></h5>
+</div>
+
+<p>
+</p>
+
+<div>
+  <% if @ticket.responses.any? %>
+    <h4>Respuesta</h4>
+    <% @ticket.responses.each do |response| %>
+      <h5><%= response.response %></h5>
+    <% end %>
+  <% end %>
 </div>
 
 <div>
