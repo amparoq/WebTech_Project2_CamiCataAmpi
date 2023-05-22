@@ -1,14 +1,8 @@
-<p style="color: green"><%= notice %></p>
+<% @executives.each do |executive| %>
+  <p>
+    <%= "#{executive.user.name} #{executive.user.last_name}" %><br>
+    <%= link_to "Show executive", executive_path(executive), class: 'btn btn-primary' %>
+  </p>
+<% end %>
 
-<h1>Executives</h1>
 
-<div id="executives">
-  <% @executives.each do |executive| %>
-    <%= render executive %>
-    <p>
-      <%= link_to "Show this executive", executive %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New executive", new_executive_path %>
