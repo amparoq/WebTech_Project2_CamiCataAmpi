@@ -15,7 +15,7 @@
   <hr/>
   <h4>Supervisors</h4>
   <% @supervisors.each_with_index do |s, index|%>
-    <% supervisor_object = @supervisors_role[index + 1] %>
+    <% supervisor_object = @supervisors_role[index] %>
     <h5><%= s.name %> <%= s.last_name %><h5/>
     <p>
     <%= link_to supervisor_object do %>
