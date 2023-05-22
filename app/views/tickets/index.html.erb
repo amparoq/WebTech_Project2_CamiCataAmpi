@@ -1,14 +1,61 @@
-<p style="color: green"><%= notice %></p>
+<style>
+.ticket-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
 
-<h1>Tickets</h1>
+.ticket-card {
+  background-color: #f6efef;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-<div id="tickets">
+.ticket-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.ticket-details {
+  margin-bottom: 5px;
+}
+
+.date-info {
+  color: #454545;
+  display: flex;
+  align-items: center;
+}
+</style>
+
+<div class="ticket-cards">
   <% @tickets.each do |ticket| %>
-    <%= render ticket %>
-    <p>
-      <%= link_to "Show this ticket", ticket %>
-    </p>
+    <div class="ticket-card">
+      <% if ticket.state == "open" %>
+        <sup><span class="badge rounded-pill text-bg-primary">Open</span></sup>
+      <% elsif ticket.state == "closed" %>
+        <sup><span class="badge rounded-pill text-bg-success">Closed</span></sup>
+      <% elsif ticket.state == "reopened" %>
+        <sup><span class="badge rounded-pill text-bg-warning">Reopened</span></sup>
+      <% end %>
+      <% if ticket.priority == 1 %>
+        <sup><span class="badge rounded-pill text-bg-danger">Prioridad Alta</span></sup>
+      <% elsif ticket.priority == 2 %>
+        <sup><span class="badge rounded-pill text-bg-warning">Prioridad Media</span></sup>
+      <% elsif ticket.priority == 3 %>
+        <sup><span class="badge rounded-pill text-bg-success">Prioridad Baja</span></sup>
+      <% end %>
+      <h4 class="ticket-title"><%= ticket.title %></h4>
+      <div class = "date-info">
+        <p class="ticket-details">Creation Date: <%= ticket.creation_date %></p>
+        <% if ticket.resolution_date %>
+          <p class="ticket-details">Resolution Date: <%= ticket.resolution_date %></p>
+        <% end %>
+      </div>
+      <p class="ticket-details">Description: <%= ticket.description %></p>
+      <a href="<%= ticket_path(ticket) %>" class="btn btn-primary">Ver ticket</a>
+    </div>
   <% end %>
 </div>
 
-<%= link_to "New ticket", new_ticket_path %>
