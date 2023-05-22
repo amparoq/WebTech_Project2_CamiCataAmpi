@@ -7,3 +7,40 @@
 <%= link_to 'Destroy this executive', @executive, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
 <%= link_to 'Back to executives', executives_path, class: 'btn btn-secondary' %>
 
+<h2>Tickets Created</h2>
+<div>
+  <% @executive.tickets.each do |ticket| %>
+    <p>
+      <div class="user-info">
+        <h4>
+          <%= ticket.title %>
+          <% badge_class = case ticket.state
+                          when "open"
+                            "badge text-bg-primary"
+                          when "reopened"
+                            "badge text-bg-warning"
+                          when "closed"
+                            "badge text-bg-success"
+                          else
+                            "badge text-bg-secondary"
+                          end %>
+          <span class="badge <%= badge_class %>"><%= ticket.state.capitalize %></span>
+        </h4>
+      </div>
+      <h6 class="ticket-info">
+        <span class="title">Creation date:</span> <%= ticket.creation_date %>
+        <% if ticket.resolution_date %>
+          <span class="space"></span> <!-- Add a space element -->
+          <span class="title">Resolution Date:</span> <%= ticket.resolution_date %>
+        <% end %>
+      </h6>
+      <p>
+        <%= link_to "Show ticket", ticket, class: "btn btn-outline-secondary" %>
+      </p>
+    </p>
+  <% end %>
+</div>
+
+<p>
+  <%= button_to "Create ticket", new_ticket_path, method: :get, class: "btn btn-light" %>
+</p>
