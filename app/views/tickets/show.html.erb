@@ -1,6 +1,74 @@
-<p style="color: green"><%= notice %></p>
+<style>
+.ticket-info {
+  display: flex;
+  align-items: center;
+}
 
-<%= render @ticket %>
+.badge-container {
+  margin-left: 10px;
+  margin-top: -3px;
+  display: flex;
+  align-items: center;
+}
+
+.date-info {
+  display: flex;
+  align-items: center;
+}
+
+.priority-info {
+  display: flex;
+  align-items: center;
+}
+
+.sep{
+  margin-right: 10px;
+  margin-left: 10px;
+}
+</style>
+
+<div class = "ticket-info">
+  <h2><%= @ticket.title %></h2>
+  <div class = "badge-container">
+    <% if @ticket.state == "open" %>
+      <span class="badge rounded-pill text-bg-primary">Open</span>
+    <% elsif @ticket.state == "closed" %>
+      <span class="badge rounded-pill text-bg-success">Closed</span>
+    <% elsif @ticket.state == "reopened" %>
+      <span class="badge rounded-pill text-bg-warning">Reopened</span>
+    <% end %>
+  </div>
+</div>
+
+<div class = "date-info">
+  <h6>Creado el <%= @ticket.creation_date %></h6> 
+  <% if @ticket.resolution_date %>
+    <h6 class = "sep">|</h6>
+    <h6>Cerrado el <%= @ticket.resolution_date %></h6>
+  <% end %>
+</div>
+
+<div>
+  <h4>Ejecutivo a cargo: <%= @ticket.executive.user.name %> <%= @ticket.executive.user.last_name %></h6> 
+</div>
+
+<div class = "priority-info">
+  <h4>Prioridad:</h4>
+  <% if @ticket.priority == 1 %>
+    <h4 style="color: red; margin-left: 10px;">Alta</h4>
+  <% end %>
+  <% if @ticket.priority == 2 %>
+    <h4 style="color: orange; margin-left: 10px;">Media</h4>
+  <% end %>
+  <% if @ticket.priority == 3 %>
+    <h4 style="color: green; margin-left: 10px;">Baja</h4>
+  <% end %>
+</div>
+
+<div>
+  <h4>Descripción</h4>
+  <h5><%= @ticket.description %></h5>
+</div>
 
 <div>
   <%= link_to "Edit this ticket", edit_ticket_path(@ticket) %> |

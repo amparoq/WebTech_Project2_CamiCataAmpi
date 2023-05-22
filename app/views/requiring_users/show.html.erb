@@ -25,8 +25,14 @@
 
 .badge-container {
   margin-left: 10px;
+  margin-top: -3px;
   display: flex;
   align-items: center;
+}
+
+.role{
+  margin-top: 8px;
+  margin-left: 20px;
 }
 
 </style>
@@ -34,7 +40,7 @@
 
 <div class="user-info">
   <h1><%= @user.name %> <%= @user.last_name %></h1>
-  <h6>Requiring User</h6>
+  <h6 class = "role">Requiring User</h6>
 </div>
 <h3>Mail: <%= @user.email %></h3>
 <h3>Telephone: <%= @user.telephone %></h3>
