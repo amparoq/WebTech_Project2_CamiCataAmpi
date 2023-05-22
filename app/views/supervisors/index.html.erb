@@ -1,10 +1,26 @@
-<h1>Supervisors</h1>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ProjectApp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-<% @supervisors.each do |supervisor| %>
-  <div class="supervisor">
-    <p><%= "#{supervisor.user.name} #{supervisor.user.last_name}" %></p>
-    <%= link_to 'Show Profile', supervisor_path(supervisor), class: 'btn btn-primary' %>
-  </div>
-<% end %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+</head>
 
-<%= link_to 'New Supervisor', new_supervisor_path, class: 'btn btn-primary' %>
+<body>
+  <h1>Supervisors</h1>
+
+  <% @supervisors.each do |supervisor| %>
+    <div class="supervisor">
+      <p><%= "#{supervisor.user.name} #{supervisor.user.last_name}" %></p>
+      <%= link_to 'Show Profile', supervisor_path(supervisor), class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+
+  <%= link_to 'New Supervisor', new_supervisor_path, class: 'btn btn-primary' %>
+  <a href="/" class="btn btn-secondary">Back</a>
+</body>
+</html>
