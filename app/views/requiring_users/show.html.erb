@@ -20,8 +20,15 @@
 
 .ticket-info .space {
   display: inline-block;
-  width: 20px; /* Adjust the value to control the horizontal space between the dates */
+  width: 20px;
 }
+
+.badge-container {
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+}
+
 </style>
 
 
@@ -45,18 +52,20 @@
     <p>
     <div class = "user-info">
       <h4><%= ticket.title %></h4>
+      <div class = "badge-container">
       <% if ticket.state == "open" %>
-        <h6 style = "color: red;">Open</h6>
+        <span class="badge rounded-pill text-bg-primary">Open</span>
       <% elsif ticket.state == "closed" %>
-        <h6 style = "color: green;">Closed</h6>
+        <span class="badge rounded-pill text-bg-success">Closed</span>
       <% elsif ticket.state == "reopened" %>
-        <h6 style = "color: red;">Reopened</h6>
+        <span class="badge rounded-pill text-bg-warning">Reopened</span>
       <% end %>
+      </div>
     </div>
     <h6 class="ticket-info">
       <span class="title">Fecha de creación:</span> <%= ticket.creation_date %>
       <% if ticket.resolution_date %>
-        <span class="space"></span> <!-- Add a space element -->
+        <span class="space"></span>
         <span class="title">Fecha de resolución:</span> <%= ticket.resolution_date %>
       <% end %>
     </h6>
