@@ -1,6 +1,36 @@
 <!-- Profile de un Requiring User -->
 
-<%= @user.name %><%= @user.last_name %>
+<style>
+.btn-custom {
+  background-color: #ffd8c8
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-info h2 {
+  margin-right: 30px;
+}
+
+.ticket-info {
+  white-space: nowrap; /* Prevent line breaks */
+}
+
+.ticket-info .space {
+  display: inline-block;
+  width: 20px; /* Adjust the value to control the horizontal space between the dates */
+}
+</style>
+
+
+<div class="user-info">
+  <h1><%= @user.name %> <%= @user.last_name %></h1>
+  <h6>Requiring User</h6>
+</div>
+<h3>Mail: <%= @user.email %></h3>
+<h3>Telephone: <%= @user.telephone %></h3>
 
 <div>
   <%= link_to "Edit this requiring user", edit_requiring_user_path(@requiring_user) %> |
@@ -8,3 +38,41 @@
 
   <%= button_to "Destroy this requiring user", @requiring_user, method: :delete %>
 </div>
+
+<h2>Tickets Created</h2>
+<div>
+  <% @tickets.each do |ticket| %>
+    <p>
+    <div class = "user-info">
+      <h4><%= ticket.title %></h4>
+      <% if ticket.state == "open" %>
+        <h6 style = "color: red;">Open</h6>
+      <% elsif ticket.state == "closed" %>
+        <h6 style = "color: green;">Closed</h6>
+      <% elsif ticket.state == "reopened" %>
+        <h6 style = "color: red;">Reopened</h6>
+      <% end %>
+    </div>
+    <h6 class="ticket-info">
+      <span class="title">Fecha de creación:</span> <%= ticket.creation_date %>
+      <% if ticket.resolution_date %>
+        <span class="space"></span> <!-- Add a space element -->
+        <span class="title">Fecha de resolución:</span> <%= ticket.resolution_date %>
+      <% end %>
+    </h6>
+    <p>
+    <%= link_to ticket do %>
+        <button type="button" class = "btn btn-custom">Show ticket</button>
+      <% end %>
+    </p>
+    </p>
+  <% end %>
+</div>
+
+<p>
+<%= link_to new_ticket_path do %>
+    <button type="button" class = "btn btn-custom">Create ticket</button>
+  <% end %>
+</p>
+
+

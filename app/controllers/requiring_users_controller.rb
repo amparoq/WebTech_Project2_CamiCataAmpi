@@ -10,6 +10,7 @@ class RequiringUsersController < ApplicationController
   def show
     @requiring_user = RequiringUser.find(params[:id])
     @user = @requiring_user.user
+    @tickets = @requiring_user.tickets
   end
 
   # GET /requiring_users/new
@@ -67,6 +68,6 @@ class RequiringUsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def requiring_user_params
-      params.fetch(:requiring_user, {})
+      params.fetch(:requiring_user, {}).permit(:user_id)
     end
 end
