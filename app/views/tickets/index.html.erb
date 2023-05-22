@@ -53,7 +53,7 @@
           <p class="ticket-details">Resolution Date: <%= ticket.resolution_date %></p>
         <% end %>
       </div>
-      <p class="ticket-details">Description: <%= ticket.description %></p>
+      <p class="ticket-details"> <%= ticket.description %></p>
       <a href="<%= ticket_path(ticket) %>" class="btn btn-primary">Ver ticket</a>
     </div>
   <% end %>
