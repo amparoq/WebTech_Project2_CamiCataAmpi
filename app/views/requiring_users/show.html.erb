@@ -1,102 +1,168 @@
 <style>
-.profile-card {
-  background-color: #f6efef;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+  .profile-card {
+    background-color: #f6efef;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
 
-.profile-heading {
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
+  .profile-heading {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
 
-.role {
-  font-size: 16px;
-  font-weight: normal;
-  margin-left: 8px;
-  margin-top: 5px;
-  color: #888888;
-}
+  .role {
+    font-size: 16px;
+    font-weight: normal;
+    margin-left: 8px;
+    margin-top: 5px;
+    color: #888888;
+  }
 
-.profile-details {
-  margin-bottom: 20px;
-}
+  .profile-details {
+    margin-bottom: 20px;
+  }
 
-.profile-info {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
+  .profile-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
 
-.badge{
-  margin-bottom: 15px;
-}
+  .badge{
+    margin-bottom: 15px;
+  }
 
-.profile-info h3 {
-  font-size: 18px;
-  margin-right: 10px;
-}
+  .profile-info h3 {
+    font-size: 18px;
+    margin-right: 10px;
+  }
 
-.profile-info .icon {
-  font-size: 18px;
-  color: #888888;
-}
+  .profile-info .icon {
+    font-size: 18px;
+    color: #888888;
+  }
 
-.profile-actions {
-  display: flex;
-}
+  .profile-actions {
+    display: flex;
+  }
 
-.ticket-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-}
+  .ticket-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
 
-.ticket-card {
-  background-color: #f6f6f6;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+  .ticket-card {
+    background-color: #f6f6f6;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
 
-.ticket-title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
+  .ticket-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
 
-.ticket-details {
-  margin-bottom: 5px;
-}
+  .ticket-details {
+    margin-bottom: 5px;
+  }
 
-.date-info {
-  color: #888888;
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-}
+  .date-info {
+    color: #888888;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
 
-.icon {
-  margin-bottom: 6px;
-}
+  .icon {
+    margin-bottom: 6px;
+  }
 
-.profile-icons{
-  margin-bottom: 10px;
-  margin-right: 6px;
-}
+  .profile-icons{
+    margin-bottom: 10px;
+    margin-right: 6px;
+  }
 
-.btn-custom {
-  margin-top: 14px;
-  background-color: #ffd8c8;
-}
+  .btn-custom {
+    margin-top: 14px;
+    background-color: #ffd8c8;
+  }
+
+  .reverse-order {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    flex-direction: row-reverse;
+  }
+  .sort-button {
+    margin-bottom: 10px;
+  }
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 5px 0;
+    z-index: 1;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  .dropdown-item {
+    display: block;
+    padding: 5px 20px;
+    cursor: pointer;
+  }
+
 
 </style>
+
 
 <head>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
+
+<script>
+  // JavaScript function to sort tickets by creation date (ascending)
+  function sortByCreationDateAsc() {
+    var ticketCardsContainer = document.querySelector('.ticket-cards');
+    var tickets = Array.from(ticketCardsContainer.children);
+    tickets.sort(function(a, b) {
+      var aCreationDate = new Date(a.dataset.creationDate);
+      var bCreationDate = new Date(b.dataset.creationDate);
+      return aCreationDate - bCreationDate;
+    });
+    tickets.forEach(function(ticket) {
+      ticketCardsContainer.appendChild(ticket);
+    });
+  }
+
+  // JavaScript function to sort tickets by creation date (descending)
+  function sortByCreationDateDesc() {
+    var ticketCardsContainer = document.querySelector('.ticket-cards');
+    var tickets = Array.from(ticketCardsContainer.children);
+    tickets.sort(function(a, b) {
+      var aCreationDate = new Date(a.dataset.creationDate);
+      var bCreationDate = new Date(b.dataset.creationDate);
+      return bCreationDate - aCreationDate;
+    });
+    tickets.forEach(function(ticket) {
+      ticketCardsContainer.appendChild(ticket);
+    });
+  }
+</script>
 
 <div class="profile-card">
   <div class="profile-info">
@@ -106,10 +172,10 @@
   <div class="profile-details">
     <div class="profile-info">
       <i class="profile-icons bi bi-mailbox"></i><h3>Email:</h3>
-      <p style = "margin-bottom: 8px;"><%= @user.email %></p>
+      <p style="margin-bottom: 8px;"><%= @user.email %></p>
     </div>
     <div class="profile-info">
-      <div style = "display: flex;">
+      <div style="display: flex;">
         <i class="profile-icons bi bi-telephone"></i><h3>Telephone:</h3><%= @user.telephone %>
       </div>
     </div>
@@ -122,10 +188,19 @@
   </div>
 </div>
 
-<h2 style = "margin-top: 10px;">Tickets Created</h2>
+
+<h2 style="margin-top: 10px;">Tickets Created</h2>
+<div class="dropdown">
+  <button class="sort-button">Sort<i class="fas fa-caret-down"></i></button>
+  <div class="dropdown-content">
+    <div class="dropdown-item" onclick="sortByCreationDateAsc()">Ascending Creation</div>
+    <div class="dropdown-item" onclick="sortByCreationDateDesc()">Latest Creation</div>
+  </div>
+</div>
+
 <div class="ticket-cards">
-  <% @tickets.each do |ticket| %>
-    <div class="ticket-card">
+  <% @tickets.sort_by { |ticket| ticket.creation_date }.each do |ticket| %>
+    <div class="ticket-card" data-creation-date="<%= ticket.creation_date %>">
       <% if ticket.state == "open" %>
         <sup><span class="badge rounded-pill text-bg-primary">Open</span></sup>
       <% elsif ticket.state == "closed" %>
@@ -151,7 +226,7 @@
           <p class="ticket-details">Resolution Date: <%= ticket.resolution_date %></p>
         </div>
       <% end %>
-      <p class="ticket-details"> <%= ticket.description %></p>
+      <p class="ticket-details"><%= ticket.description %></p>
       <a href="<%= ticket_path(ticket) %>" class="btn btn-primary">Ver ticket</a>
     </div>
   <% end %>
@@ -163,3 +238,4 @@
     Create Ticket
   <% end %>
 </p>
+
