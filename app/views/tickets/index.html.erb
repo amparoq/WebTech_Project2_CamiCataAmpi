@@ -35,6 +35,18 @@
 .icon {
   margin-bottom: 6px;
 }
+
+.red-nice {
+  background-color: #ff6f69;
+}
+
+.yellow-nice {
+  background-color: #ffcc5c;
+}
+
+.green-nice {
+  background-color: #88d8b0;
+}
 </style>
 
 <head>
@@ -45,18 +57,18 @@
   <% @tickets.each do |ticket| %>
     <div class="ticket-card">
       <% if ticket.state == "open" %>
-        <sup><span class="badge rounded-pill text-bg-primary">Open</span></sup>
+        <sup><span class="badge rounded-pill red-nice">Open</span></sup>
       <% elsif ticket.state == "closed" %>
-        <sup><span class="badge rounded-pill text-bg-success">Closed</span></sup>
+        <sup><span class="badge rounded-pill green-nice">Closed</span></sup>
       <% elsif ticket.state == "reopened" %>
-        <sup><span class="badge rounded-pill text-bg-warning">Reopened</span></sup>
+        <sup><span class="badge rounded-pill yellow-nice">Reopened</span></sup>
       <% end %>
       <% if ticket.priority == 1 %>
-        <sup><span class="badge rounded-pill text-bg-danger">Prioridad Alta</span></sup>
+        <sup><span class="badge rounded-pill red-nice">Prioridad Alta</span></sup>
       <% elsif ticket.priority == 2 %>
-        <sup><span class="badge rounded-pill text-bg-warning">Prioridad Media</span></sup>
+        <sup><span class="badge rounded-pill yellow-nice">Prioridad Media</span></sup>
       <% elsif ticket.priority == 3 %>
-        <sup><span class="badge rounded-pill text-bg-success">Prioridad Baja</span></sup>
+        <sup><span class="badge rounded-pill green-nice">Prioridad Baja</span></sup>
       <% end %>
       <h4 class="ticket-title"><%= ticket.title %></h4>
       <div class="date-info">
