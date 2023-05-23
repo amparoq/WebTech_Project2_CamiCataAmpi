@@ -1,16 +1,96 @@
-<p style="color: green"><%= notice %></p>
+<style>
+  .notice {
+    color: green;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
 
-<h1>Requiring users</h1>
+  .requiring-users-container {
+    margin-bottom: 20px;
+  }
 
-<div id="requiring_users">
+  .requiring-user-card {
+    background-color: #f6efef;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+  }
+
+  .requiring-user-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .requiring-user-link {
+    color: #0069d9;
+    text-decoration: none;
+  }
+
+  .requiring-user-link:hover {
+    text-decoration: underline;
+  }
+
+  .btn-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    background-color: #0069d9;
+    color: #fff;
+    border-radius: 4px;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn:not(:last-child) {
+    margin-right: 10px;
+  }
+
+  .btn:hover {
+    background-color: #0056b3;
+  }
+
+  .btn-secondary {
+    background-color: #6c757d;
+  }
+
+  .btn-secondary:hover {
+    background-color: #495057;
+  }
+
+  .btn-primary {
+    background-color: #0069d9;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+<p class="notice"><%= notice %></p>
+
+<h1>Requiring Users</h1>
+
+<div class="requiring-users-container">
   <% @requiring_users.each do |requiring_user| %>
-    <%= render requiring_user %>
-    <p>
-      <%= link_to "Show this requiring user", requiring_user %>
-    </p>
+    <div class="requiring-user-card">
+      <h4 class="requiring-user-name"><%= requiring_user.user.name %> <%= requiring_user.user.last_name %></h4>
+      <p><%= link_to "Show this requiring user", requiring_user, class: 'requiring-user-link' %></p>
+    </div>
   <% end %>
 </div>
 
-<%= link_to "New requiring user", new_requiring_user_path %>
-
-<a href="/" class="btn btn-secondary">Back</a>
+<div class="btn-container">
+  <%= link_to "Back", root_path, class: 'btn btn-secondary' %>
+  <%= link_to "New Requiring User", new_requiring_user_path, class: 'btn btn-primary' %>
+</div>
