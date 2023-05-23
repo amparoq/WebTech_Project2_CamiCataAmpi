@@ -8,6 +8,74 @@
 
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  <style>
+    .supervisor {
+      background-color: #f6efef;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 10px;
+    }
+
+    .supervisor-name {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .supervisor-link {
+      color: #0069d9;
+      text-decoration: none;
+    }
+
+    .supervisor-link:hover {
+      text-decoration: underline;
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      background-color: #0069d9;
+      color: #fff;
+      border-radius: 4px;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:not(:last-child) {
+      margin-right: 10px;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+    }
+
+    .btn-secondary:hover {
+      background-color: #495057;
+    }
+
+    .btn-primary {
+      background-color: #0069d9;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 
 <body>
@@ -15,12 +83,14 @@
 
   <% @supervisors.each do |supervisor| %>
     <div class="supervisor">
-      <p><%= "#{supervisor.user.name} #{supervisor.user.last_name}" %></p>
-      <%= link_to 'Show Profile', supervisor_path(supervisor), class: 'btn btn-primary' %>
+      <h4 class="supervisor-name"><%= "#{supervisor.user.name} #{supervisor.user.last_name}" %></h4>
+      <p><%= link_to "Show Profile", supervisor_path(supervisor), class: 'supervisor-link' %></p>
     </div>
   <% end %>
 
-  <%= link_to 'New Supervisor', new_supervisor_path, class: 'btn btn-primary' %>
-  <a href="/" class="btn btn-secondary">Back</a>
+  <div class="btn-container">
+  <%= link_to "Back", root_path, class: 'btn btn-secondary' %>
+  <%= link_to "New Supervisor", new_supervisor_path, class: 'btn btn-primary' %>
+  </div>
 </body>
 </html>
