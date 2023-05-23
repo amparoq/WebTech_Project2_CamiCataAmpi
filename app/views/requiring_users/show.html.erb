@@ -99,8 +99,18 @@
     flex-direction: row-reverse;
   }
   .sort-button {
-    margin-bottom: 10px;
-  }
+  margin-bottom: 10px;
+  background-color: #ffd8c8;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  color: #333333;
+  transition: background-color 0.3s ease;
+}
   .dropdown {
     position: relative;
     display: inline-block;
@@ -125,6 +135,10 @@
     padding: 5px 20px;
     cursor: pointer;
   }
+
+  .dropdown-item:hover {
+  background-color: #e6e6e6;
+}
 
 
 </style>
@@ -193,7 +207,7 @@
 <div class="dropdown">
   <button class="sort-button">Sort<i class="fas fa-caret-down"></i></button>
   <div class="dropdown-content">
-    <div class="dropdown-item" onclick="sortByCreationDateAsc()">Ascending Creation</div>
+    <div class="dropdown-item" onclick="sortByCreationDateAsc()">Ascending Date</div>
     <div class="dropdown-item" onclick="sortByCreationDateDesc()">Latest Creation</div>
   </div>
 </div>
