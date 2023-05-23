@@ -11,6 +11,7 @@ class RequiringUsersController < ApplicationController
     @requiring_user = RequiringUser.find(params[:id])
     @user = @requiring_user.user
     @tickets = @requiring_user.tickets
+    @responses = @requiring_user.responses.where(acceptance: false)
   end
 
   # GET /requiring_users/new

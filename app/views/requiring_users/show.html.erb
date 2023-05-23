@@ -48,12 +48,14 @@
     display: flex;
   }
 
+  .response-cards,
   .ticket-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
   }
 
+  .response-card,
   .ticket-card {
     background-color: #f6f6f6;
     padding: 20px;
@@ -87,6 +89,17 @@
     margin-right: 6px;
   }
 
+  .sort-btn-custom{
+    margin-top: 16px;
+    margin-left: 10px;
+    background-color: #ffd8c8;
+    width: 65px;
+    height: 30px;
+    padding: 4px 8px;
+    text-align: center;
+    line-height: 10px;
+  }
+
   .btn-custom {
     margin-top: 14px;
     background-color: #ffd8c8;
@@ -98,9 +111,7 @@
     gap: 20px;
     flex-direction: row-reverse;
   }
-  .sort-button {
-    margin-bottom: 10px;
-  }
+
   .dropdown {
     position: relative;
     display: inline-block;
@@ -189,12 +200,14 @@
 </div>
 
 
-<h2 style="margin-top: 10px;">Tickets Created</h2>
-<div class="dropdown">
-  <button class="sort-button">Sort<i class="fas fa-caret-down"></i></button>
-  <div class="dropdown-content">
-    <div class="dropdown-item" onclick="sortByCreationDateAsc()">Ascending Creation</div>
-    <div class="dropdown-item" onclick="sortByCreationDateDesc()">Latest Creation</div>
+<div style = "display: flex;">
+  <h2 style="margin-top: 10px;">Tickets Created</h2>
+  <div class="dropdown">
+    <button class="btn sort-btn-custom">Sort<i class="fas fa-caret-down" style = "margin-left: 4px;"></i></button>
+    <div class="dropdown-content">
+      <div class="dropdown-item" onclick="sortByCreationDateAsc()">Ascending Creation</div>
+      <div class="dropdown-item" onclick="sortByCreationDateDesc()">Latest Creation</div>
+    </div>
   </div>
 </div>
 
@@ -238,4 +251,26 @@
     Create Ticket
   <% end %>
 </p>
+
+<hr>
+</hr>
+
+<h2 style="margin-top: 10px;">Respuestas Pendientes</h2>
+<% if @responses.any? %>
+  <div class="response-cards">
+    <% @responses.each do |response| %>
+        <div class="response-card">
+          <h4 class="ticket-title"><%= response.ticket.title %></h4>
+          <p class="ticket-details"><%= response.response %></p>
+          <div>
+            <a href="<%= ticket_path(response.ticket) %>"  class="btn btn-primary">Ver ticket</a>
+            <a href="#" class="btn btn-primary">Aceptar</a>
+          </div>
+        </div>
+    <% end %>
+  </div>
+<% else %>
+  <p class = "text-muted">No hay respuestas pendientes</p>
+<% end %>
+
 

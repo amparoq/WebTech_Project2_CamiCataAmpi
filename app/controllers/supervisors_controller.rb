@@ -6,6 +6,12 @@ class SupervisorsController < ApplicationController
     @supervisors = Supervisor.all
   end
 
+  def dashboard
+    @supervisor = Supervisor.find(params[:id])
+    @requiring_users = RequiringUser.all
+    @executives = Executive.all
+  end
+
   # GET /supervisors/1 or /supervisors/1.json
   def show
     @supervisor = Supervisor.find(params[:id])

@@ -1,24 +1,29 @@
 <style>
-  body {
-    background-color: #f8f9fa;
-  }
 
   .btn-custom {
     background-color: #ffd8c8;
   }
 
   .profile-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
     margin-bottom: 20px;
+    height: 100%;
+    margin-right: 10px;
   }
 
-  .profile-card h2 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
+  .admin-profile-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 39%;
+    margin-bottom: 20px;
   }
 
   .profile-card h4 {
@@ -36,64 +41,111 @@
     border-top: 1px solid #dee2e6;
     margin: 20px 0;
   }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .card-grid2 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .image-card {
+    background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898;
+    background-blend-mode: multiply,multiply;
+    flex: 1;
+    margin-top: -70px;
+    margin-bottom: -70px;
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 60%;
+    height: 300px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+
+  .image-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+  
 </style>
 
 <h2>User Profiles</h2>
 
-<div class="profile-card">
-  <h4>Administrator</h4>
-  <h5><%= @admin.name %> <%= @admin.last_name %></h5>
-  <p>
-    <%= link_to @admin_role do %>
-      <button type="button" class="btn btn-custom">Show profile</button>
-    <% end %>
-  </p>
+<h4>Administrator</h4>
+<div class="card-grid2">
+  <div class="admin-profile-card">
+    <h4><%= @admin.name %> <%= @admin.last_name %></h4>
+    <p><%= @admin.email %></p>
+    <p><%= @admin.telephone %></p>
+    <p>
+      <%= link_to @admin_role do %>
+        <button type="button" class="btn btn-custom">Show profile</button>
+      <% end %>
+    </p>
+  </div>
+
+  <div class="image-card">
+    <img src="assets/im.jpeg" alt="Image description">
+  </div>
 </div>
 
-<div class="profile-card">
-  <h4>Supervisors</h4>
+<h4>Supervisors</h4>
+<div class="card-grid">
   <% @supervisors.each_with_index do |s, index|%>
     <% supervisor_object = @supervisors_role[index] %>
-    <h5><%= s.name %> <%= s.last_name %></h5>
-    <p>
-      <%= link_to supervisor_object do %>
-        <button type="button" class="btn btn-custom">Show profile</button>
-      <% end %>
-    </p>
-    <% unless index == @supervisors.size - 1 %>
-      <hr>
-    <% end %>
+    <div class="profile-card">
+      <h4><%= s.name %> <%= s.last_name %></h4>
+      <p><%= s.email %></p>
+      <p><%= s.telephone %></p>
+      <p>
+        <%= link_to supervisor_object do %>
+          <button type="button" class="btn btn-custom">Show profile</button>
+        <% end %>
+      </p>
+    </div>
   <% end %>
 </div>
 
-<div class="profile-card">
-  <h4>Executives</h4>
+<h4>Executives</h4>
+<div class="card-grid">
   <% @executives.each_with_index do |e, index| %>
     <% executive_object = @executives_role[index] %>
-    <h5><%= e.name %> <%= e.last_name %></h5>
-    <p>
-      <%= link_to executive_object do %>
-        <button type="button" class="btn btn-custom">Show profile</button>
-      <% end %>
-    </p>
-    <% unless index == @executives.size - 1 %>
-      <hr>
-    <% end %>
+    <div class="profile-card">
+      <h4><%= e.name %> <%= e.last_name %></h4>
+      <p><%= e.email %></p>
+      <p><%= e.telephone %></p>
+      <p>
+        <%= link_to executive_object do %>
+          <button type="button" class="btn btn-custom">Show profile</button>
+        <% end %>
+      </p>
+    </div>
   <% end %>
 </div>
 
-<div class="profile-card">
-  <h4>Requiring Users</h4>
+<h4>Requiring Users</h4>
+<div class="card-grid">
   <% @req_users.each_with_index do |r, index| %>
     <% req_user_object = @req_users_role[index] %>
-    <h5><%= r.name %> <%= r.last_name %></h5>
-    <p>
-      <%= link_to req_user_object do %>
-        <button type="button" class="btn btn-custom">Show profile</button>
-      <% end %>
-    </p>
-    <% unless index == @req_users.size - 1 %>
-      <hr>
-    <% end %>
+    <div class="profile-card">
+      <h4><%= r.name %> <%= r.last_name %></h4>
+      <p><%= r.email %></p>
+      <p><%= r.telephone %></p>
+      <p>
+        <%= link_to req_user_object do %>
+          <button type="button" class="btn btn-custom">Show profile</button>
+        <% end %>
+      </p>
+    </div>
   <% end %>
 </div>
