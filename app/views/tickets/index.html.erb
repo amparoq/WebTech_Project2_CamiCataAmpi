@@ -18,6 +18,10 @@
   margin-bottom: 10px;
 }
 
+.badge {
+  margin-bottom: 5px;
+}
+
 .ticket-details {
   margin-bottom: 5px;
 }
@@ -27,7 +31,15 @@
   display: flex;
   align-items: center;
 }
+
+.icon {
+  margin-bottom: 6px;
+}
 </style>
+
+<head>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
 
 <div class="ticket-cards">
   <% @tickets.each do |ticket| %>
@@ -47,15 +59,18 @@
         <sup><span class="badge rounded-pill text-bg-success">Prioridad Baja</span></sup>
       <% end %>
       <h4 class="ticket-title"><%= ticket.title %></h4>
-      <div class = "date-info">
+      <div class="date-info">
+        <span class="icon me-1"><i class="far fa-calendar-alt"></i></span>
         <p class="ticket-details">Creation Date: <%= ticket.creation_date %></p>
-        <% if ticket.resolution_date %>
-          <p class="ticket-details">Resolution Date: <%= ticket.resolution_date %></p>
-        <% end %>
       </div>
+      <% if ticket.resolution_date %>
+        <div class="date-info">
+          <span class="icon me-1"><i class="far fa-calendar-check"></i></span>
+          <p class="ticket-details">Resolution Date: <%= ticket.resolution_date %></p>
+        </div>
+      <% end %>
       <p class="ticket-details"> <%= ticket.description %></p>
       <a href="<%= ticket_path(ticket) %>" class="btn btn-primary">Ver ticket</a>
     </div>
   <% end %>
 </div>
-

@@ -1,48 +1,99 @@
 <style>
+  body {
+    background-color: #f8f9fa;
+  }
+
   .btn-custom {
-    background-color: #ffd8c8
+    background-color: #ffd8c8;
+  }
+
+  .profile-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .profile-card h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .profile-card h4 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .profile-card h5 {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+
+  .profile-card hr {
+    border-top: 1px solid #dee2e6;
+    margin: 20px 0;
   }
 </style>
+
 <h2>User Profiles</h2>
-<ul>
-  <h3>Administrator</h3>
-    <h5><%= @admin.name %> <%= @admin.last_name %><h5/>
-    <p>
+
+<div class="profile-card">
+  <h4>Administrator</h4>
+  <h5><%= @admin.name %> <%= @admin.last_name %></h5>
+  <p>
     <%= link_to @admin_role do %>
-        <button type="button" class = "btn btn-custom">Show profile</button>
-      <% end %>
-    </p>
-  <hr/>
+      <button type="button" class="btn btn-custom">Show profile</button>
+    <% end %>
+  </p>
+</div>
+
+<div class="profile-card">
   <h4>Supervisors</h4>
   <% @supervisors.each_with_index do |s, index|%>
     <% supervisor_object = @supervisors_role[index] %>
-    <h5><%= s.name %> <%= s.last_name %><h5/>
+    <h5><%= s.name %> <%= s.last_name %></h5>
     <p>
-    <%= link_to supervisor_object do %>
-        <button type="button" class = "btn btn-custom">Show profile</button>
+      <%= link_to supervisor_object do %>
+        <button type="button" class="btn btn-custom">Show profile</button>
       <% end %>
     </p>
+    <% unless index == @supervisors.size - 1 %>
+      <hr>
+    <% end %>
   <% end %>
-  <hr/>
+</div>
+
+<div class="profile-card">
   <h4>Executives</h4>
   <% @executives.each_with_index do |e, index| %>
     <% executive_object = @executives_role[index] %>
-    <h5/><%= e.name %> <%= e.last_name %><h5/>
+    <h5><%= e.name %> <%= e.last_name %></h5>
     <p>
-    <%= link_to executive_object do %>
-        <button type="button" class = "btn btn-custom">Show profile</button>
+      <%= link_to executive_object do %>
+        <button type="button" class="btn btn-custom">Show profile</button>
       <% end %>
     </p>
+    <% unless index == @executives.size - 1 %>
+      <hr>
+    <% end %>
   <% end %>
-  <hr/>
+</div>
+
+<div class="profile-card">
   <h4>Requiring Users</h4>
   <% @req_users.each_with_index do |r, index| %>
     <% req_user_object = @req_users_role[index] %>
-    <h5/><%= r.name %> <%= r.last_name %><h5/>
+    <h5><%= r.name %> <%= r.last_name %></h5>
     <p>
-    <%= link_to req_user_object do %>
-        <button type="button" class = "btn btn-custom">Show profile</button>
+      <%= link_to req_user_object do %>
+        <button type="button" class="btn btn-custom">Show profile</button>
       <% end %>
     </p>
+    <% unless index == @req_users.size - 1 %>
+      <hr>
+    <% end %>
   <% end %>
-</ul>
+</div>

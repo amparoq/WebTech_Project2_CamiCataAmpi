@@ -1,40 +1,87 @@
 <style>
-.ticket-info {
-  display: flex;
-  align-items: center;
-}
+  .ticket-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
 
-.badge-container {
-  margin-left: 10px;
-  margin-top: -3px;
-  display: flex;
-  align-items: center;
-}
+  .badge-container {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+  }
 
-.date-info {
-  display: flex;
-  align-items: center;
-}
+  .date-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
 
-.priority-info {
-  display: flex;
-  align-items: center;
-}
+  .priority-info {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
 
-.sep{
-  margin-right: 10px;
-  margin-left: 10px;
-}
+  .badge-primary {
+    background-color: #d8ffd8;
+    color: #0f0c0c;
+  }
 
-.tags{
-  display: flex;
-  align-items: center;
-}
+  .badge-secondary {
+    background-color:	#c3c3ff;
+    color: #0f0c0c;
+  }
+
+  .badge-tertiary {
+    background-color: #edffbf;
+    color: #0f0c0c;
+  }
+
+  .badge-quaternary {
+    background-color: #c3ffec;
+    color: #0f0c0c;
+  }
+
+  .tags {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .tag-badge {
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+
+  .response-info {
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .response-text {
+    background-color: #f6efef;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+  }
+
+  .sep {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+
+  .tags-icon {
+    margin-left: 4px;
+    margin-bottom: 4px;
+    margin-right: 4px;
+  }
+
 </style>
 
-<div class = "ticket-info">
+<div class="ticket-info">
   <h2><%= @ticket.title %></h2>
-  <div class = "badge-container">
+  <div class="badge-container">
     <% if @ticket.state == "open" %>
       <span class="badge rounded-pill text-bg-primary">Open</span>
     <% elsif @ticket.state == "closed" %>
@@ -45,7 +92,7 @@
   </div>
 </div>
 
-<div class = "date-info">
+<div class="date-info">
   <h6>Creado el <%= @ticket.creation_date %></h6> 
   <% if @ticket.resolution_date %>
     <h6 class = "sep">|</h6>
@@ -54,32 +101,30 @@
 </div>
 
 <div class="tags">
-  <sep>
-  <% @ticket.tags.each do |tag| %>
-    <span class="badge text-bg-secondary""><%= tag.name %></span>
+  <i class="bi bi-tags tags-icon"></i>
+  <% @ticket.tags.each_with_index do |tag, index| %>
+    <% color_class = ["badge-primary", "badge-secondary", "badge-tertiary", "badge-quaternary"][index % 4] %>
+    <span class="badge tag-badge <%= color_class %>"><%= tag.name %></span>
   <% end %>
-  </sep>
 </div>
 
 <p></p>
 
 <div>
-  <h4>Creado por: <%= @ticket.requiring_user.user.name %> <%= @ticket.requiring_user.user.last_name %></h6> 
+  <h4>Creado por: <%= @ticket.requiring_user.user.name %> <%= @ticket.requiring_user.user.last_name %></h4> 
 </div>
 
 <div>
-  <h4>Ejecutivo a cargo: <%= @ticket.executive.user.name %> <%= @ticket.executive.user.last_name %></h6> 
+  <h4>Ejecutivo a cargo: <%= @ticket.executive.user.name %> <%= @ticket.executive.user.last_name %></h4> 
 </div>
 
-<div class = "priority-info">
+<div class="priority-info">
   <h4>Prioridad:</h4>
   <% if @ticket.priority == 1 %>
     <h4 style="color: red; margin-left: 10px;">Alta</h4>
-  <% end %>
-  <% if @ticket.priority == 2 %>
+  <% elsif @ticket.priority == 2 %>
     <h4 style="color: orange; margin-left: 10px;">Media</h4>
-  <% end %>
-  <% if @ticket.priority == 3 %>
+  <% elsif @ticket.priority == 3 %>
     <h4 style="color: green; margin-left: 10px;">Baja</h4>
   <% end %>
 </div>
@@ -89,14 +134,15 @@
   <h5><%= @ticket.description %></h5>
 </div>
 
-<p>
-</p>
+<p></p>
 
-<div>
+<div class="response-info">
   <% if @ticket.responses.any? %>
     <h4>Respuesta</h4>
     <% @ticket.responses.each do |response| %>
-      <h5><%= response.response %></h5>
+      <div class="response-text">
+        <h5><%= response.response %></h5>
+      </div>
     <% end %>
   <% end %>
 </div>
