@@ -7,6 +7,7 @@ class Ticket < ApplicationRecord
     has_many :responses
     has_many :executive_metrics
     validate :resolution_date_greater_than_creation_date
+    enum priority: { high: 0, medium: 1, low: 2 }
 
     after_create do
         creation_executive_metric
@@ -23,6 +24,8 @@ class Ticket < ApplicationRecord
             change_metric_reopened
         end
     end
+
+
 
     private
     def resolution_date_greater_than_creation_date

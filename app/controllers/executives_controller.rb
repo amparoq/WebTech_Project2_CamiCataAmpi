@@ -11,6 +11,12 @@ class ExecutivesController < ApplicationController
     @executive = Executive.find(params[:id])
     @user = @executive.user
     @tickets = @executive.tickets
+    @month = Date.today.beginning_of_month
+    @total_tickets_received = @executive.total_tickets_received_in_month(@month)
+    @total_open_tickets = @executive.total_open_tickets_in_month(@month)
+    @total_closed_tickets = @executive.total_closed_tickets_in_month(@month)
+    @open_tickets_by_priority = @executive.open_tickets_by_priority_in_month(@month)
+    @closed_tickets_by_priority = @executive.closed_tickets_by_priority_in_month(@month)
   end
 
   # GET /executives/new

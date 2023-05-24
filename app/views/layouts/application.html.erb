@@ -23,6 +23,13 @@
         </li>
       </ul>
     </div>
+    <ul>
+      <% @executives.each do |executive| %>
+        <li>
+          <%= link_to "#{executive.name} Metrics", executive_path(executive) %>
+        </li>
+      <% end %>
+    </ul>
   </nav>
 
   <%= yield %>

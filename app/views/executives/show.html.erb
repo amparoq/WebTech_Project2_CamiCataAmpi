@@ -157,3 +157,18 @@
   <% end %>
 </div>
 
+<h1><%= @executive.name %> Metrics</h1>
+
+<h2>Total Tickets Received in Current Month: <%= @total_tickets_received %></h2>
+
+<h2>Open Tickets</h2>
+<p>Total: <%= @total_open_tickets %></p>
+<% @open_tickets_by_priority.each do |priority, count| %>
+  <p><%= priority.capitalize %> Priority: <%= count %></p>
+<% end %>
+
+<h2>Closed Tickets</h2>
+<p>Total: <%= @total_closed_tickets %></p>
+<% @closed_tickets_by_priority.each do |priority, count| %>
+  <p><%= priority.capitalize %> Priority: <%= count %></p>
+<% end %>
