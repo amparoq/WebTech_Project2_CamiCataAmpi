@@ -1,10 +1,50 @@
+<style>
+.custom-card.profile-card {
+  background-color: #f6efef;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
+.custom-card .list-group-item {
+  background-color: #f6efef;
+  border: none;
+}
 
-<h1><%= @supervisor.user.name %> <%= @supervisor.user.last_name %> <span class="smaller">- <%= @supervisor.user.role %></span></h1>
-<p>Email: <%= @supervisor.user.email %></p>
-<p>Phone: <%= @supervisor.user.telephone %></p>
+.custom-card .card-body {
+  padding: 0;
+}
 
-<%= link_to 'Create New Supervisor', new_supervisor_path, class: 'btn btn-primary' %>
-<%= link_to 'Edit', edit_supervisor_path(@supervisor), class: 'btn btn-secondary' %>
-<%= link_to 'Destroy', @supervisor, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-<%= link_to 'Back to Supervisors', supervisors_path, class: 'btn btn-secondary' %>
+.custom-card .btn-group .btn:not(:last-child) {
+  margin-right: 8px; /* Adjust the margin between buttons */
+}
+
+.custom-card .card-footer {
+  background-color: #f6efef; 
+}
+</style>
+
+<div class="custom-container my-5">
+  <div class="custom-card profile-card">
+    <div class="card-body">
+      <h1 class="card-title mb-4"><%= @supervisor.user.name %> <%= @supervisor.user.last_name %></h1>
+      <p class="card-text text-muted mb-3"><small><%= @supervisor.user.role %></small></p>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <i class="fas fa-envelope me-2"></i> Email: <%= @supervisor.user.email %>
+        </li>
+        <li class="list-group-item">
+          <i class="fas fa-phone me-2"></i> Phone: <%= @supervisor.user.telephone %>
+        </li>
+      </ul>
+    </div>
+    <div class="card-footer">
+      <div class="btn-group" role="group">
+        <%= link_to 'Create New Supervisor', new_supervisor_path, class: 'btn btn-success' %>
+        <%= link_to 'Edit', edit_supervisor_path(@supervisor), class: 'btn btn-primary' %>
+        <%= link_to 'Destroy', @supervisor, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+        <%= link_to 'Back to Supervisors', supervisors_path, class: 'btn btn-secondary' %>
+      </div>
+    </div>
+  </div>
+</div>
