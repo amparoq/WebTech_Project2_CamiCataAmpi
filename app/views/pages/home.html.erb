@@ -98,8 +98,14 @@
   <% if @admin_role.present? %>
     <div class="admin-profile-card">
       <h4><%= @admin.name %> <%= @admin.last_name %></h4>
-      <p><%= @admin.email %></p>
-      <p><%= @admin.telephone %></p>
+      <div style = "display: flex;">
+          <i class="bi bi-mailbox" style = "margin-right: 5px;"></i>
+          <p><%= @admin.email %></p>
+        </div>
+      <div style = "display: flex;">
+        <i class="bi bi-telephone" style = "margin-right: 5px;"></i>
+        <p><%= @admin.telephone %></p>
+      </div>
       <p>
         <%= link_to @admin_role do %>
           <button type="button" class="btn btn-custom">Show profile</button>
@@ -127,8 +133,14 @@
     <% if supervisor_object.present? %>
       <div class="profile-card">
         <h4><%= s.name %> <%= s.last_name %></h4>
-        <p><%= s.email %></p>
-        <p><%= s.telephone %></p>
+        <div style = "display: flex;">
+          <i class="bi bi-mailbox" style = "margin-right: 5px;"></i>
+          <p><%= s.email %></p>
+        </div>
+        <div style = "display: flex;">
+          <i class="bi bi-telephone" style = "margin-right: 5px;"></i>
+          <p><%= s.telephone %></p>
+        </div>
         <p>
           <%= link_to supervisor_object do %>
             <button type="button" class="btn btn-custom">Show profile</button>
@@ -146,8 +158,14 @@
     <% if executive_object.present? %>
       <div class="profile-card">
         <h4><%= e.name %> <%= e.last_name %></h4>
-        <p><%= e.email %></p>
-        <p><%= e.telephone %></p>
+        <div style = "display: flex;">
+          <i class="bi bi-mailbox" style = "margin-right: 5px;"></i>
+          <p><%= e.email %></p>
+        </div>
+        <div style = "display: flex;">
+          <i class="bi bi-telephone" style = "margin-right: 5px;"></i>
+          <p><%= e.telephone %></p>
+        </div>
         <p>
           <%= link_to executive_object do %>
             <button type="button" class="btn btn-custom">Show profile</button>
@@ -165,8 +183,14 @@
     <% if req_user_object.present? %>
       <div class="profile-card">
         <h4><%= r.name %> <%= r.last_name %></h4>
-        <p><%= r.email %></p>
-        <p><%= r.telephone %></p>
+        <div style = "display: flex;">
+          <i class="bi bi-mailbox" style = "margin-right: 5px;"></i>
+          <p><%= r.email %></p>
+        </div>
+        <div style = "display: flex;">
+          <i class="bi bi-telephone" style = "margin-right: 5px;"></i>
+          <p><%= r.telephone %></p>
+        </div>
         <p>
           <%= link_to req_user_object do %>
             <button type="button" class="btn btn-custom">Show profile</button>

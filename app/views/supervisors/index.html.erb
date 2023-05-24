@@ -82,10 +82,12 @@
   <h1>Supervisors</h1>
 
   <% @supervisors.each do |supervisor| %>
-    <div class="supervisor">
-      <h4 class="supervisor-name"><%= "#{supervisor.user.name} #{supervisor.user.last_name}" %></h4>
-      <p><%= link_to "Show Profile", supervisor_path(supervisor), class: 'supervisor-link' %></p>
-    </div>
+    <% if supervisor.administrator == false %>
+      <div class="supervisor">
+        <h4 class="supervisor-name"><%= "#{supervisor.user.name} #{supervisor.user.last_name}" %></h4>
+        <p><%= link_to "Show Profile", supervisor_path(supervisor), class: 'supervisor-link' %></p>
+      </div>
+    <% end %> 
   <% end %>
 
   <div class="btn-container">

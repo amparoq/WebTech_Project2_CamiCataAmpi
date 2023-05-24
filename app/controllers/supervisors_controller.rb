@@ -16,6 +16,8 @@ class SupervisorsController < ApplicationController
   def show
     @supervisor = Supervisor.find(params[:id])
     @user = @supervisor.user
+    @executives = Executive.all
+    @req_users = RequiringUser.all
   end
 
   # GET /supervisors/new
