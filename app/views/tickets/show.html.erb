@@ -1,28 +1,4 @@
 <style>
-  .ticket-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-
-  .badge-container {
-    margin-left: 10px;
-    display: flex;
-    align-items: center;
-  }
-
-  .date-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-
-  .priority-info {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-  }
-
   .badge-primary {
     background-color: #c14884;
     color: #0f0c0c;
@@ -97,141 +73,103 @@
     padding: 5px 10px;
     border-radius: 3px;
   }
-  
-  .card {
-    padding: 10px;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  .card-title {
-    font-weight: bold;
-    margin-bottom: 5px;
-    font-size: 18px;
-  }
-
-  .card-text {
-    margin-bottom: 5px;
-  }
-  
-  .card-container {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .description-card,
-  .response-card {
-    flex-basis: 50;
-  }
-
-  .card {
-    height: 100;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .card-body {
-    flex-grow: 1;
-  }
-
-  .actions-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
-  }
-  
 </style>
 
-<div class="ticket-info">
-  <h2><%= @ticket.title %></h2>
-  <div class="badge-container">
-    <% if @ticket.state == "open" %>
-      <span class="badge rounded-pill red-nice">Open</span>
-    <% elsif @ticket.state == "closed" %>
-      <span class="badge rounded-pill green-nice">Closed</span>
-    <% elsif @ticket.state == "reopened" %>
-      <span class="badge rounded-pill yellow-nice">Reopened</span>
-    <% end %>
-  </div>
-</div>
-
-<div class="date-info">
-  <h6>Creado el <%= @ticket.creation_date %></h6> 
-  <% if @ticket.resolution_date %>
-    <h6 class="sep">|</h6>
-    <h6>Cerrado el <%= @ticket.resolution_date %></h6>
-  <% end %>
-</div>
-
-<div class="tags">
-  <i class="bi bi-tags tags-icon"></i>
-  <% @ticket.tags.each_with_index do |tag, index| %>
-    <% color_class = ["badge-primary", "badge-secondary", "badge-tertiary", "badge-quaternary"][index % 4] %>
-    <span class="badge tag-badge <%= color_class %>"><%= tag.name %></span>
-  <% end %>
-</div>
-
-<div class="row">
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">Creado por:</h4>
-        <p class="card-text" style="font-size: 20px;"><%= @ticket.requiring_user.user.name %> <%= @ticket.requiring_user.user.last_name %></p>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">Ejecutivo a cargo:</h4>
-        <p class="card-text" style="font-size: 20px;"><%= @ticket.executive.user.name %> <%= @ticket.executive.user.last_name %></p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="priority-info">
-  <h4>Prioridad:</h4>
-  <% if @ticket.priority == 1 %>
-    <h4 style="color: red; margin-left: 10px;">Alta</h4>
-  <% elsif @ticket.priority == 2 %>
-    <h4 style="color: orange; margin-left: 10px;">Media</h4>
-  <% elsif @ticket.priority == 3 %>
-    <h4 style="color: green; margin-left: 10px;">Baja</h4>
-  <% end %>
-</div>
-
-<div class="row">
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Description</h5>
-        <p class="card-text"><%= @ticket.description %></p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Response</h5>
-        <% if @ticket.responses.any? %>
-          <% @ticket.responses.each do |response| %>
-            <p class="card-text"><%= response.response %></p>
+<div class="container my-5">
+  <div class="card">
+    <div class="card-body">
+      <div class="ticket-info d-flex align-items-center justify-content-between">
+        <h2 class="mb-0"><%= @ticket.title %></h2>
+        <div class="badge-container">
+          <% if @ticket.state == "open" %>
+            <span class="badge rounded-pill red-nice">Open</span>
+          <% elsif @ticket.state == "closed" %>
+            <span class="badge rounded-pill green-nice">Closed</span>
+          <% elsif @ticket.state == "reopened" %>
+            <span class="badge rounded-pill yellow-nice">Reopened</span>
           <% end %>
-        <% else %>
-          <p class="card-text text-muted">No hay respuesta</p>
+        </div>
+      </div>
+
+      <div class="date-info d-flex align-items-center">
+        <h6 class="mb-0">Creado el <%= @ticket.creation_date %></h6> 
+        <% if @ticket.resolution_date %>
+          <h6 class="sep">|</h6>
+          <h6 class="mb-0">Cerrado el <%= @ticket.resolution_date %></h6>
         <% end %>
       </div>
+
+      <div class="tags">
+        <i class="bi bi-tags tags-icon"></i>
+        <% @ticket.tags.each_with_index do |tag, index| %>
+          <% color_class = ["badge-primary", "badge-secondary", "badge-tertiary", "badge-quaternary"][index % 4] %>
+          <span class="badge tag-badge <%= color_class %>"><%= tag.name %></span>
+        <% end %>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Creado por:</h4>
+              <p class="card-text" style="font-size: 20px;"><%= @ticket.requiring_user.user.name %> <%= @ticket.requiring_user.user.last_name %></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Ejecutivo a cargo:</h4>
+              <p class="card-text" style="font-size: 20px;"><%= @ticket.executive.user.name %> <%= @ticket.executive.user.last_name %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="priority-info d-flex align-items-center">
+        <h4 class="mb-0">Prioridad:</h4>
+        <% if @ticket.priority == 1 %>
+          <h4 class="text-danger mb-0 ms-3">Alta</h4>
+        <% elsif @ticket.priority == 2 %>
+          <h4 class="text-warning mb-0 ms-3">Media</h4>
+        <% elsif @ticket.priority == 3 %>
+          <h4 class="text-success mb-0 ms-3">Baja</h4>
+        <% end %>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Description</h5>
+              <p class="card-text"><%= @ticket.description %></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Response</h5>
+              <% if @ticket.responses.any? %>
+                <% @ticket.responses.each do |response| %>
+                  <p class="response-text"><%= response.response %></p>
+                <% end %>
+              <% else %>
+                <p class="card-text text-muted">No hay respuesta</p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions-container d-flex justify-content-end mt-4">
+      <%= link_to "Edit this ticket", edit_ticket_path(@ticket), class: "btn btn-primary me-2" %>
+      <%= button_to "Destroy this ticket", @ticket, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+    </div>
+
+    <div class="text-center mt-4">
+      <button class="btn btn-secondary" onclick="history.back()">Back</button>
     </div>
   </div>
-</div>
-
-
-<div class="actions-container">
-  <%= link_to "Edit this ticket", edit_ticket_path(@ticket) %>
-  <%= button_to "Destroy this ticket", @ticket, method: :delete, data: { confirm: "Are you sure?" } %>
-</div>
-
-<div>
-  <button class="btn btn-secondary" onclick="history.back()">Back</button>
 </div>
