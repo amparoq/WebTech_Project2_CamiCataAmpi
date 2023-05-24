@@ -1,4 +1,31 @@
 <style>
+  .comment-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .comment-card {
+    background-color: #f6efef;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .comment-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .comment-details {
+    margin-bottom: 5px;
+  }
+
+  .icon {
+    margin-bottom: 6px;
+  }
+
   .badge-primary {
     background-color: #c14884;
     color: #0f0c0c;
@@ -73,21 +100,44 @@
     padding: 5px 10px;
     border-radius: 3px;
   }
+
+  .role-badge {
+    background-color: #836474;
+    margin-left: 10px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+  }
 </style>
+
+<head>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
 
 <div class="container my-5">
   <div class="card">
     <div class="card-body">
       <div class="ticket-info d-flex align-items-center justify-content-between">
         <h2 class="mb-0"><%= @ticket.title %></h2>
-        <div class="badge-container">
-          <% if @ticket.state == "open" %>
-            <span class="badge rounded-pill red-nice">Open</span>
-          <% elsif @ticket.state == "closed" %>
-            <span class="badge rounded-pill green-nice">Closed</span>
-          <% elsif @ticket.state == "reopened" %>
-            <span class="badge rounded-pill yellow-nice">Reopened</span>
-          <% end %>
+        <div class="d-flex align-items-center">
+          <span class="badge-container me-2">
+            <% if @ticket.priority == 1 %>
+              <span class="badge rounded-pill red-nice">Prioridad Alta</span>
+            <% elsif @ticket.priority == 2 %>
+              <span class="badge rounded-pill yellow-nice">Prioridad Media</span>
+            <% elsif @ticket.priority == 3 %>
+              <span class="badge rounded-pill yellow-nice">Prioridad Baja</span>
+            <% end %>
+          </span>
+          <span class="badge-container">
+            <% if @ticket.state == "open" %>
+              <span class="badge rounded-pill red-nice">Open</span>
+            <% elsif @ticket.state == "closed" %>
+              <span class="badge rounded-pill green-nice">Closed</span>
+            <% elsif @ticket.state == "reopened" %>
+              <span class="badge rounded-pill yellow-nice">Reopened</span>
+            <% end %>
+          </span>
         </div>
       </div>
 
@@ -126,17 +176,6 @@
         </div>
       </div>
 
-      <div class="priority-info d-flex align-items-center">
-        <h4 class="mb-0">Prioridad:</h4>
-        <% if @ticket.priority == 1 %>
-          <h4 class="text-danger mb-0 ms-3">Alta</h4>
-        <% elsif @ticket.priority == 2 %>
-          <h4 class="text-warning mb-0 ms-3">Media</h4>
-        <% elsif @ticket.priority == 3 %>
-          <h4 class="text-success mb-0 ms-3">Baja</h4>
-        <% end %>
-      </div>
-
       <div class="row">
         <div class="col-sm-6">
           <div class="card">
@@ -165,11 +204,36 @@
 
     <div class="actions-container d-flex justify-content-end mt-4">
       <%= link_to "Edit this ticket", edit_ticket_path(@ticket), class: "btn btn-primary me-2" %>
-      <%= button_to "Destroy this ticket", @ticket, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+      <%= button_to "Destroy this ticket", @ticket, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger", style: "margin-right: 10px;" %>
     </div>
 
     <div class="text-center mt-4">
-      <button class="btn btn-secondary" onclick="history.back()">Back</button>
+      <button class="btn btn-secondary" style = "margin-bottom: 10px;" onclick="history.back()">Back</button>
     </div>
   </div>
+</div>
+
+
+<div style = "display: flex;">
+  <h2>Comments</h2>
+  <i class="bi bi-chat-dots"></i>
+</div>
+
+<div class="comment-cards">
+  <% if @comments.any? %>
+    <% @comments.each do |comment| %>
+      <div class="comment-card">
+        <div style = "display: flex;">
+          <h4 class="comment-title"><%= comment.executive.user.name %> <%= comment.executive.user.last_name %></h4>
+          <% if comment.executive == @ticket.executive %>
+            <span class="badge rounded-pill role-badge">Ejecutivo a cargo</span>
+          <% end %>
+        </div>
+        <p class="ticket-details text-muted"> <%= comment.created_at %></p>
+        <p class="ticket-details"> <%= comment.comment %></p>
+      </div>
+    <% end %>
+  <% else %>
+    <p class="text-muted">No hay comentarios</p>
+  <% end %>
 </div>

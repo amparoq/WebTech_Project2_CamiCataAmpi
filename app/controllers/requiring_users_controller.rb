@@ -53,6 +53,7 @@ class RequiringUsersController < ApplicationController
 
   # DELETE /requiring_users/1 or /requiring_users/1.json
   def destroy
+    @requiring_user.tickets.destroy_all
     @requiring_user.destroy
 
     respond_to do |format|

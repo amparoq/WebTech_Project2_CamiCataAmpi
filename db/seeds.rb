@@ -47,7 +47,22 @@ att1 = Attachment.create(title: "Interfaz Actual usuario",path: "/usr/files/ss_i
 att2 = Attachment.create(title: "Foto del error del sistema", path: "/usr/files/ss_error_facturación.jpg",ticket_id: t3.id)
 att3 = Attachment.create(title: "Respuesta servidor", path: "/usr/files/respuesta_servidor.pdf",ticket_id: t8.id)
 
-#Comment:
+#Comments:
+c1 = Comment.create(comment: "Hola! No soy del área de comunicaciones, ¿con quien puedo hablar?", executive_id: t1.executive_id, ticket_id: t1.id)
+c2 = Comment.create(comment: "Hola, las reuniones las decide el jefe correspondiente al inicio del año y no tienen que ver con el área en si, espero eso te ayude a gestionar.", executive_id: e2.id, ticket_id: t1.id)
+c3 = Comment.create(comment: "Ok, entonces no hay nada que hacer, gracias.", executive_id: t1.executive_id, ticket_id: t1.id)
+c4 = Comment.create(comment: "La gente con las credenciales antiguas tenía ese problema ¿no es así?", executive_id: t5.executive_id, ticket_id: t5.id)
+c5 = Comment.create(comment: "Sí, la página ya no soporta las credenciales antiguas y se cae. Saludos", executive_id: e2.id, ticket_id: t5.id)
+c6 = Comment.create(comment: "Revisé la página y no me sale ningún problema.", executive_id: t3.executive_id, ticket_id: t3.id)
+c7 = Comment.create(comment: "Ese problema ya se solucionó, saludos.", executive_id: e1.id, ticket_id: t3.id)
+c8 = Comment.create(comment: "Hola! El ticket fue reabierto, aparentemente a algunos computadores todavía no les funciona el sistema.", executive_id: t3.executive_id, ticket_id: t3.id)
+c9 = Comment.create(comment: "Realicé un chequeo mensual, efectivamente los reportes no se están generando correctamente.", executive_id: t3.executive_id, ticket_id: t3.id)
+c10 = Comment.create(comment: "En tal caso hay que hablar con algún supervisor, ellos conocen más de la página.", executive_id: e1.id, ticket_id: t3.id)
+c11 = Comment.create(comment: "RECORDATORIO: Revisar bien cuales son las credenciales habilitadas para el servidor.", executive_id: t8.executive_id, ticket_id: t8.id)
+c12 = Comment.create(comment: "Hay algunos permisos no habilitados en mensajes.", executive_id: t8.executive_id, ticket_id: t8.id)
+c13 = Comment.create(comment: "Solucionado, mandar respuesta de credenciales cuanto antes.", executive_id: t8.executive_id, ticket_id: t8.id)
+c14 = Comment.create(comment: "Recordatorio: Error de credenciales antiguas, mandar respuesta y especificar cuanto antes.", executive_id: t9.executive_id, ticket_id: t9.id)
+
 
 #Responses:
 r1 = Response.create(response: "Estimado/a, vendrán el jueves a repararla, gracias por avisar.", acceptance: true, evaluation: 4.5, ticket_id: t2.id, executive_id: t2.executive_id, requiring_user_id: t2.requiring_user_id)
@@ -62,8 +77,7 @@ r7 = Response.create(response: "Se debe utilizar una cuenta gmail para hacer el 
 r8  = Response.create(response: "Era un problema con los permisos, ya está solucionado, favor confirmar.", acceptance: true, evaluation: 3.5, ticket_id: t10.id, executive_id: t10.executive_id, requiring_user_id: t10.requiring_user_id)
 
 #Executive Metrics:
-#No se si se hace una vez se crean tickets o qué. 
-#Me tinca que sí, onda creamos un ticket y hacemos eso de que vea y actualice según eso :)
+#Se crean según tickets y sus estados. 
 
 #Tags:
 tag1 = Tag.create(name: "Plataforma Web")

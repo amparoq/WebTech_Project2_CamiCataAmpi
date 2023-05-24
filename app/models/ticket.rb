@@ -1,13 +1,13 @@
 class Ticket < ApplicationRecord
     belongs_to :requiring_user
     belongs_to :executive
-    has_and_belongs_to_many :tags
-    has_many :attachments 
+    has_many :attachments
     has_many :comments
     has_many :responses
     has_many :executive_metrics
+    has_many :tags_tickets
+    has_many :tags, through: :tags_tickets
     validate :resolution_date_greater_than_creation_date
-    enum priority: { high: 0, medium: 1, low: 2 }
 
     after_create do
         creation_executive_metric
@@ -25,8 +25,11 @@ class Ticket < ApplicationRecord
         end
     end
 
-
-
+    before_destroy do
+        destroy_dependent_records
+        update_executive_assigned_tickets
+    end
+    
     private
     def resolution_date_greater_than_creation_date
         return unless resolution_date && creation_date
@@ -55,5 +58,17 @@ class Ticket < ApplicationRecord
     def change_metric_reopened
         ex = ExecutiveMetric.find_by(ticket_id: self.ticket_id)
         ex.update(type_of_metric: "reopened") if ex.present?
+    end
+
+    def destroy_dependent_records
+        attachments.destroy_all
+        comments.destroy_all
+        responses.destroy_all
+        executive_metrics.destroy_all
+        tags.clear
+    end
+    
+    def update_executive_assigned_tickets
+    executive.decrement!(:assigned_tickets)
     end
 end

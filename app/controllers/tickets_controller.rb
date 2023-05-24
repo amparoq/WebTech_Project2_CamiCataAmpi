@@ -9,6 +9,7 @@ class TicketsController < ApplicationController
   # GET /tickets/1 or /tickets/1.json
   def show
     @ticket = Ticket.find(params[:id])
+    @comments = @ticket.comments.sort_by(&:created_at)
   end
 
   # GET /tickets/new
@@ -51,6 +52,7 @@ class TicketsController < ApplicationController
   # DELETE /tickets/1 or /tickets/1.json
   def destroy
     @ticket.destroy
+
 
     respond_to do |format|
       format.html { redirect_to tickets_url, notice: "Ticket was successfully destroyed." }
