@@ -1,50 +1,175 @@
 <style>
-.custom-card.profile-card {
-  background-color: #f6efef;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+  .profile-card {
+    background-color: #f6efef;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
 
-.custom-card .list-group-item {
-  background-color: #f6efef;
-  border: none;
-}
+  .profile-heading {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
 
-.custom-card .card-body {
-  padding: 0;
-}
+  .role {
+    font-size: 16px;
+    font-weight: normal;
+    margin-left: 8px;
+    margin-top: 5px;
+    color: #888888;
+  }
 
-.custom-card .btn-group .btn:not(:last-child) {
-  margin-right: 8px; /* Adjust the margin between buttons */
-}
+  .profile-details {
+    margin-bottom: 20px;
+  }
 
-.custom-card .card-footer {
-  background-color: #f6efef; 
+  .profile-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  .badge{
+    margin-bottom: 15px;
+  }
+
+  .profile-info h3 {
+    font-size: 18px;
+    margin-right: 10px;
+  }
+
+  .profile-info .icon {
+    font-size: 18px;
+    color: #888888;
+  }
+
+  .profile-actions {
+    display: flex;
+  }
+
+  .profile-actions > * {
+    margin-right: 10px;
+  }
+
+  .response-cards,
+  .ticket-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .response-card,
+  .ticket-card {
+    background-color: #f6f6f6;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .ticket-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .ticket-details {
+    margin-bottom: 5px;
+  }
+
+  .date-info {
+    color: #888888;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .icon {
+    margin-bottom: 6px;
+  }
+
+  .profile-icons{
+    margin-bottom: 10px;
+    margin-right: 6px;
+  }
+
+  .sort-btn-custom{
+    margin-top: 16px;
+    margin-left: 10px;
+    background-color: #ffd8c8;
+    width: 65px;
+    height: 30px;
+    padding: 4px 8px;
+    text-align: center;
+    line-height: 10px;
+  }
+
+  .btn-custom {
+    margin-top: 14px;
+    background-color: #ffd8c8;
+  }
+
+  .reverse-order {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    flex-direction: row-reverse;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 5px 0;
+    z-index: 1;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  .dropdown-item {
+    display: block;
+    padding: 5px 20px;
+    cursor: pointer;
+  }
+
+  .dropdown-item:hover {
+  background-color: #e6e6e6;
 }
 </style>
 
-<div class="custom-container my-5">
-  <div class="custom-card profile-card">
-    <div class="card-body">
-      <h1 class="card-title mb-4"><%= @supervisor.user.name %> <%= @supervisor.user.last_name %></h1>
-      <p class="card-text text-muted mb-3"><small><%= @supervisor.user.role %></small></p>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          <i class="fas fa-envelope me-2"></i> Email: <%= @supervisor.user.email %>
-        </li>
-        <li class="list-group-item">
-          <i class="fas fa-phone me-2"></i> Phone: <%= @supervisor.user.telephone %>
-        </li>
-      </ul>
+<div class="profile-card">
+  <div class="profile-info">
+    <h1 class="profile-heading"><%= @user.name %> <%= @user.last_name %></h1>
+    <h6 class="role">Supervisor</h6>
+  </div>
+  <div class="profile-details">
+    <div class="profile-info">
+      <i class="profile-icons bi bi-mailbox"></i><h3>Email:</h3>
+      <p style="margin-bottom: 8px;"><%= @user.email %></p>
     </div>
-    <div class="card-footer">
-      <div class="btn-group" role="group">
-        <%= link_to 'Create New Supervisor', new_supervisor_path, class: 'btn btn-success' %>
-        <%= link_to 'Edit', edit_supervisor_path(@supervisor), class: 'btn btn-primary' %>
-        <%= link_to 'Destroy', @supervisor, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-        <%= link_to 'Back to Supervisors', supervisors_path, class: 'btn btn-secondary' %>
+    <div class="profile-info">
+      <div style="display: flex;">
+        <i class="profile-icons bi bi-telephone"></i><h3>Telephone:</h3><%= @user.telephone %>
       </div>
     </div>
+  </div>
+
+  <div class="profile-actions">
+    <%= link_to 'Edit Profile', edit_supervisor_path(@supervisor), class: 'btn btn-primary' %>
+    <% if @supervisor.administrator == false %>
+      <%= link_to 'Back to Supervisors', supervisors_path, class: 'btn btn-secondary' %>
+    <% else %>
+      <%= link_to 'Back', "/", class: 'btn btn-secondary' %>
+    <% end %>
+    <%= button_to 'Destroy', @supervisor, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
   </div>
 </div>

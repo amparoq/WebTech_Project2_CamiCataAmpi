@@ -6,7 +6,11 @@ class Executive < ApplicationRecord
   has_many :responses
 
   before_save :init
+  before_destroy do
+    destroy_dependant
+  end
 
+  private
   def init
     self.assigned_tickets ||= 0
   end
@@ -31,4 +35,11 @@ class Executive < ApplicationRecord
     executive_metrics.by_month(month).closed_tickets.group(:priority).count
   end
 
+  def destroy_dependant
+    comments.destroy_all
+    tickets.destroy_all
+    responses.destroy_all
+    executive_metrics.destroy_all
+  end
+    
 end

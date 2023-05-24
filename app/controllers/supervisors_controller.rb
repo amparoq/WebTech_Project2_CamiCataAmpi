@@ -15,6 +15,7 @@ class SupervisorsController < ApplicationController
   # GET /supervisors/1 or /supervisors/1.json
   def show
     @supervisor = Supervisor.find(params[:id])
+    @user = @supervisor.user
   end
 
   # GET /supervisors/new

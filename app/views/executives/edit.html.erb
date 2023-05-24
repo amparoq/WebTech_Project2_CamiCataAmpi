@@ -1,20 +1,26 @@
 <h1>Edit Executive</h1>
-<%= form_with(model: @executive, url: executive_path(@executive), method: :patch) do |form| %>
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email %>
-  </div>
-  <div class="field">
-    <%= form.label :phone %>
-    <%= form.text_field :phone %>
-  </div>
-  <div class="actions">
-    <%= link_to 'Back to Executives', executive_path(@executive), class: 'btn btn-primary' %>
-    <%= form.submit 'Update Executive' %>
-  </div>
-<% end %>
-
+<form class="row g-3" action="<%= executive_path(@executive) %>" method="post">
+  <%= form_with(model: @executive, local: true) do |form| %>
+    <div class="col-md-12">
+      <label for="inputName" class="form-label">Name</label>
+      <%= form.text_field :name, class: 'form-control', id: 'inputName' %>
+    </div>
+    <div class="col-md-12">
+      <label for="inputLastName" class="form-label">Last Name</label>
+      <%= form.text_field :last_name, class: 'form-control', id: 'inputLastName' %>
+    </div>
+    <div class="col-md-12">
+      <label for="inputPhone" class="form-label">Phone</label>
+      <%= form.text_field :phone, class: 'form-control', id: 'inputPhone' %>
+    </div>
+    <div class="col-md-12">
+      <label for="inputEmail" class="form-label">Email</label>
+      <%= form.email_field :email, class: 'form-control', id: 'inputEmail' %>
+    </div>
+    <div class="actions">
+      <%= link_to 'Back to executives', executives_path, class: 'btn btn-primary' %>
+      <%= form.submit 'Update Executive', class: 'btn btn-primary' %>
+      </div>
+    </div>
+  <% end %>
+</form>

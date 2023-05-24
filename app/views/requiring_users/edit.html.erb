@@ -1,10 +1,26 @@
-<h1>Editing requiring user</h1>
-
-<%= render "form", requiring_user: @requiring_user %>
-
-<br>
-
-<div>
-  <%= link_to "Show this requiring user", @requiring_user %> |
-  <%= link_to "Back to requiring users", requiring_users_path %>
-</div>
+<h1>Edit Requiring User</h1>
+<form class="row g-3" action="<%= requiring_user_path(@requiring_user) %>" method="post">
+  <%= form_with(model: @requiring_user, local: true) do |form| %>
+    <div class="col-md-12">
+      <label for="inputName" class="form-label">Name</label>
+      <%= form.text_field :name, class: 'form-control', id: 'inputName' %>
+    </div>
+    <div class="col-md-12">
+      <label for="inputLastName" class="form-label">Last Name</label>
+      <%= form.text_field :last_name, class: 'form-control', id: 'inputLastName' %>
+    </div>
+    <div class="col-md-12">
+      <label for="inputPhone" class="form-label">Phone</label>
+      <%= form.text_field :phone, class: 'form-control', id: 'inputPhone' %>
+    </div>
+    <div class="col-md-12">
+      <label for="inputEmail" class="form-label">Email</label>
+      <%= form.email_field :email, class: 'form-control', id: 'inputEmail' %>
+    </div>
+    <div class="actions">
+      <%= link_to 'Back to requiring users', requiring_users_path, class: 'btn btn-primary' %>
+      <%= form.submit 'Update Requiring User', class: 'btn btn-primary' %>
+      </div>
+    </div>
+  <% end %>
+</form>
