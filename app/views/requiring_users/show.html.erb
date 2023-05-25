@@ -194,9 +194,14 @@
 
   <div class="profile-actions">
     <%= link_to "Edit Profile", edit_requiring_user_path(@requiring_user), class: "btn btn-primary me-2" %>
-    <%= link_to "Back to Requiring Users", requiring_users_path, class: "btn btn-secondary me-2" %>
+    <%= link_to "See all Requiring Users", requiring_users_path, class: "btn btn-secondary me-2" %>
     <%= button_to "Destroy User", @requiring_user, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
   </div>
+
+  <div class="profile-actions">
+    <button class="btn btn-custom" style = "margin-bottom: 10px;" onclick="history.back()">Back</button>
+  </div>
+
 </div>
 
 

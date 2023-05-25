@@ -117,12 +117,17 @@
 
   <div class="profile-actions">
     <%= link_to "Edit Profile", edit_executive_path(@executive), class: "btn btn-primary me-2" %>
-    <%= link_to "Back to Executives", executives_path, class: "btn btn-secondary me-2" %>
+    <%= link_to "See all Executives", executives_path, class: "btn btn-secondary me-2" %>
     <%= button_to "Destroy User", @executive, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
   </div>
+
+  <div class="profile-actions">
+    <button class="btn btn-custom" style = "margin-bottom: 10px;" onclick="history.back()">Back</button>
+  </div>
+
 </div>
 
-<h2 style = "margin-top: 10px;">Assigned Tickets</h2>
+<h2 style="margin-top: 10px;">Assigned Tickets</h2>
 <div class="ticket-cards">
   <% @tickets.each do |ticket| %>
     <div class="ticket-card">

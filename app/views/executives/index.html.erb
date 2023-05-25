@@ -83,6 +83,11 @@
     .btn-primary:hover {
       background-color: #0056b3;
     }
+
+  .btn-custom {
+  margin-top: 14px;
+  background-color: #d896ff;
+  }
   </style>
 </head>
 
@@ -99,8 +104,13 @@
   <% end %>
 
   <div class="btn-container">
-    <%= link_to "Back", root_path, class: 'btn btn-secondary' %>
+    <%= link_to "Back Home", root_path, class: 'btn btn-secondary' %>
     <%= link_to "New Executive", new_executive_path, class: 'btn btn-primary' %>
   </div>
+
+  <div>
+    <button class="btn btn-custom" style = "margin-bottom: 10px;" onclick="history.back()">Back</button>
+  </div>
+
 </body>
 </html>

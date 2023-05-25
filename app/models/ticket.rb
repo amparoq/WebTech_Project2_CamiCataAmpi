@@ -38,7 +38,7 @@ class Ticket < ApplicationRecord
     end
 
     def creation_executive_metric
-        ExecutiveMetric.create(executive_id: self.executive_id, date: Date.today, type_of_metric: "create")
+        ExecutiveMetric.create(executive_id: self.executive_id, date: Date.today, type_of_metric: "create", ticket_id: self.id)
     end
 
     def opened_or_closed_executive_metric

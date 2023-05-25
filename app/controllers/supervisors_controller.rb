@@ -15,6 +15,7 @@ class SupervisorsController < ApplicationController
   # GET /supervisors/1 or /supervisors/1.json
   def show
     @supervisor = Supervisor.find(params[:id])
+    @supervisors = Supervisor.where(administrator: false)
     @user = @supervisor.user
     @executives = Executive.all
     @req_users = RequiringUser.all

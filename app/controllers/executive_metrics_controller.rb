@@ -4,6 +4,11 @@ class ExecutiveMetricsController < ApplicationController
   # GET /executive_metrics or /executive_metrics.json
   def index
     @executive_metrics = ExecutiveMetric.all
+    @executives = Executive.all
+    @open_counts = @executive_metrics.where(type_of_metric: "open").group(:executive_id).count
+    @close_counts =  @executive_metrics.where(type_of_metric: "closed").group(:executive_id).count
+    @created_counts = @executive_metrics.where(type_of_metric: "create").group(:executive_id).count
+    @evaluation_average = @executive_metrics.where(type_of_metric: "Evaluation").group(:executive_id).average(:evaluation)
   end
 
   # GET /executive_metrics/1 or /executive_metrics/1.json
