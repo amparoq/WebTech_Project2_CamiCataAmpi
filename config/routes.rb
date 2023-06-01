@@ -7,14 +7,7 @@ Rails.application.routes.draw do
     resources :attachments, only: [:index, :show, :create, :destroy, :update, :new, :edit]
   end  
   resources :tags, only: [:index, :show, :create, :destroy, :update, :new, :edit]
-  resources :supervisors, only: [:index, :show, :create, :destroy, :update, :new, :edit] do
-    member do
-      get 'dashboard'
-    end
-  end
   resources :responses, only: [:index, :show, :create, :destroy, :update, :new, :edit]
-  resources :executives, only: [:index, :show, :create, :destroy, :update, :new, :edit]
-  resources :requiring_users, only: [:index, :show, :create, :destroy, :update, :new, :edit]
   resources :executive_metrics, only: [:index, :show, :create, :destroy, :update, :new, :edit]
   # Defines the root path route ("/")
   # root "articles#index"

@@ -162,7 +162,7 @@
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">Creado por:</h4>
-              <p class="card-text" style="font-size: 20px;"><%= @ticket.requiring_user.user.name %> <%= @ticket.requiring_user.user.last_name %></p>
+              <p class="card-text" style="font-size: 20px;"><%= @ticket.requiring_user.name %> <%= @ticket.requiring_user.last_name %></p>
             </div>
           </div>
         </div>
@@ -170,7 +170,7 @@
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">Ejecutivo a cargo:</h4>
-              <p class="card-text" style="font-size: 20px;"><%= @ticket.executive.user.name %> <%= @ticket.executive.user.last_name %></p>
+              <p class="card-text" style="font-size: 20px;"><%= @ticket.executive.name %> <%= @ticket.executive.last_name %></p>
             </div>
           </div>
         </div>
@@ -224,7 +224,7 @@
     <% @comments.each do |comment| %>
       <div class="comment-card">
         <div style = "display: flex;">
-          <h4 class="comment-title"><%= comment.executive.user.name %> <%= comment.executive.user.last_name %></h4>
+          <h4 class="comment-title"><%= comment.executive.name %> <%= comment.executive.last_name %></h4>
           <% if comment.executive == @ticket.executive %>
             <span class="badge rounded-pill role-badge">Ejecutivo a cargo</span>
           <% end %>

@@ -4,7 +4,7 @@ class ExecutiveMetricsController < ApplicationController
   # GET /executive_metrics or /executive_metrics.json
   def index
     @executive_metrics = ExecutiveMetric.all
-    @executives = Executive.all
+    @executives = User.executive
     @open_counts = @executive_metrics.where(type_of_metric: "open").group(:executive_id).count
     @close_counts =  @executive_metrics.where(type_of_metric: "closed").group(:executive_id).count
     @created_counts = @executive_metrics.where(type_of_metric: "create").group(:executive_id).count

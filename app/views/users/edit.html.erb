@@ -1,10 +1,49 @@
-<h1>Editing user</h1>
+<% if @user.requiring_user? %>
+  <h1>Edit Requiring User</h1>
+<% end %>
+<% if @user.executive? %>
+  <h1>Edit Executive</h1>
+<% end %>
+<% if @user.supervisor? %>
+  <h1>Edit Supervisor</h1>
+<% end %>
+<% if @user.administrator? %>
+  <h1>Edit Administrator</h1>
+<% end %>
 
-<%= render "form", user: @user %>
 
-<br>
-
-<div>
-  <%= link_to "Show this user", @user %> |
-  <%= link_to "Back to users", users_path %>
-</div>
+<form class="row g-3" action="<%= user_path(@user) %>" method="post">
+  <%= form_with(model: @user, local: true) do |form| %>
+    <div class="col-md-12">
+      <label for="inputName" class="form-label">Name</label>
+      <%= form.text_field :name, class: 'form-control', id: 'inputName' %>
+    </div>
+    <div class="col-md-12">
+      <label for="inputLastName" class="form-label">Last Name</label>
+      <%= form.text_field :last_name, class: 'form-control', id: 'inputLastName' %>
+    </div>
+    <div class="col-md-12">
+      <label for="inputPhone" class="form-label">Phone</label>
+      <%= form.text_field :phone, class: 'form-control', id: 'inputPhone' %>
+    </div>
+    <div class="col-md-12">
+      <label for="inputEmail" class="form-label">Email</label>
+      <%= form.email_field :email, class: 'form-control', id: 'inputEmail' %>
+    </div>
+    <div class="actions">
+      <button class="btn btn-custom" style = "margin-bottom: 10px;" onclick="history.back()">Back</button>
+      <% if @user.requiring_user? %>
+        <%= form.submit 'Update Requiring User', class: 'btn btn-primary' %>
+      <% end %>
+      <% if @user.executive? %>
+        <%= form.submit 'Update Executive', class: 'btn btn-primary' %>
+      <% end %>
+      <% if @user.supervisor? %>
+        <%= form.submit 'Update Supervisor', class: 'btn btn-primary' %>
+      <% end %>
+      <% if @user.administrator? %>
+        <%= form.submit 'Update Administrator', class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+  <% end %>
+</form>

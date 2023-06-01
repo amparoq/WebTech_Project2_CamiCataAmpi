@@ -1,9 +1,28 @@
-<h1>New user</h1>
+<h1>New User</h1>
 
-<%= render "form", user: @user %>
+<%= form_with model: @user, url: user_path do |form| %>
+  <div class="form-floating mb-3">
+    <%= form.text_field :name, class: 'form-control', id: 'floatingName', placeholder: 'Name' %>
+    <%= form.label :name, 'Name', class: 'form-label', for: 'floatingName' %>
+  </div>
 
-<br>
+  <div class="form-floating mb-3">
+    <%= form.text_field :last_name, class: 'form-control', id: 'floatingLastName', placeholder: 'Last Name' %>
+    <%= form.label :last_name, 'Last Name', class: 'form-label', for: 'floatingLastName' %>
+  </div>
 
-<div>
-  <%= link_to "Back to users", users_path %>
-</div>
+  <div class="form-floating mb-3">
+    <%= form.email_field :email, class: 'form-control', id: 'floatingEmail', placeholder: 'Email' %>
+    <%= form.label :email, 'Email', class: 'form-label', for: 'floatingEmail' %>
+  </div>
+
+  <div class="form-floating mb-3">
+    <%= form.text_field :phone, class: 'form-control', id: 'floatingPhone', placeholder: 'Phone' %>
+    <%= form.label :phone, 'Phone', class: 'form-label', for: 'floatingPhone' %>
+  </div>
+
+ 
+  <button class="btn btn-custom" style = "margin-bottom: 10px;" onclick="history.back()">Back</button>
+  <%= form.submit 'Create User', class: 'btn btn-primary' %>
+
+<% end %>

@@ -51,8 +51,8 @@
   </thead>
   <tbody>
     <% @executives.each do |executive| %>
-      <tr onclick="window.location='<%= executive_path(executive) %>'">
-        <td><%= executive.user.name %> <%= executive.user.last_name %></td>
+      <tr onclick="window.location='<%= user_path(executive) %>'">
+        <td><%= executive.name %> <%= executive.last_name %></td>
         <td><%= @created_counts[executive.id] || 0 %></td>
         <td><%= @close_counts[executive.id] || 0 %></td>
         <td><%= @open_counts[executive.id] || 0 %></td>

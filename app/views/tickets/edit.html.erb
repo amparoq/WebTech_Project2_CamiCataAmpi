@@ -2,8 +2,6 @@
 .btn-custom {
   margin-top: 14px;
   background-color: #ffd8c8;
-  margin-right: 15px;
-  margin-bottom: 10px;
 }
 </style>
 
@@ -11,10 +9,10 @@
 
 <%= render "form", ticket: @ticket %>
 
-<br>
 
 <div style="display: flex;">
   <%= link_to "Show this ticket", @ticket, class: "btn btn-custom" %>
   <%= link_to "Back to tickets", tickets_path, class: "btn btn-custom" %>
 </div>
+
 

@@ -1,5 +1,6 @@
 class AddExecutiveReffToExecutiveMetric < ActiveRecord::Migration[7.0]
   def change
-    add_reference :executive_metrics, :executive, null: false, foreign_key: true
+    add_column :executive_metrics, :executive_id, :bigint
+    add_foreign_key :executive_metrics, :users, column: :executive_id
   end
 end

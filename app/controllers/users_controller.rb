@@ -50,12 +50,6 @@ class UsersController < ApplicationController
 
   # DELETE /users/1 or /users/1.json
   def destroy
-    if @user.role == "admin" or @user.role = "supervisor"
-      @user.all_supervisors.destroy
-    elsif @user.role == "executive"
-        @user.all_executives.destroy
-    elsif @user.role == "requiring_user"
-      @user.all_requiring_users.destroy
     @user.destroy
 
     respond_to do |format|
@@ -72,6 +66,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.fetch(:user, {})
+      params.fetch(:user, {}).permit(:name, :last_name, :telephone, :email)
     end
 end

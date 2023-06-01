@@ -1,8 +1,8 @@
 class Response < ApplicationRecord
     belongs_to :ticket
-    belongs_to :executive
-    belongs_to :requiring_user
-
+    belongs_to :executive, class_name: 'User'
+    belongs_to :requiring_user, class_name: 'User'
+    
     after_create do
         if evaluation.present?
             create_executive_metric

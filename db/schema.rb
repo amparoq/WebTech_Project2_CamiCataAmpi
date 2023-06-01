@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_21_051123) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_01_172833) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -28,8 +28,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_051123) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "ticket_id", null: false
-    t.bigint "executive_id", null: false
-    t.index ["executive_id"], name: "index_comments_on_executive_id"
+    t.integer "executive_id"
     t.index ["ticket_id"], name: "index_comments_on_ticket_id"
   end
 
@@ -39,25 +38,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_051123) do
     t.float "evaluation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "executive_id", null: false
+    t.bigint "executive_id"
     t.bigint "ticket_id", null: false
-    t.index ["executive_id"], name: "index_executive_metrics_on_executive_id"
     t.index ["ticket_id"], name: "index_executive_metrics_on_ticket_id"
-  end
-
-  create_table "executives", force: :cascade do |t|
-    t.integer "assigned_tickets"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_executives_on_user_id"
-  end
-
-  create_table "requiring_users", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_requiring_users_on_user_id"
   end
 
   create_table "responses", force: :cascade do |t|
@@ -67,19 +50,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_051123) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "ticket_id", null: false
-    t.bigint "executive_id", null: false
-    t.bigint "requiring_user_id", null: false
-    t.index ["executive_id"], name: "index_responses_on_executive_id"
-    t.index ["requiring_user_id"], name: "index_responses_on_requiring_user_id"
+    t.bigint "executive_id"
+    t.bigint "requiring_user_id"
     t.index ["ticket_id"], name: "index_responses_on_ticket_id"
-  end
-
-  create_table "supervisors", force: :cascade do |t|
-    t.boolean "administrator"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_supervisors_on_user_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -103,10 +76,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_051123) do
     t.string "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "requiring_user_id", null: false
-    t.bigint "executive_id", null: false
-    t.index ["executive_id"], name: "index_tickets_on_executive_id"
-    t.index ["requiring_user_id"], name: "index_tickets_on_requiring_user_id"
+    t.integer "executive_id"
+    t.integer "requiring_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -114,22 +85,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_051123) do
     t.string "last_name"
     t.string "telephone"
     t.string "email"
-    t.string "role"
+    t.integer "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   add_foreign_key "attachments", "tickets"
-  add_foreign_key "comments", "executives"
   add_foreign_key "comments", "tickets"
-  add_foreign_key "executive_metrics", "executives"
+  add_foreign_key "comments", "users", column: "executive_id"
   add_foreign_key "executive_metrics", "tickets"
-  add_foreign_key "executives", "users"
-  add_foreign_key "requiring_users", "users"
-  add_foreign_key "responses", "executives"
-  add_foreign_key "responses", "requiring_users"
+  add_foreign_key "executive_metrics", "users", column: "executive_id"
   add_foreign_key "responses", "tickets"
-  add_foreign_key "supervisors", "users"
-  add_foreign_key "tickets", "executives"
-  add_foreign_key "tickets", "requiring_users"
+  add_foreign_key "responses", "users", column: "executive_id"
+  add_foreign_key "responses", "users", column: "requiring_user_id"
+  add_foreign_key "tickets", "users", column: "executive_id"
+  add_foreign_key "tickets", "users", column: "requiring_user_id"
 end

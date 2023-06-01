@@ -1,6 +1,6 @@
 class Ticket < ApplicationRecord
-    belongs_to :requiring_user
-    belongs_to :executive
+    belongs_to :executive, class_name: 'User'
+    belongs_to :requiring_user, class_name: 'User'
     has_many :attachments
     has_many :comments
     has_many :responses
@@ -12,8 +12,6 @@ class Ticket < ApplicationRecord
     after_create do
         creation_executive_metric
         opened_or_closed_executive_metric
-        self.executive.assigned_tickets += 1
-        self.executive.save
     end
 
     before_update do
