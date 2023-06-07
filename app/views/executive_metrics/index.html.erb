@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html lang="en">
+
 <style>
   h1 {
     text-align: center;
@@ -31,37 +34,113 @@
     cursor: pointer;
   }
 
+  tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+  }
+
+  tbody tr:nth-child(odd):hover {
+    background-color: #dcdcdc;
+    cursor: pointer;
+  }
+
   .btn-custom {
     margin-top: 14px;
     background-color: #ffd8c8;
   }
 </style>
 
-<h1>Executives Performance Report</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Executive</th>
-      <th>Tickets Created</th>
-      <th>Tickets Closed</th>
-      <th>Cases Open</th>
-      <th>Average Evaluation</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @executives.each do |executive| %>
-      <tr onclick="window.location='<%= user_path(executive) %>'">
-        <td><%= executive.name %> <%= executive.last_name %></td>
-        <td><%= @created_counts[executive.id] || 0 %></td>
-        <td><%= @close_counts[executive.id] || 0 %></td>
-        <td><%= @open_counts[executive.id] || 0 %></td>
-        <td><%= @evaluation_average[executive.id].to_f.round(2) || 0.0 %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
 
-<div>
-  <button class="btn btn-custom" style = "margin-bottom: 10px;" onclick="history.back()">Back</button>
-</div>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Custom fonts for this template-->
+  <%= stylesheet_link_tag 'fontawesome-free/css/all.min.css' %>
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <%= stylesheet_link_tag 'sb-admin-2.min.css' %>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+
+<body id="top-page">
+
+  <div id="wrapper" class="d-flex">
+
+    <!-- Sidebar -->
+    <%= render partial:'layouts/sidebar' %>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column"
+      style="background-image: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);">
+
+      <!-- Main Content -->
+      <div id="content" class="container-fluid">
+
+        <h1 class = "sidebar-brand-text" style = "margin-top: 10px;">Executives Performance Report</h1>
+
+        <hr style = "background-color: #d0d0d0;"></hr>
+
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align: center;">Executive</th>
+              <th style="text-align: center;">Tickets Created</th>
+              <th style="text-align: center;">Tickets Closed</th>
+              <th style="text-align: center;">Cases Open</th>
+              <th style="text-align: center;">Average Evaluation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @executives.each do |executive| %>
+              <tr onclick="window.location='<%= user_path(executive) %>'">
+                <td><%= executive.name %> <%= executive.last_name %></td>
+                <td><%= @created_counts[executive.id] || 0 %></td>
+                <td><%= @close_counts[executive.id] || 0 %></td>
+                <td><%= @open_counts[executive.id] || 0 %></td>
+                <td><%= @evaluation_average[executive.id].to_f.round(2) || 0.0 %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <div>
+          <button class="btn btn-custom" style="margin-bottom: 10px;" onclick="history.back()">Back</button>
+        </div>
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <%= stylesheet_link_tag 'fontawesome-free/css/all.min.css' %>
+      <%= stylesheet_link_tag 'sb-admin-2.min.css' %>
+      <%= javascript_include_tag 'jquery-easing/jquery.easing.min.js' %>
+      <%= javascript_include_tag 'js_boot/bootstrap.bundle.min.js' %>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <script>
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+      document.getElementById('accordionSidebar').classList.toggle('toggled');
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,108 @@
+<style>
+.log-out-button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+
+.color-custom {
+    background-color: #1d1d1d;
+    margin-right: 10px;
+}
+
+.nav-item {
+    font-size: 1.2em;
+}
+
+.nav-link {
+    color: 	#d6d7d4;
+}
+
+.nav-link:hover {
+    color: #f3f9fb;
+    text-decoration: none;
+}
+
+.sidebar-divider {
+    background-color: #d0d0d0;
+}
+
+</style>
+
+<body>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<ul class="navbar-nav color-custom sidebar accordion" id="accordionSidebar">
+
+<div class="sidebar-brand d-flex align-items-center justify-content-center">
+    <div class="sidebar-brand-text mx-3" style = "color: #eeeeee;">Welcome, <%= current_user.name %>!</div>
+</div>
+
+<hr class="sidebar-divider my-0">
+
+<!-- Nav Item - Dashboard -->
+<li class="nav-item active">
+    <a class="nav-link" href="/">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Home</span></a>
+</li>
+
+<!-- Divider -->
+<hr class="sidebar-divider" >
+
+<li class="nav-item">
+    <a class="nav-link" href="<%= user_path(current_user) %>">
+        <i class="material-icons">face</i>
+        <span>My Profile</span></a>
+</li>
+
+<% if current_user.requiring_user? || current_user.executive? %>
+    <li class="nav-item">
+        <a class="nav-link" href="<%= user_tickets_path(current_user) %>">
+            <i class="fas fa fa-ticket"></i>
+            <span>My Tickets</span>
+        </a>
+    </li>
+<% end %>
+
+<% if current_user.supervisor? || current_user.administrator? %>
+
+    <li class="nav-item">
+    <a class="nav-link" href="<%= tickets_path %>">
+        <i class="fas fa fa-ticket"></i>
+        <span>Tickets</span>
+    </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="<%= executive_metrics_path %>">
+            <i class='fas fa-chart-line'></i>
+            <span>Executive Metrics</span>
+        </a>
+    </li>
+<% end %>
+
+<hr class="sidebar-divider">
+
+<li class="nav-item">
+  <%= button_to destroy_user_session_path, method: :delete, class: "nav-link log-out-button custom-link" do %>
+    <i class="fas fa-power-off"></i>
+    <span>Log out</span>
+  <% end %>
+</li>
+
+
+
+
+
+<!-- Divider -->
+<hr class="sidebar-divider d-none d-md-block">
+
+<!-- Sidebar Toggler (Sidebar) -->
+<div class="text-center d-none d-md-inline">
+    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+</div>
+
+</ul>
+</body>

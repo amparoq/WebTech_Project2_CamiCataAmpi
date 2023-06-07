@@ -1,93 +1,160 @@
 <style>
-.ticket-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-}
+  .ticket-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
 
-.ticket-card {
-  background-color: #f6efef;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+  .ticket-card {
+    background-color: #f6efef;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+  }
 
-.ticket-title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
+  .ticket-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
 
-.badge {
-  margin-bottom: 5px;
-}
+  .badge {
+    margin-bottom: 5px;
+  }
 
-.ticket-details {
-  margin-bottom: 5px;
-}
+  .ticket-details {
+    margin-bottom: 5px;
+  }
 
-.date-info {
-  color: #454545;
-  display: flex;
-  align-items: center;
-}
+  .date-info {
+    color: #454545;
+    display: flex;
+    align-items: center;
+  }
 
-.icon {
-  margin-bottom: 6px;
-}
+  .icon {
+    margin-bottom: 6px;
+  }
 
-.red-nice {
-  background-color: #ff6f69;
-}
+  .red-nice {
+    background-color: #ff6f69;
+  }
 
-.yellow-nice {
-  background-color: #ffcc5c;
-}
+  .yellow-nice {
+    background-color: #ffcc5c;
+  }
 
-.green-nice {
-  background-color: #88d8b0;
-}
+  .green-nice {
+    background-color: #88d8b0;
+  }
 </style>
 
 <head>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Custom fonts for this template-->
+    <%= stylesheet_link_tag 'fontawesome-free/css/all.min.css' %>
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 
-<div style = "display: flex;">
-  <h1>Tickets</h1>
-  <p class = "text-muted" style = "margin-top: 16px; margin-left: 15px;">Todos los tickets en el sistema</p>
-</div>
+<body id="page-top">
 
-<div class="ticket-cards">
-  <% @tickets.each do |ticket| %>
-    <div class="ticket-card">
-      <% if ticket.state == "open" %>
-        <sup><span class="badge rounded-pill red-nice">Open</span></sup>
-      <% elsif ticket.state == "closed" %>
-        <sup><span class="badge rounded-pill green-nice">Closed</span></sup>
-      <% elsif ticket.state == "reopened" %>
-        <sup><span class="badge rounded-pill yellow-nice">Reopened</span></sup>
-      <% end %>
-      <% if ticket.priority == 1 %>
-        <sup><span class="badge rounded-pill red-nice">Prioridad Alta</span></sup>
-      <% elsif ticket.priority == 2 %>
-        <sup><span class="badge rounded-pill yellow-nice">Prioridad Media</span></sup>
-      <% elsif ticket.priority == 3 %>
-        <sup><span class="badge rounded-pill green-nice">Prioridad Baja</span></sup>
-      <% end %>
-      <h4 class="ticket-title"><%= ticket.title %></h4>
-      <div class="date-info">
-        <span class="icon me-1"><i class="far fa-calendar-alt"></i></span>
-        <p class="ticket-details">Creation Date: <%= ticket.creation_date %></p>
-      </div>
-      <% if ticket.resolution_date %>
-        <div class="date-info">
-          <span class="icon me-1"><i class="far fa-calendar-check"></i></span>
-          <p class="ticket-details">Resolution Date: <%= ticket.resolution_date %></p>
+  <div id="wrapper">
+    <%= render partial:'layouts/sidebar' %>
+
+    <div id="content-wrapper" class="d-flex flex-column" style = "background-image: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);">
+      <% if current_user.requiring_user? %>
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="sidebar-brand-text" style = "color: #666666; margin-left: 10px; margin-top: 30px; margin-bottom: -20px;">Mis Tickets</h1>
+            <a href="<%= new_user_ticket_path(current_user) %>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" style = "margin-bottom: -40px; margin-right: 20px;">
+            <i class="bi bi-plus" text-white-50"></i> Crear Ticket</a>
         </div>
       <% end %>
-      <p class="ticket-details"> <%= ticket.description %></p>
-      <a href="<%= ticket_path(ticket) %>" class="btn btn-primary">Ver ticket</a>
-    </div>
-  <% end %>
-</div>
+
+      <% if current_user.executive? %>
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="sidebar-brand-text" style = "color: #666666; margin-left: 10px; margin-top: 30px; margin-bottom: -20px;">Tickets Asignados</h1>
+        </div>
+      <% end %>
+
+      <% if current_user.supervisor?  || current_user.administrator? %>
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="sidebar-brand-text" style = "color: #666666; margin-left: 10px; margin-top: 30px; margin-bottom: -20px;">Tickets</h1>
+        </div>
+      <% end %>
+
+      <hr style = "background-color: #d0d0d0;"></hr>
+
+      <div class="ticket-cards">
+        <% @tickets.each do |ticket| %>
+          <div class="ticket-card">
+            <% if ticket.state == "open" %>
+              <sup><span class="badge rounded-pill red-nice">Open</span></sup>
+            <% elsif ticket.state == "closed" %>
+              <sup><span class="badge rounded-pill green-nice">Closed</span></sup>
+            <% elsif ticket.state == "reopened" %>
+              <sup><span class="badge rounded-pill yellow-nice">Reopened</span></sup>
+            <% end %>
+            <% if ticket.priority == 1 %>
+              <sup><span class="badge rounded-pill red-nice">Prioridad Alta</span></sup>
+            <% elsif ticket.priority == 2 %>
+              <sup><span class="badge rounded-pill yellow-nice">Prioridad Media</span></sup>
+            <% elsif ticket.priority == 3 %>
+              <sup><span class="badge rounded-pill green-nice">Prioridad Baja</span></sup>
+            <% end %>
+            <% if (current_user.supervisor?  || current_user.administrator?) &&  (ticket.state == "open") && !ticket.responses.any?%>
+              <sup class="badge badge-pill badge-danger" style = "margin-left: 142px;">Sin Respuesta</sup>
+            <% end %>
+            <h4 class="ticket-title"><%= ticket.title %></h4>
+            <div class="date-info">
+              <span class="icon me-1"><i class="far fa-calendar-alt"></i></span>
+              <p class="ticket-details">Creation Date: <%= ticket.creation_date %></p>
+            </div>
+            <% if ticket.resolution_date %>
+              <div class="date-info">
+                <span class="icon me-1"><i class="far fa-calendar-check"></i></span>
+                <p class="ticket-details">Resolution Date: <%= ticket.resolution_date %></p>
+              </div>
+            <% end %>
+            <p class="ticket-details"> <%= ticket.description %></p>
+            <a href="<%= ticket_path(ticket) %>" class="btn btn-primary">Ver ticket</a>
+          </div>
+        <% end %>
+      </div>
+
+      </div>
+      <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+      </a>
+
+      <!-- Bootstrap core JavaScript-->
+
+      <%= stylesheet_link_tag 'fontawesome-free/css/all.min.css' %>
+      <%= stylesheet_link_tag 'sb-admin-2.min.css' %>
+      <%= javascript_include_tag 'jquery-easing/jquery.easing.min.js' %>
+      <%= javascript_include_tag 'js_boot/bootstrap.bundle.min.js' %>
+  </div>
+
+  <script>
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+      document.getElementById('accordionSidebar').classList.toggle('toggled');
+    });
+  </script>
+  
+</body>

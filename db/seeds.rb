@@ -7,14 +7,14 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 #Users
-u1 = User.create(name: "Harry", last_name: "Styles", telephone: "+56 9 2456 1982", email: "hsTPWK@gmail.com", role: 3)
-u2 = User.create(name: "John", last_name: "Mayer", telephone: "+56 9 5567 9876", email: "johnMayer26@gmail.com", role: 2)
-u3 = User.create(name: "Phoebe", last_name: "Bridgers", telephone: "+56 9 7654 9833", email: "phoebe_b@gmail.com", role: 2)
-u4 = User.create(name: "Luke", last_name: "Hemmings", telephone: "+56 9 5423 8877", email: "hemmings5sos@gmail.com", role: 1)
-u5 = User.create(name: "Ashton", last_name: "Irwin", telephone: "+56 9 1543 8745", email: "AshIrw_shelookssoperfect@gmail.com", role: 1)
-u6 = User.create(name: "Taylor", last_name: "Swift", telephone: "+56 9 6254 7365", email: "TheOldTaylorCantComeToThePhoneRightNow@gmail.com", role: 0)
-u7 = User.create(name: "Freddy", last_name: "Mercury", telephone: "+56 1542 3274", email: "EOeoEO@gmail.com", role: 0)
-u8 = User.create(name: "Sufjan", last_name: "Stevens", telephone: "+56 9 2019 2021", email: "sufjst543@gmail.com", role: 0)
+u1 = User.create(name: "Harry", last_name: "Styles", telephone: "+56 9 2456 1982", email: "hsTPWK@gmail.com", role: 3, password: "123456")
+u2 = User.create(name: "John", last_name: "Mayer", telephone: "+56 9 5567 9876", email: "johnMayer26@gmail.com", role: 2, password: "123456")
+u3 = User.create(name: "Phoebe", last_name: "Bridgers", telephone: "+56 9 7654 9833", email: "phoebe_b@gmail.com", role: 2, password: "123456")
+u4 = User.create(name: "Luke", last_name: "Hemmings", telephone: "+56 9 5423 8877", email: "hemmings5sos@gmail.com", role: 1, password: "123456")
+u5 = User.create(name: "Ashton", last_name: "Irwin", telephone: "+56 9 1543 8745", email: "AshIrw_shelookssoperfect@gmail.com", role: 1, password: "123456")
+u6 = User.create(name: "Taylor", last_name: "Swift", telephone: "+56 9 6254 7365", email: "TheOldTaylorCantComeToThePhoneRightNow@gmail.com", role: 0, password: "123456")
+u7 = User.create(name: "Freddy", last_name: "Mercury", telephone: "+56 1542 3274", email: "EOeoEO@gmail.com", role: 0, password: "123456")
+u8 = User.create(name: "Sufjan", last_name: "Stevens", telephone: "+56 9 2019 2021", email: "sufjst543@gmail.com", role: 0, password: "123456")
 
 #Tickets:
 t1 = Ticket.create(creation_date: Date.new(2023,4,6), resolution_date: Date.new(2023,4,8), deadline_date: Date.new(2023,4,9), title: "Problemas con reunión", description: "No se están realizando las reuniones correspondientes en el área de comunicaciones", priority: 2, state: "closed", requiring_user_id: u6.id, executive_id: u4.id)
