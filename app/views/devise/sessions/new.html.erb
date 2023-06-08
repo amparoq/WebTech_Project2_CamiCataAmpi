@@ -1,26 +1,83 @@
-<h2>Log in</h2>
+<head>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+    <!-- Custom fonts for this template-->
+    <%= stylesheet_link_tag 'fontawesome-free/css/all.min.css' %>
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+    <!-- Custom styles for this template-->
+    <%= stylesheet_link_tag 'sb-admin-2.min.css' %>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                    </div>
+                                        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+                                          <div class="field" style = "margin-bottom: 20px;">
+                                            <%= f.label :email%><br/>
+                                            <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control form-control-user" %>
+                                          </div>
+
+                                          <div class="field">
+                                            <%= f.label :password %><br/>
+                                            <%= f.password_field :password, autocomplete: "current-password", class:"form-control form-control-user"  %>
+                                          </div>
+
+                                          <% if devise_mapping.rememberable? %>
+                                            <div class="field" style = "margin-top: 10px;">
+                                              <%= f.check_box :remember_me %>
+                                              <%= f.label :remember_me %>
+                                            </div>
+                                          <% end %>
+
+                                          <div class="actions">
+                                            <%= f.submit "Log in", class: "btn btn-primary btn-user btn-block" %>
+                                          </div>
+                                        <% end %>
+                                    <hr style = "background-color: #d0d0d0;"></hr>
+                                    <div class="text-center">                       
+                                      <%= render "devise/shared/links" %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
-  <% end %>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
+    <%= stylesheet_link_tag 'fontawesome-free/css/all.min.css' %>
+    <%= stylesheet_link_tag 'sb-admin-2.min.css' %>
+    <%= javascript_include_tag 'jquery-easing/jquery.easing.min.js' %>
+    <%= javascript_include_tag 'js_boot/bootstrap.bundle.min.js' %>
 
-<%= render "devise/shared/links" %>
+</body>
+

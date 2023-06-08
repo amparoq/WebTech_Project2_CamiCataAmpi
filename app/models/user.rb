@@ -12,6 +12,8 @@ class User < ApplicationRecord
     has_many :executive_responses, class_name: 'Response', foreign_key: 'executive_id'
     has_many :requiring_user_responses, class_name: 'Response', foreign_key: 'requiring_user_id'
 
+    attribute :role, :integer, default: 0
+
     enum role: {
         requiring_user: 0,
         executive: 1,
