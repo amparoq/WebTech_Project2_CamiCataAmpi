@@ -20,6 +20,7 @@ class TicketsController < ApplicationController
   def show
     @ticket = Ticket.find(params[:id])
     @comments = @ticket.comments.sort_by(&:created_at)
+    @attachments = @ticket.attachments
   end
 
   # GET /tickets/new
@@ -55,6 +56,22 @@ class TicketsController < ApplicationController
     if tags.present?
       tags.each do |tag|
         TagsTicket.create(ticket_id: @ticket.id, tag_id: tag)
+      end
+    end
+
+    if params[:ticket][:attachments].present?
+      params[:ticket][:attachments].each do |attachment|
+        next if attachment.blank? || !attachment.is_a?(ActionDispatch::Http::UploadedFile)
+
+        title = attachment.original_filename
+        blob = ActiveStorage::Blob.create_and_upload!(
+          io: attachment.open,
+          filename: attachment.original_filename,
+          content_type: attachment.content_type
+        )
+
+        @ticket.attachments.attach(blob)
+        blob.update(metadata: { title: title })
       end
     end
 
@@ -100,6 +117,6 @@ class TicketsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def ticket_params
-      params.fetch(:ticket, {}).permit(:title, :description, :priority)
+      params.fetch(:ticket, {}).permit(:title, :description, :priority, attachments: [])
     end
 end

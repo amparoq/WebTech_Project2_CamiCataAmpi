@@ -232,6 +232,16 @@
           <button class="btn btn-secondary" style = "margin-bottom: 10px;" onclick="history.back()">Back</button>
         </div>
 
+        <div>
+        <% if @attachments.present? %>
+          <% @attachments.each do |attachment| %>
+            <% blob = attachment.blob %>
+            <% title = blob.metadata['title'] %>
+            <%= link_to title, rails_blob_url(attachment) if title.present? %>
+          <% end %>
+        <% end %>
+        </div>
+
       </div>
     
       <% if current_user.executive? %>

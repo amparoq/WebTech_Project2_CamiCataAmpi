@@ -1,7 +1,7 @@
 class Ticket < ApplicationRecord
     belongs_to :executive, class_name: 'User'
     belongs_to :requiring_user, class_name: 'User'
-    has_many :attachments
+    has_many_attached :attachments
     has_many :comments
     has_many :responses
     has_many :executive_metrics

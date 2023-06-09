@@ -168,6 +168,10 @@
                     <option>3</option>
                   </select>
                 </div>
+                <label>Adjuntos</label></br>
+                <div class="field">
+                  <%= form.file_field :attachments, multiple: true, class: 'btn' %>
+                </div>
                 <hr style="background-color: #d0d0d0;">
                 <label>Tags</label></br>
                 <% Tag.all.each do |tag| %>
