@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
   root 'pages#home'
+  # routes.rb
+  get '/tickets/search', to: 'tickets#search'
+
 
   resources :users, only: [:index, :show, :create, :destroy, :update, :new, :edit] do
     resources :tickets, only: [:index, :show, :create, :destroy, :update, :new, :edit]
