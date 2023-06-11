@@ -47,6 +47,20 @@
   .green-nice {
     background-color: #88d8b0;
   }
+  search-container {
+    max-width: 300px; /* Adjust the width as needed */
+    margin: 0 auto; /* Center the search bar horizontally */
+  }
+  
+  search-input {
+    border-radius: 0;
+  }
+  
+  search-button {
+    border-radius: 0;
+    margin-left: -1px; /* Adjust the spacing between the input and button */
+  }
+  
 </style>
 
 <head>
@@ -100,11 +114,12 @@
       <% end %>
 
       <hr style = "background-color: #d0d0d0;"></hr>
-      <div id="search-container">
-      <input type="text" id="search-input" placeholder="Search tickets...">
-      <button id="search-button">Search</button>
-    </div>
-    
+      
+      <div id="search-container" class="d-flex">
+        <input type="text" id="search-input" class="form-control" placeholder="Search ticket...">
+        <button id="search-button" class="btn btn-primary">Search</button>
+      </div>
+
 
       <div class="ticket-cards">
         <% @tickets.each do |ticket| %>
