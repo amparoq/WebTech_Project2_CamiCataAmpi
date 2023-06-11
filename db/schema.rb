@@ -74,6 +74,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_073222) do
   create_table "responses", force: :cascade do |t|
     t.string "response"
     t.boolean "acceptance"
+    t.boolean "rejected"
     t.float "evaluation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

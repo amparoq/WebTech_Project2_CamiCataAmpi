@@ -1,17 +1,19 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: {sessions: 'users/sessions', registrations: 'users/registrations'} 
-  root "pages#home"
+  devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
+  root 'pages#home'
 
   resources :users, only: [:index, :show, :create, :destroy, :update, :new, :edit] do
     resources :tickets, only: [:index, :show, :create, :destroy, :update, :new, :edit]
   end
-  resources :tickets, only: [:index, :show, :create, :destroy, :update, :new, :edit] do
-    resources :comments, only: [:index, :show, :create, :destroy, :update, :new, :edit]
+  resources :tickets do
+    collection do
+      get :index_others
+    end
+    resources :responses, only: [:new, :create, :edit, :update]
+    resources :comments, only: [:new, :create]
     resources :attachments, only: [:index, :show, :create, :destroy, :update, :new, :edit]
-  end  
-  resources :responses, only: [:index, :show, :create, :destroy, :update, :new, :edit]
-  resources :tags, only: [:index, :show, :create, :destroy, :update, :new, :edit]
-  resources :executive_metrics, only: [:index, :show, :create, :destroy, :update, :new, :edit]
-  # Defines the root path route ("/")
-  # root "articles#index"
+  end
+
+  resources :tags
+  resources :executive_metrics
 end

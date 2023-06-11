@@ -13,6 +13,7 @@ class ResponsesController < ApplicationController
 
   # GET /responses/new
   def new
+    @ticket = Ticket.find(params[:ticket_id])
     @response = Response.new
   end
 
@@ -22,11 +23,13 @@ class ResponsesController < ApplicationController
 
   # POST /responses or /responses.json
   def create
-    @response = Response.new(response_params)
+    @ticket = Ticket.find(params[:ticket_id])
+    @executive_id = current_user.id
+    @response = Response.create(response: response_params[:response], acceptance: false, rejected: false, ticket_id: @ticket.id, executive_id: @executive_id, requiring_user_id: @ticket.requiring_user_id)
 
     respond_to do |format|
       if @response.save
-        format.html { redirect_to response_url(@response), notice: "Response was successfully created." }
+        format.html { redirect_to @ticket, notice: "Response was successfully created." }
         format.json { render :show, status: :created, location: @response }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -37,16 +40,31 @@ class ResponsesController < ApplicationController
 
   # PATCH/PUT /responses/1 or /responses/1.json
   def update
-    respond_to do |format|
-      if @response.update(response_params)
-        format.html { redirect_to response_url(@response), notice: "Response was successfully updated." }
-        format.json { render :show, status: :ok, location: @response }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @response.errors, status: :unprocessable_entity }
+    @ticket = Ticket.find(params[:ticket_id])
+    @responses = @ticket.responses.where('rejected = false AND acceptance = false')
+    if params[:commit] == "Enviar evaluación"
+      @responses.each do |response|
+        response.acceptance = true
+        response.evaluation = params[:evaluation]
+        response.save
+      end
+      @ticket.state = "closed"
+      @ticket.save
+    end
+
+    if params[:commit] == "Sí, estoy seguro/a"
+      @responses.each do |response|
+        response.rejected = true
+        response.save
       end
     end
+  
+    respond_to do |format|
+      format.html { redirect_to @ticket, notice: "Responses were successfully updated." }
+      format.json { render :show, status: :ok, location: @responses.first }
+    end
   end
+  
 
   # DELETE /responses/1 or /responses/1.json
   def destroy
@@ -66,6 +84,6 @@ class ResponsesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def response_params
-      params.fetch(:response, {})
+      params.fetch(:response, {}).permit(:response)
     end
 end

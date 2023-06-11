@@ -3,6 +3,7 @@ class CreateResponse < ActiveRecord::Migration[7.0]
     create_table :responses do |t|
       t.string :response
       t.boolean :acceptance
+      t.boolean :rejected
       t.float :evaluation
 
       t.timestamps

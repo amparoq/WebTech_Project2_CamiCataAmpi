@@ -5,14 +5,63 @@
 }
 </style>
 
-<h1>Editing ticket</h1>
+<head>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
 
-<%= render "form", ticket: @ticket %>
+<body>
+  <div id="top-page">
 
+    <div id="wrapper">
+      <%= render partial: 'layouts/sidebar' %>
 
-<div style="display: flex;">
-  <%= link_to "Show this ticket", @ticket, class: "btn btn-custom" %>
-  <%= link_to "Back to tickets", tickets_path, class: "btn btn-custom" %>
-</div>
+      <div class="container my-5">
+      <h1>Edit Ticket</h1>
+        <div class="card">
+          <div class="card-body">
+            <div class="ticket-info d-flex align-items-center justify-content-between">
 
-
+              <form class="row g-3" action="<%= ticket_path(@ticket) %>" method="post">
+                <%= form_with(model: @ticket, local: true) do |form| %>
+                  <%= form.hidden_field :authenticity_token %>
+                  <div class="col-md-12">
+                    <label for="inputTitle" class="form-label">Title</label>
+                    <%= form.text_field :title, class: 'form-control', id: "inputTitle" %>
+                  </div>
+                  <div class="col-md-12">
+                    <label for="inputDescription" class="form-label">Description</label>
+                    <%= form.text_area :description, class: 'form-control', id: 'inputDescription' %>
+                  </div>
+                  <div class="form-group col-md-12">
+                    <label for="inputPriority">Prioridad</label>
+                    <%= form.select :priority, [1, 2, 3], {}, class: 'form-control', id: 'inputPriority' %>
+                  </div>
+                  <label>Adjuntos</label><br>
+                  <div class="field">
+                    <%= form.file_field :attachments, multiple: true, class: 'btn' %>
+                  </div>
+                  <label>Tags</label><br>
+                  <div class="form-check form-check-inline">
+                    <% Tag.all.each do |tag| %>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tag_<%= tag.id %>" name="ticket[tag_ids][]" value="<%= tag.id %>" <%= @ticket.tags.include?(tag) ? 'checked' : '' %>>
+                        <label class="form-check-label" for="tag_<%= tag.id %>"><%= tag.name %></label>
+                      </div>
+                    <% end %>
+                  </div>
+                  <hr style="background-color: #d0d0d0;">
+                  <div class="actions text-center mt-4">
+                    <%= form.submit 'Update Ticket', class: 'btn btn-primary' %>
+                  </div>
+                  <div>
+                    <button class="btn btn-secondary" style = "margin-bottom: 10px;" onclick="history.back()" type="button">Back</button>
+                  </div>
+                <% end %>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

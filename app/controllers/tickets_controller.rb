@@ -4,22 +4,28 @@ class TicketsController < ApplicationController
   # GET /tickets or /tickets.json
   def index
     if current_user.requiring_user? || current_user.executive?
-      @user = User.find(params[:user_id])
+      @user = current_user
       if @user.requiring_user?
         @tickets = @user.requiring_user_tickets
       end
       if @user.executive?
         @tickets = @user.executive_tickets
+        @other_tickets = Ticket.all - @tickets
       end
     else
       @tickets = Ticket.all
     end
   end
 
+  def index_others
+    @tickets = Ticket.where.not(executive_id: current_user.id)
+  end
+
   # GET /tickets/1 or /tickets/1.json
   def show
     @ticket = Ticket.find(params[:id])
     @comments = @ticket.comments.sort_by(&:created_at)
+    @comment = Comment.new
     @attachments = @ticket.attachments
   end
 
@@ -88,6 +94,16 @@ class TicketsController < ApplicationController
 
   # PATCH/PUT /tickets/1 or /tickets/1.json
   def update
+    
+    @ticket.tags.clear
+    selected_tag_ids = params[:ticket][:tag_ids].reject(&:empty?).map(&:to_i)
+
+    if selected_tag_ids.present?
+      selected_tag_ids.each do |tag_id|
+        TagsTicket.create(ticket_id: @ticket.id, tag_id: tag_id)
+      end
+    end
+
     respond_to do |format|
       if @ticket.update(ticket_params)
         format.html { redirect_to ticket_url(@ticket), notice: "Ticket was successfully updated." }
@@ -112,7 +128,7 @@ class TicketsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_ticket
-      @ticket = Ticket.find(params[:id])
+        @ticket = Ticket.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

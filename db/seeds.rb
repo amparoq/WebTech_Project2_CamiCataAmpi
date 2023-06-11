@@ -53,16 +53,16 @@ c14 = Comment.create(comment: "Recordatorio: Error de credenciales antiguas, man
 
 
 #Responses:
-r1 = Response.create(response: "Estimado/a, vendrán el jueves a repararla, gracias por avisar.", acceptance: true, evaluation: 4.5, ticket_id: t2.id, executive_id: t2.executive_id, requiring_user_id: t2.requiring_user_id)
-r2 = Response.create(response: "Estimado/a, la cantidad de reuniones las determina el jefe de cada área, coordinar con él/ella.", acceptance: true, evaluation: 2.0, ticket_id: t1.id, executive_id: t1.executive_id, requiring_user_id: t1.requiring_user_id)
-r3 = Response.create(response: "Estimado/a, el sistema de facturación ya se arregló, favor revisar nuevamente si funciona correctamente", acceptance: true, ticket_id: t3.id, executive_id: t3.executive_id, requiring_user_id: t3.requiring_user_id)
-r4 = Response.create(response: "Estimado/a, el sistema de facturación ya se arregló, favor revisar nuevamente si funciona correctamente", acceptance: true, ticket_id: t3.id, executive_id: t3.executive_id, requiring_user_id: t3.requiring_user_id)
-r5 = Response.create(response: "Estimado/a, eso le ocurre a los usuario con el formato antiguo, hay que cambiar el mail y utilizar una cuenta gmail, saludos", acceptance: true, evaluation: 4, ticket_id: t5.id, executive_id: t5.executive_id, requiring_user_id: t5.requiring_user_id)
+r1 = Response.create(response: "Estimado/a, vendrán el jueves a repararla, gracias por avisar.", acceptance: true, rejected: false, evaluation: 4.5, ticket_id: t2.id, executive_id: t2.executive_id, requiring_user_id: t2.requiring_user_id)
+r2 = Response.create(response: "Estimado/a, la cantidad de reuniones las determina el jefe de cada área, coordinar con él/ella.", acceptance: true, rejected: false, evaluation: 2.0, ticket_id: t1.id, executive_id: t1.executive_id, requiring_user_id: t1.requiring_user_id)
+r3 = Response.create(response: "Estimado/a, el sistema de facturación ya se arregló, favor revisar nuevamente si funciona correctamente", acceptance: true, rejected: false, ticket_id: t3.id, executive_id: t3.executive_id, requiring_user_id: t3.requiring_user_id)
+r4 = Response.create(response: "Estimado/a, el sistema de facturación ya se arregló, favor revisar nuevamente si funciona correctamente", acceptance: true, rejected: false, ticket_id: t3.id, executive_id: t3.executive_id, requiring_user_id: t3.requiring_user_id)
+r5 = Response.create(response: "Estimado/a, eso le ocurre a los usuario con el formato antiguo, hay que cambiar el mail y utilizar una cuenta gmail, saludos", acceptance: true, rejected: false, evaluation: 4, ticket_id: t5.id, executive_id: t5.executive_id, requiring_user_id: t5.requiring_user_id)
 r6 = Response.create(response: "Intentar con las siguientes credenciales: 
 nombre: WebTech
-contraseña: webTech_123", acceptance: false, ticket_id: t8.id, executive_id: t8.executive_id, requiring_user_id: t8.requiring_user_id)
-r7 = Response.create(response: "Se debe utilizar una cuenta gmail para hacer el registro, espero que eso ayude.", acceptance: true, evaluation: 4.0, ticket_id: t9.id, executive_id: t9.executive_id, requiring_user_id: t9.requiring_user_id)
-r8  = Response.create(response: "Era un problema con los permisos, ya está solucionado, favor confirmar.", acceptance: true, evaluation: 3.5, ticket_id: t10.id, executive_id: t10.executive_id, requiring_user_id: t10.requiring_user_id)
+contraseña: webTech_123", acceptance: false, rejected: false, ticket_id: t8.id, executive_id: t8.executive_id, requiring_user_id: t8.requiring_user_id)
+r7 = Response.create(response: "Se debe utilizar una cuenta gmail para hacer el registro, espero que eso ayude.", acceptance: true, rejected: false, evaluation: 4.0, ticket_id: t9.id, executive_id: t9.executive_id, requiring_user_id: t9.requiring_user_id)
+r8  = Response.create(response: "Era un problema con los permisos, ya está solucionado, favor confirmar.", acceptance: true, rejected: false, evaluation: 3.5, ticket_id: t10.id, executive_id: t10.executive_id, requiring_user_id: t10.requiring_user_id)
 
 #Executive Metrics:
 #Se crean según tickets y sus estados. 

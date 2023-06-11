@@ -1,2 +1,238 @@
-<div id="<%= dom_id ticket %>">
+<style>
+
+  .card {
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-bottom: 10px;
+  }
+
+  .comment-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .comment-card {
+    background-color: #f6efef;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .comment-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .no-comment {
+    background-color: transparent;
+  }
+
+  .comment-details {
+    margin-bottom: 5px;
+  }
+
+  .icon {
+    margin-bottom: 6px;
+  }
+
+  .badge-primary {
+    background-color: #c14884;
+    color: #0f0c0c;
+  }
+
+  .badge-secondary {
+    background-color: #6a77d8;
+    color: #0f0c0c;
+  }
+
+  .badge-tertiary {
+    background-color: #7aacf0;
+    color: #0f0c0c;
+  }
+
+  .badge-quaternary {
+    background-color: #afe1ec;
+    color: #0f0c0c;
+  }
+
+  .tags {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .tag-badge {
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+
+  .response-info {
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .response-text {
+    background-color: #f6efef;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+  }
+
+  .sep {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+
+  .tags-icon {
+    margin-left: 4px;
+    margin-bottom: 4px;
+    margin-right: 4px;
+  }
+
+  .red-nice {
+    background-color: #ff6f69;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 3px;
+  }
+
+  .yellow-nice {
+    background-color: #ffcc5c;
+    color: #0f0c0c;
+    padding: 5px 10px;
+    border-radius: 3px;
+  }
+
+  .green-nice {
+    background-color: #88d8b0;
+    color: #0f0c0c;
+    padding: 5px 10px;
+    border-radius: 3px;
+  }
+
+  .role-badge {
+    background-color: #836474;
+    margin-left: 10px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+  }
+
+  .add-comment {
+    margin-left: 730px;
+    margin-bottom: 10px;
+  }
+</style>
+
+<head>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <%= csrf_meta_tags %>
+</head>
+
+<body>
+  <div id="top-page">
+
+    <div id="wrapper">
+      <div class="container my-5">
+      <div class="card">
+        <div class="card-body">
+          <div class="ticket-info d-flex align-items-center justify-content-between">
+            <h2 class="mb-0"><%= @ticket.title %></h2>
+            <div class="d-flex align-items-center">
+              <span class="badge-container me-2">
+                <% if @ticket.priority == 1 %>
+                  <span class="badge rounded-pill red-nice">Prioridad Alta</span>
+                <% elsif @ticket.priority == 2 %>
+                  <span class="badge rounded-pill yellow-nice">Prioridad Media</span>
+                <% elsif @ticket.priority == 3 %>
+                  <span class="badge rounded-pill yellow-nice">Prioridad Baja</span>
+                <% end %>
+              </span>
+              <span class="badge-container">
+                <% if @ticket.state == "open" %>
+                  <span class="badge rounded-pill red-nice">Open</span>
+                <% elsif @ticket.state == "closed" %>
+                  <span class="badge rounded-pill green-nice">Closed</span>
+                <% elsif @ticket.state == "reopened" %>
+                  <span class="badge rounded-pill yellow-nice">Reopened</span>
+                <% end %>
+              </span>
+            </div>
+          </div>
+    
+          <div class="date-info d-flex align-items-center">
+            <h6 class="mb-0">Creado el <%= @ticket.creation_date %></h6> 
+            <% if @ticket.resolution_date %>
+              <h6 class="sep">|</h6>
+              <h6 class="mb-0">Cerrado el <%= @ticket.resolution_date %></h6>
+            <% end %>
+          </div>
+    
+          <div class="tags">
+            <i class="bi bi-tags tags-icon"></i>
+            <% @ticket.tags.each_with_index do |tag, index| %>
+              <% color_class = ["badge-primary", "badge-secondary", "badge-tertiary", "badge-quaternary"][index % 4] %>
+              <span class="badge tag-badge <%= color_class %>"><%= tag.name %></span>
+            <% end %>
+          </div>
+    
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Creado por:</h4>
+                  <p class="card-text" style="font-size: 20px;"><%= @ticket.requiring_user.name %> <%= @ticket.requiring_user.last_name %></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Ejecutivo a cargo:</h4>
+                  <p class="card-text" style="font-size: 20px;"><%= @ticket.executive.name %> <%= @ticket.executive.last_name %></p>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Description</h5>
+                        <p class="card-text"><%= @ticket.description %></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                    <h5 class="card-title">Adjuntos</h5>
+                        <% if @attachments.present? %>
+                        <% @attachments.each do |attachment| %>
+                            <% blob = attachment.blob %>
+                            <% title = blob.metadata['title'] %>
+                            <%= link_to title, rails_blob_url(attachment) if title.present? %>
+                        <% end %>
+                        <% else %>
+                        <p class="card-text text-muted">No hay archivos adjuntos</p>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+        
+    
+    <%= stylesheet_link_tag 'fontawesome-free/css/all.min.css' %>
+    <%= stylesheet_link_tag 'sb-admin-2.min.css' %>
+    <%= javascript_include_tag 'jquery-easing/jquery.easing.min.js' %>
+    <%= javascript_include_tag 'js_boot/bootstrap.bundle.min.js' %>
+
+  </div>
+</body>

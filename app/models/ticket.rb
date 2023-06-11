@@ -25,7 +25,6 @@ class Ticket < ApplicationRecord
 
     before_destroy do
         destroy_dependent_records
-        update_executive_assigned_tickets
     end
     
     private
@@ -49,12 +48,12 @@ class Ticket < ApplicationRecord
     end
 
     def change_metric
-        ex = ExecutiveMetric.find_by(ticket_id: self.ticket_id)
+        ex = ExecutiveMetric.find_by(ticket_id: self.id)
         ex.update(type_of_metric: "closed") if ex.present?
     end
 
     def change_metric_reopened
-        ex = ExecutiveMetric.find_by(ticket_id: self.ticket_id)
+        ex = ExecutiveMetric.find_by(ticket_id: self.id)
         ex.update(type_of_metric: "reopened") if ex.present?
     end
 
@@ -64,9 +63,5 @@ class Ticket < ApplicationRecord
         responses.destroy_all
         executive_metrics.destroy_all
         tags.clear
-    end
-    
-    def update_executive_assigned_tickets
-    executive.decrement!(:assigned_tickets)
     end
 end

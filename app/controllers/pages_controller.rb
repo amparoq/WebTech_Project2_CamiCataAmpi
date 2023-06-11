@@ -3,13 +3,13 @@ class PagesController < ApplicationController
         if current_user.requiring_user?
             @tickets = current_user.requiring_user_tickets
             @opened_tickets = @tickets.where(state: "open")
-            @pending_responses = current_user.requiring_user_responses.where(acceptance: false)
+            @pending_responses = current_user.requiring_user_responses.where(acceptance: false, rejected: false)
         end
         if current_user.executive?
             @tickets = current_user.executive_tickets
             @opened_tickets = @tickets.where(state: "open")
             @evaluation_average = ExecutiveMetric.where(type_of_metric: "Evaluation").group(:executive_id).average(:evaluation)
-            @pending_responses = current_user.executive_responses.where(acceptance: false)
+            @pending_responses = current_user.executive_responses.where(acceptance: false, rejected: false)
             @tickets_no_answer = @tickets.select { |ticket| ticket.state == "open" && !ticket.responses.any? }
         end
         if current_user.supervisor?

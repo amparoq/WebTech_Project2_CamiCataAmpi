@@ -66,6 +66,15 @@
     </li>
 <% end %>
 
+<% if current_user.executive? %>
+    <li class="nav-item">
+        <a class="nav-link" href="<%= index_others_tickets_path %>">
+            <i class="fas fa fa-ticket"></i>
+            <span>Other Tickets</span>
+        </a>
+    </li>
+<% end %>
+
 <% if current_user.supervisor? || current_user.administrator? %>
 
     <li class="nav-item">

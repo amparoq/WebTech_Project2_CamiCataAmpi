@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  protect_from_forgery with: :exception
   before_action :set_comment, only: %i[ show edit update destroy ]
 
   # GET /comments or /comments.json
@@ -8,12 +9,12 @@ class CommentsController < ApplicationController
 
   # GET /comments/1 or /comments/1.json
   def show
-    @comment = Comment.find(params[:id])
   end
 
   # GET /comments/new
   def new
-    @comment = Comment.new
+    @ticket = Ticket.find(params[:ticket_id])
+    @comment = @ticket.comments.build
   end
 
   # GET /comments/1/edit
@@ -22,16 +23,15 @@ class CommentsController < ApplicationController
 
   # POST /comments or /comments.json
   def create
-    @comment = Comment.new(comment_params)
+    @ticket = Ticket.find(params[:ticket_id])
+    @executive_id = current_user.id
+    @comment_content = params[:comment]
+    @comment = Comment.create(comment: @comment_content, ticket_id: @ticket.id, executive_id: @executive_id)
 
-    respond_to do |format|
-      if @comment.save
-        format.html { redirect_to comment_url(@comment), notice: "Comment was successfully created." }
-        format.json { render :show, status: :created, location: @comment }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
-      end
+    if @comment.save
+      redirect_to @ticket, notice: "Comentario creado correctamente."
+    else
+      redirect_to @ticket, alert: "Error al crear el comentario."
     end
   end
 
@@ -66,6 +66,6 @@ class CommentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comment_params
-      params.fetch(:comment, {})
+      params.fetch(:comment, {}).permit(:comment, :ticket_id)
     end
 end

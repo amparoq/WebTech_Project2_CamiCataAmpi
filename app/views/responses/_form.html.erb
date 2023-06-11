@@ -1,17 +1,41 @@
-<%= form_with(model: response) do |form| %>
-  <% if response.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(response.errors.count, "error") %> prohibited this response from being saved:</h2>
+<body>
+  <div id="top-page">
+    <div id="wrapper">
+      <%= render partial: 'layouts/sidebar' %>
 
-      <ul>
-        <% response.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+      <div class="container my-5">
+        <div class="card">
+          <div class="card-body align-items-center justify-content">
+            <div>
+              <h1>Responder</h1>
+            </div>
+            <%= form_with(model: response, url: ticket_responses_path(@ticket)) do |form| %>
+              <% if response.errors.any? %>
+                <div style="color: red">
+                  <h2><%= pluralize(response.errors.count, "error") %> prohibited this response from being saved:</h2>
+
+                  <ul>
+                    <% response.errors.each do |error| %>
+                      <li><%= error.full_message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
+              
+              <div class="form-group">
+                <%= form.text_area :response, class: "form-control", rows: 3, placeholder: "Escribe tu respuesta..." %>
+              </div>
+              
+              <div class="text-center mt-4">
+                <%= form.submit "Crear Respuesta", class: "btn btn-primary"  %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <hr style="background-color: #d0d0d0;">
+        <h2 style="margin-bottom: -30px;">Respondiendo en:</h2>
+        <%= render partial: 'tickets/ticket' %>
+      </div>
     </div>
-  <% end %>
-
-  <div>
-    <%= form.submit %>
   </div>
-<% end %>
+</body>
