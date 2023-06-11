@@ -176,10 +176,12 @@
           <div class="modal-body">
               </p>Está seguro/a que desea rechazar la respuesta, esta acción es irreversible</p>
             <%= form_with(model: @response, url: ticket_response_path(@ticket), id: "response-form", method: :patch) do |form| %>
-              <%= form.submit "Sí, estoy seguro/a", class: "btn btn-primary" %>
-              <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
-                No estoy seguro/a
-              </button>
+              <div style = "text-align: center;">
+                <%= form.submit "Sí, estoy seguro/a", class: "btn btn-primary" %>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
+                  No estoy seguro/a
+                </button>
+              </div>
             <% end %>
           </div>
         </div>
@@ -284,7 +286,7 @@
                       <a class="btn btn-danger" id = "rechazar-respuesta" onclick="denial_handler(event)">Rechazar</a>
                     </div>
                   <% else %>
-                    <% if @ticket.responses.any? { |response| !response.acceptance} && current_user.executive?%>
+                    <% if @ticket.responses.any? { |response| !response.acceptance} && current_user.executive? && current_user.id == @ticket.executive_id%>
                       <%= button_to 'Responder', new_ticket_response_path(@ticket), method: :get, class: "btn btn-primary" %>
                     <% end %>
                   <% end %>
