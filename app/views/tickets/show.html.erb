@@ -145,7 +145,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="evaluacionModalLabel">Evaluar respuesta</h5>
+            <h5 class="modal-title" id="evaluacionModalLabel">Evaluate Response</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -154,10 +154,10 @@
             <!-- Formulario de evaluación de respuesta -->
             <%= form_with(model: @response, url: ticket_response_path(@ticket), id: "response-form", method: :patch) do |form| %>
               <div class="form-group">
-                <%= form.label :evaluation, "Calificación" %>
+                <%= form.label :evaluation, "Calification" %>
                 <%= form.select :evaluation, options_for_select((1..5).step(0.5)), {}, class: "form-control" %>
               </div>
-              <%= form.submit "Enviar evaluación", class: "btn btn-primary" %>
+              <%= form.submit "Send evaluation", class: "btn btn-primary" %>
             <% end %>
           </div>
         </div>
@@ -168,18 +168,18 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="evaluacionModalLabel">Rechazar Respuesta</h5>
+            <h5 class="modal-title" id="evaluacionModalLabel">Reject Response</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-              </p>Está seguro/a que desea rechazar la respuesta, esta acción es irreversible</p>
+              </p>Are you sure you wish to reject the response? This action is irreversible </p>
             <%= form_with(model: @response, url: ticket_response_path(@ticket), id: "response-form", method: :patch) do |form| %>
               <div style = "text-align: center;">
-                <%= form.submit "Sí, estoy seguro/a", class: "btn btn-primary" %>
+                <%= form.submit "Yes, I am sure", class: "btn btn-primary" %>
                 <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
-                  No estoy seguro/a
+                  I am not sure
                 </button>
               </div>
             <% end %>
@@ -197,13 +197,13 @@
             <h2 class="mb-0"><%= @ticket.title %></h2>
             <div class="d-flex align-items-center">
               <span class="badge-container me-2">
-                <% if @ticket.priority == 1 %>
-                  <span class="badge rounded-pill red-nice">Prioridad Alta</span>
-                <% elsif @ticket.priority == 2 %>
-                  <span class="badge rounded-pill yellow-nice">Prioridad Media</span>
-                <% elsif @ticket.priority == 3 %>
-                  <span class="badge rounded-pill yellow-nice">Prioridad Baja</span>
-                <% end %>
+              <% if @ticket.priority == 1 %>
+                <span class="badge rounded-pill red-nice">High Priority</span>
+              <% elsif @ticket.priority == 2 %>
+                <span class="badge rounded-pill yellow-nice">Medium Priority</span>
+              <% elsif @ticket.priority == 3 %>
+                <span class="badge rounded-pill yellow-nice">Low Priority</span>
+              <% end %>
               </span>
               <span class="badge-container">
                 <% if @ticket.state == "open" %>
@@ -218,10 +218,10 @@
           </div>
     
           <div class="date-info d-flex align-items-center">
-            <h6 class="mb-0">Creado el <%= @ticket.creation_date %></h6> 
+            <h6 class="mb-0">Created on <%= @ticket.creation_date %></h6> 
             <% if @ticket.resolution_date %>
               <h6 class="sep">|</h6>
-              <h6 class="mb-0">Cerrado el <%= @ticket.resolution_date %></h6>
+              <h6 class="mb-0">Closed on <%= @ticket.resolution_date %></h6>
             <% end %>
           </div>
     
@@ -237,7 +237,7 @@
             <div class="col-md-6">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Creado por:</h4>
+                  <h4 class="card-title">Created by:</h4>
                   <p class="card-text" style="font-size: 20px;"><%= @ticket.requiring_user.name %> <%= @ticket.requiring_user.last_name %></p>
                 </div>
               </div>
@@ -245,7 +245,7 @@
             <div class="col-md-6">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Ejecutivo a cargo:</h4>
+                  <h4 class="card-title">Executive in charge:</h4>
                   <p class="card-text" style="font-size: 20px;"><%= @ticket.executive.name %> <%= @ticket.executive.last_name %></p>
                 </div>
               </div>
@@ -269,12 +269,12 @@
                   <% @ticket.responses.each do |response| %>
                     <div class="response-text">
                       <% if !response.rejected && !response.acceptance %>
-                        <span class="badge rounded-pill yellow-nice corner">Pendiente</span>
+                        <span class="badge rounded-pill yellow-nice corner">Pending</span>
                       <% else %>
                         <% if response.acceptance %>
-                          <span class="badge rounded-pill green-nice corner">Aceptada</span>
+                          <span class="badge rounded-pill green-nice corner">Accepted</span>
                         <% elsif response.rejected %>
-                          <span class="badge rounded-pill red-nice corner">Rechazada</span>
+                          <span class="badge rounded-pill red-nice corner">Rejected</span>
                         <% end %>
                       <% end %>
                       <p><%= response.response %></p>
@@ -282,19 +282,19 @@
                   <% end %>
                   <% if @ticket.responses.any? { |response| !response.acceptance && !response.rejected } && current_user.requiring_user? %>
                     <div style="margin-bottom: 10px;">
-                      <a class="btn btn-primary" id = "aceptar-respuesta" onclick="acceptance_handler(event)" >Aceptar</a>
-                      <a class="btn btn-danger" id = "rechazar-respuesta" onclick="denial_handler(event)">Rechazar</a>
+                      <a class="btn btn-primary" id = "aceptar-respuesta" onclick="acceptance_handler(event)" >Accept</a>
+                      <a class="btn btn-danger" id = "rechazar-respuesta" onclick="denial_handler(event)">Reject</a>
                     </div>
                   <% else %>
                     <% if @ticket.responses.any? { |response| !response.acceptance} && current_user.executive? && current_user.id == @ticket.executive_id%>
-                      <%= button_to 'Responder', new_ticket_response_path(@ticket), method: :get, class: "btn btn-primary" %>
+                      <%= button_to 'Answer', new_ticket_response_path(@ticket), method: :get, class: "btn btn-primary" %>
                     <% end %>
                   <% end %>
                 <% else %>
                   <% if current_user.executive? && current_user.id == @ticket.executive_id %>
-                    <%= button_to 'Responder', new_ticket_response_path(@ticket), method: :get, class: "btn btn-primary" %>
+                    <%= button_to 'Answer', new_ticket_response_path(@ticket), method: :get, class: "btn btn-primary" %>
                   <% else %>
-                    <p class="card-text text-muted">No hay respuesta</p>
+                    <p class="card-text text-muted">There are no responses</p>
                   <% end %>
                 <% end %>
               </div>
@@ -306,7 +306,7 @@
             <div class="col-sm-6">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">Adjuntos</h5>
+                  <h5 class="card-title">Attachments</h5>
                     <% if @attachments.present? %>
                       <% @attachments.each do |attachment| %>
                         <% blob = attachment.blob %>
@@ -314,7 +314,7 @@
                         <%= link_to title, rails_blob_url(attachment) if title.present? %>
                       <% end %>
                     <% else %>
-                      <p class="card-text text-muted">No hay archivos adjuntos</p>
+                      <p class="card-text text-muted">There are no attachments</p>
                     <% end %>
                 </div>
               </div>
@@ -341,7 +341,7 @@
         <div style="display: flex;">
           <h2>Comments</h2>
           <i class="bi bi-chat-dots"></i>
-          <a href = "<%= new_ticket_comment_path(@ticket) %>" class = "btn btn-primary add-comment">Agregar comentario <i class="bi bi-plus"></i></a>
+          <a href = "<%= new_ticket_comment_path(@ticket) %>" class = "btn btn-primary add-comment">Leave a comment <i class="bi bi-plus"></i></a>
         </div>
     
         <div class="comment-cards">
@@ -351,7 +351,7 @@
                 <div style="display: flex;">
                   <h4 class="comment-title"><%= comment.executive.name %> <%= comment.executive.last_name %></h4>
                   <% if comment.executive == @ticket.executive %>
-                    <span class="badge rounded-pill role-badge">Ejecutivo a cargo</span>
+                    <span class="badge rounded-pill role-badge">Executive in charge</span>
                   <% end %>
                 </div>
                 <p class="ticket-details text-muted"> <%= comment.created_at %></p>
@@ -361,7 +361,7 @@
           <% else %>
             <div class="comment-card no-comment">
               <div style="display: flex;">
-                <h4 class="comment-title">No hay comentarios</h4>
+                <h4 class="comment-title">There are no comments</h4>
               </div>
               <i class='fas fa-comment-slash' style='font-size:24px'></i>
             </div>

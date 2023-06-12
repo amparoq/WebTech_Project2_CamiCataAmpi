@@ -151,24 +151,24 @@
                 <% end %>
 
                 <div class="form-group">
-                  <label for="exampleFormControlInput1">Título</label>
+                  <label for="exampleFormControlInput1">Title</label>
                   <input type="text" class="form-control" id="exampleFormControlInput1" name="title">
                 </div>
 
                 <div class="form-group">
-                  <label for="exampleFormControlTextarea1">Descripción</label>
+                  <label for="exampleFormControlTextarea1">Description</label>
                   <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
                 </div>
 
                 <div class="form-group">
-                  <label for="exampleFormControlSelect1">Prioridad</label>
+                  <label for="exampleFormControlSelect1">Priority</label>
                   <select class="form-control" id="exampleFormControlSelect1" name = "priority">
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
                   </select>
                 </div>
-                <label>Adjuntos</label></br>
+                <label>Attachements</label></br>
                 <div class="field">
                   <%= form.file_field :attachments, multiple: true, class: 'btn' %>
                 </div>
@@ -194,5 +194,4 @@
       </div>
     </div>
   </div>
-
 </body>

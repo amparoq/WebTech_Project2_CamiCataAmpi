@@ -1,0 +1,59 @@
+<style>
+    .no-response {
+        background-color: transparent;
+    }
+
+    .no-open-tickets {
+        background-color: transparent;
+    }
+
+    .red-nice {
+    background-color: #ff6f69;
+    }
+
+    .yellow-nice {
+    background-color: #ffcc5c;
+    }
+
+    .green-nice {
+    background-color: #88d8b0;
+    }
+</style>
+
+
+<h3 class="h3 mb-0 text-gray-800" style = "margin-top: 5px; margin-bottom: 20px;">Open Tickets</h3>
+<div id="content-wrapper" class="d-flex flex-column" style = "background-image: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);">
+    <div id="content">
+        <div class="container-fluid">
+            <div class="ticket-response-section">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3" style = "color: #2a4454; margin-bottom: -8px;">
+                        <h6 class="m-0 font-weight-bold text-primary"><%= open_ticket.title %></h6>
+                    </div>
+                    <div class="card-body">
+                        <div class = "badges-priority">
+                            <% if open_ticket.priority == 1 %>
+                            <sup><span class="badge rounded-pill red-nice">High Priority</span></sup>
+                            <% elsif open_ticket.priority == 2 %>
+                                <sup><span class="badge rounded-pill yellow-nice">Medium Priority</span></sup>
+                            <% elsif open_ticket.priority == 3 %>
+                                <sup><span class="badge rounded-pill green-nice">Low Priority</span></sup>
+                            <% end %>
+                        </div>
+                    <div style = "display: flex;">
+                        <span class="icon me-1"><i class="far fa-calendar-alt"></i></span>
+                        <p class="ticket-details">Creation Date: <%= open_ticket.creation_date %></p>
+                    </div>
+                    <% if open_ticket.resolution_date %>
+                        <div style = "display: flex;">
+                            <span class="icon me-1"><i class="far fa-calendar-check"></i></span>
+                            <p class="ticket-details">Resolution Date: <%= open_ticket.resolution_date %></p>
+                        </div>
+                    <% end %>
+                    <p> <%= open_ticket.description %></p>
+                    <a href="<%= ticket_path(open_ticket) %>" class="btn btn-primary">See ticket</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

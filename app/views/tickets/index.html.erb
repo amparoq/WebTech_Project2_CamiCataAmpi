@@ -95,7 +95,7 @@
     <div id="content-wrapper" class="d-flex flex-column" style = "background-image: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);">
       <% if current_user.requiring_user? %>
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="sidebar-brand-text" style = "color: #666666; margin-left: 10px; margin-top: 30px; margin-bottom: -20px;">Mis Tickets</h1>
+            <h1 class="sidebar-brand-text" style = "color: #666666; margin-left: 10px; margin-top: 30px; margin-bottom: -20px;">My Tickets</h1>
             <a href="<%= new_user_ticket_path(current_user) %>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" style = "margin-bottom: -40px; margin-right: 20px;">
             <i class="bi bi-plus" text-white-50"></i> Crear Ticket</a>
         </div>
@@ -103,7 +103,7 @@
 
       <% if current_user.executive? %>
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="sidebar-brand-text" style = "color: #666666; margin-left: 10px; margin-top: 30px; margin-bottom: -20px;">Tickets Asignados</h1>
+            <h1 class="sidebar-brand-text" style = "color: #666666; margin-left: 10px; margin-top: 30px; margin-bottom: -20px;">Assigned Tickets</h1>
         </div>
       <% end %>
 
@@ -125,18 +125,18 @@
         <% @tickets.each do |ticket| %>
           <div class="ticket-card">
             <% if ticket.state == "open" %>
-              <sup><span class="badge rounded-pill red-nice">Open</span></sup>
+              <span class="badge rounded-pill red-nice">Open</span>
             <% elsif ticket.state == "closed" %>
-              <sup><span class="badge rounded-pill green-nice">Closed</span></sup>
+              <span class="badge rounded-pill green-nice">Closed</span>
             <% elsif ticket.state == "reopened" %>
-              <sup><span class="badge rounded-pill yellow-nice">Reopened</span></sup>
+              <span class="badge rounded-pill yellow-nice">Reopened</span>
             <% end %>
             <% if ticket.priority == 1 %>
-              <sup><span class="badge rounded-pill red-nice">Prioridad Alta</span></sup>
+              <span class="badge rounded-pill red-nice">High Priority</span>
             <% elsif ticket.priority == 2 %>
-              <sup><span class="badge rounded-pill yellow-nice">Prioridad Media</span></sup>
+              <span class="badge rounded-pill yellow-nice">Medium Priority</span>
             <% elsif ticket.priority == 3 %>
-              <sup><span class="badge rounded-pill green-nice">Prioridad Baja</span></sup>
+              <span class="badge rounded-pill yellow-nice">Low Priority</span>
             <% end %>
             <% if (current_user.supervisor?  || current_user.administrator?) &&  (ticket.state == "open") && !ticket.responses.any?%>
               <sup class="badge badge-pill badge-danger" style = "margin-left: 142px;">Sin Respuesta</sup>
@@ -153,7 +153,7 @@
               </div>
             <% end %>
             <p class="ticket-details"> <%= ticket.description %></p>
-            <a href="<%= ticket_path(ticket) %>" class="btn btn-primary">Ver ticket</a>
+            <a href="<%= ticket_path(ticket) %>" class="btn btn-primary">See ticket</a>
           </div>
         <% end %>
       </div>

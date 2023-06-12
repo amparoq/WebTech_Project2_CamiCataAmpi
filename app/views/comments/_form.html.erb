@@ -135,7 +135,7 @@
         <div class="card">
           <div class="card-body align-items-center justify-content">
             <div>
-            <h1>Crear comentario</h1>
+            <h1>Create a comment</h1>
             </div>
 
             <%= form_with(model: comment, url: ticket_comments_path(@ticket)) do |form| %>
@@ -151,14 +151,14 @@
                   </div>
                 <% end %>
 
-                <p class = "muted-text">Recuerda que este comentario será visible para todos los demás ejecutivos</p>
+                <p class = "muted-text">Remember that this comment will be visible to every other executive</p>
 
                 <div class="form-group">
-                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="comment" placeholder = "Escribe tu comentario..."></textarea>
+                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="comment" placeholder = "Write a comment..."></textarea>
                 </div>
 
                 <div class="text-center mt-4">
-                  <%= form.submit 'Publicar Comentario', class: 'btn btn-primary' %>
+                  <%= form.submit 'Publish Comment', class: 'btn btn-primary' %>
                 </div>
                 <div>
                   <button class="btn btn-secondary" style = "margin-bottom: 10px;" onclick="history.back()" type = "button">Back</button>
@@ -167,7 +167,7 @@
             </div>
           </div>
           <hr style="background-color: #d0d0d0;">
-          <h2 style="margin-bottom: -30px;">Comentando en:</h2>
+          <h2 style="margin-bottom: -30px;">Commenting on:</h2>
           <%= render partial: 'tickets/ticket' %>
         </div>
       </div>

@@ -7,7 +7,7 @@
         <div class="card">
           <div class="card-body align-items-center justify-content">
             <div>
-              <h1>Responder</h1>
+              <h1>Answer</h1>
             </div>
             <%= form_with(model: response, url: ticket_responses_path(@ticket)) do |form| %>
               <% if response.errors.any? %>
@@ -23,17 +23,17 @@
               <% end %>
               
               <div class="form-group">
-                <%= form.text_area :response, class: "form-control", rows: 3, placeholder: "Escribe tu respuesta..." %>
+                <%= form.text_area :response, class: "form-control", rows: 3, placeholder: "Write you response..." %>
               </div>
               
               <div class="text-center mt-4">
-                <%= form.submit "Crear Respuesta", class: "btn btn-primary"  %>
+                <%= form.submit "Create Response", class: "btn btn-primary"  %>
               </div>
             <% end %>
           </div>
         </div>
         <hr style="background-color: #d0d0d0;">
-        <h2 style="margin-bottom: -30px;">Respondiendo en:</h2>
+        <h2 style="margin-bottom: -30px;">Responding on:</h2>
         <%= render partial: 'tickets/ticket' %>
       </div>
     </div>

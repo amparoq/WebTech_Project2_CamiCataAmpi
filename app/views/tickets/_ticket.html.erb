@@ -143,11 +143,11 @@
             <div class="d-flex align-items-center">
               <span class="badge-container me-2">
                 <% if @ticket.priority == 1 %>
-                  <span class="badge rounded-pill red-nice">Prioridad Alta</span>
+                  <span class="badge rounded-pill red-nice">High Priority</span>
                 <% elsif @ticket.priority == 2 %>
-                  <span class="badge rounded-pill yellow-nice">Prioridad Media</span>
+                  <span class="badge rounded-pill yellow-nice">Medium Priority</span>
                 <% elsif @ticket.priority == 3 %>
-                  <span class="badge rounded-pill yellow-nice">Prioridad Baja</span>
+                  <span class="badge rounded-pill yellow-nice">Low Priority</span>
                 <% end %>
               </span>
               <span class="badge-container">
@@ -163,10 +163,10 @@
           </div>
     
           <div class="date-info d-flex align-items-center">
-            <h6 class="mb-0">Creado el <%= @ticket.creation_date %></h6> 
+            <h6 class="mb-0">Created: <%= @ticket.creation_date %></h6> 
             <% if @ticket.resolution_date %>
               <h6 class="sep">|</h6>
-              <h6 class="mb-0">Cerrado el <%= @ticket.resolution_date %></h6>
+              <h6 class="mb-0">Closed <%= @ticket.resolution_date %></h6>
             <% end %>
           </div>
     
@@ -182,7 +182,7 @@
             <div class="col-md-6">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Creado por:</h4>
+                  <h4 class="card-title">Created by:</h4>
                   <p class="card-text" style="font-size: 20px;"><%= @ticket.requiring_user.name %> <%= @ticket.requiring_user.last_name %></p>
                 </div>
               </div>
@@ -190,7 +190,7 @@
             <div class="col-md-6">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Ejecutivo a cargo:</h4>
+                  <h4 class="card-title">Executive in charge:</h4>
                   <p class="card-text" style="font-size: 20px;"><%= @ticket.executive.name %> <%= @ticket.executive.last_name %></p>
                 </div>
               </div>
@@ -210,7 +210,7 @@
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-body">
-                    <h5 class="card-title">Adjuntos</h5>
+                    <h5 class="card-title">Attachments</h5>
                         <% if @attachments.present? %>
                         <% @attachments.each do |attachment| %>
                             <% blob = attachment.blob %>
@@ -218,7 +218,7 @@
                             <%= link_to title, rails_blob_url(attachment) if title.present? %>
                         <% end %>
                         <% else %>
-                        <p class="card-text text-muted">No hay archivos adjuntos</p>
+                        <p class="card-text text-muted">There are no attachments</p>
                         <% end %>
                     </div>
                 </div>

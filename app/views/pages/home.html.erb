@@ -30,22 +30,6 @@
     .no-response {
         background-color: transparent;
     }
-
-    .no-open-tickets {
-        background-color: transparent;
-    }
-
-    .red-nice {
-    background-color: #ff6f69;
-    }
-
-    .yellow-nice {
-    background-color: #ffcc5c;
-    }
-
-    .green-nice {
-    background-color: #88d8b0;
-    }
 </style>
 
 <body id="page-top">
@@ -76,11 +60,11 @@
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Respuesta
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Response
                                             <%= index + 1%></div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800"><%= response.response %></div>
 
-                                        <a href="<%= ticket_path(response.ticket) %>" class="btn btn-primary" style="width: 180px; margin-top: 10px;">Ver</a>
+                                        <a href="<%= ticket_path(response.ticket) %>" class="btn btn-primary" style="width: 180px; margin-top: 10px;">See</a>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -96,7 +80,7 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">No hay respuestas pendientes</div>
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">There are no pending responses</div>
                                 <i class="bi bi-emoji-smile-upside-down"></i>
                             </div>
                             <div class="col-auto">
@@ -110,63 +94,14 @@
             </div>
 
             <hr style = "background-color: #d0d0d0;"></hr>
+            
+            <% if @opened_tickets.present? %>
+                <%= render partial: "pages/open_ticket", collection: @opened_tickets %>
+            <% else %>
+                <%= render partial: "pages/no_open_tickets" %>
+            <% end %>
 
-            <h3 class="h3 mb-0 text-gray-800" style = "margin-top: 5px; margin-bottom: 20px;">Tickets abiertos</h3>
-                <div id="content-wrapper" class="d-flex flex-column" style = "background-image: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);">
-                <div id="content">
-                <div class="container-fluid">
-                    <div class="ticket-response-section">
-                    <% if @opened_tickets.present? %>
-                        <% @opened_tickets.each do |ticket| %>
-                            <div class="card shadow mb-4">
-                            <div class="card-header py-3" style = "color: #2a4454; margin-bottom: -8px;">
-                                <h6 class="m-0 font-weight-bold text-primary"><%= ticket.title %></h6>
-                            </div>
-                            <div class="card-body">
-                                <div class = "badges-priority">
-                                    <% if ticket.priority == 1 %>
-                                    <sup><span class="badge rounded-pill red-nice">Prioridad Alta</span></sup>
-                                    <% elsif ticket.priority == 2 %>
-                                        <sup><span class="badge rounded-pill yellow-nice">Prioridad Media</span></sup>
-                                    <% elsif ticket.priority == 3 %>
-                                        <sup><span class="badge rounded-pill green-nice">Prioridad Baja</span></sup>
-                                    <% end %>
-                                </div>
-                            <div style = "display: flex;">
-                                <span class="icon me-1"><i class="far fa-calendar-alt"></i></span>
-                                <p class="ticket-details">Creation Date: <%= ticket.creation_date %></p>
-                            </div>
-                        <% if ticket.resolution_date %>
-                            <div style = "display: flex;">
-                            <span class="icon me-1"><i class="far fa-calendar-check"></i></span>
-                            <p class="ticket-details">Resolution Date: <%= ticket.resolution_date %></p>
-                            </div>
-                        <% end %>
-                        <p> <%= ticket.description %></p>
-                        <a href="<%= ticket_path(ticket) %>" class="btn btn-primary">Ver ticket</a>
-                            </div>
-                            </div>
-                        <% end %>
-                    
-                    <% else %>
-                        <div class="card shadow mb-4 no-open-tickets">
-                        <div class="card-header py-3" style="margin-bottom: -8px; background-color: rgba( 248, 249, 252, 0.3);">
-                            <h6 class="m-0 font-weight-bold text-primary">No hay tickets abiertos</h6>
-                        </div>
-
-                        <div class="card-body" style="display: flex; flex-direction: column;">
-                            <i class="bi bi-emoji-laughing" style = "margin-top: 5px; margin-bottom: 12px; margin-left: 8px;"></i>
-                            <a href="<%= user_tickets_path(current_user) %>" class="btn btn-primary" style="width: 180px;">Ver todos mis tickets</a>
-                        </div>
-                    <% end %>
-                    </div>
-                </div>
-                </div>
-            </div>
-                    
-                <!-- End of Main Content -->
-
-            </div>
+        </div>
             <!-- End of Content Wrapper -->
         <% elsif current_user.executive? %>
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -256,58 +191,12 @@
                     </div>
                 </div>
             </div>
-            <h3 class="h3 mb-0 text-gray-800" style = "margin-top: 5px; margin-bottom: 20px;">Tickets abiertos</h3>
-            <div id="content-wrapper" class="d-flex flex-column" style = "background-image: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);">
-                <div id="content">
-                <div class="container-fluid">
-                    <div class="ticket-response-section">
-                    <% if @opened_tickets.present? %>
-                        <% @opened_tickets.each do |ticket| %>
-                            <div class="card shadow mb-4">
-                            <div class="card-header py-3" style = "color: #2a4454; margin-bottom: -8px;">
-                                <h6 class="m-0 font-weight-bold text-primary"><%= ticket.title %></h6>
-                            </div>
-                            <div class="card-body">
-                                <div class = "badges-priority">
-                                    <% if ticket.priority == 1 %>
-                                    <sup><span class="badge rounded-pill red-nice">Prioridad Alta</span></sup>
-                                    <% elsif ticket.priority == 2 %>
-                                        <sup><span class="badge rounded-pill yellow-nice">Prioridad Media</span></sup>
-                                    <% elsif ticket.priority == 3 %>
-                                        <sup><span class="badge rounded-pill green-nice">Prioridad Baja</span></sup>
-                                    <% end %>
-                                </div>
-                            <div style = "display: flex;">
-                                <span class="icon me-1"><i class="far fa-calendar-alt"></i></span>
-                                <p class="ticket-details">Creation Date: <%= ticket.creation_date %></p>
-                            </div>
-                        <% if ticket.resolution_date %>
-                            <div style = "display: flex;">
-                            <span class="icon me-1"><i class="far fa-calendar-check"></i></span>
-                            <p class="ticket-details">Resolution Date: <%= ticket.resolution_date %></p>
-                            </div>
-                        <% end %>
-                        <p> <%= ticket.description %></p>
-                        <a href="<%= ticket_path(ticket) %>" class="btn btn-primary">Ver ticket</a>
-                            </div>
-                            </div>
-                        <% end %>
-                    
-                    <% else %>
-                        <div class="card shadow mb-4 no-open-tickets">
-                        <div class="card-header py-3" style="margin-bottom: -8px; background-color: rgba( 248, 249, 252, 0.3);">
-                            <h6 class="m-0 font-weight-bold text-primary">No hay tickets abiertos</h6>
-                        </div>
 
-                        <div class="card-body" style="display: flex; flex-direction: column;">
-                            <i class="bi bi-emoji-laughing" style = "margin-top: 5px; margin-bottom: 12px; margin-left: 8px;"></i>
-                            <a href="<%= user_tickets_path(current_user) %>" class="btn btn-primary" style="width: 180px;">Ver todos mis tickets</a>
-                        </div>
-                    <% end %>
-                    </div>
-                </div>
-                </div>
-            </div>
+            <% if @opened_tickets.present? %>
+                <%= render partial: "pages/open_ticket", collection: @opened_tickets %>
+            <% else %>
+                <%= render partial: 'pages/no_open_tickets' %>
+            <% end %>
         </div>
         </div> 
         <% elsif current_user.supervisor? %>

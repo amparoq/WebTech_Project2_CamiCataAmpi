@@ -42,7 +42,7 @@ class ResponsesController < ApplicationController
   def update
     @ticket = Ticket.find(params[:ticket_id])
     @responses = @ticket.responses.where('rejected = false AND acceptance = false')
-    if params[:commit] == "Enviar evaluación"
+    if params[:commit] == "Send evaluation"
       @responses.each do |response|
         response.acceptance = true
         response.evaluation = params[:evaluation]
@@ -52,7 +52,7 @@ class ResponsesController < ApplicationController
       @ticket.save
     end
 
-    if params[:commit] == "Sí, estoy seguro/a"
+    if params[:commit] == "Yes, I am sure"
       @responses.each do |response|
         response.rejected = true
         response.save

@@ -91,22 +91,22 @@
       <div class="ticket-cards">
         <% @tickets.each do |ticket| %>
           <div class="ticket-card">
-            <% if ticket.state == "open" %>
-              <sup><span class="badge rounded-pill red-nice">Open</span></sup>
-            <% elsif ticket.state == "closed" %>
-              <sup><span class="badge rounded-pill green-nice">Closed</span></sup>
-            <% elsif ticket.state == "reopened" %>
-              <sup><span class="badge rounded-pill yellow-nice">Reopened</span></sup>
-            <% end %>
-            <% if ticket.priority == 1 %>
-              <sup><span class="badge rounded-pill red-nice">Prioridad Alta</span></sup>
-            <% elsif ticket.priority == 2 %>
-              <sup><span class="badge rounded-pill yellow-nice">Prioridad Media</span></sup>
-            <% elsif ticket.priority == 3 %>
-              <sup><span class="badge rounded-pill green-nice">Prioridad Baja</span></sup>
-            <% end %>
+          <% if ticket.state == "open" %>
+            <span class="badge rounded-pill red-nice">Open</span>
+          <% elsif ticket.state == "closed" %>
+            <span class="badge rounded-pill green-nice">Closed</span>
+          <% elsif ticket.state == "reopened" %>
+            <span class="badge rounded-pill yellow-nice">Reopened</span>
+          <% end %>
+          <% if ticket.priority == 1 %>
+            <span class="badge rounded-pill red-nice">High Priority</span>
+          <% elsif ticket.priority == 2 %>
+            <span class="badge rounded-pill yellow-nice">Medium Priority</span>
+          <% elsif ticket.priority == 3 %>
+            <span class="badge rounded-pill yellow-nice">Low Priority</span>
+          <% end %>
             <% if (current_user.supervisor?  || current_user.administrator?) &&  (ticket.state == "open") && !ticket.responses.any?%>
-              <sup class="badge badge-pill badge-danger" style = "margin-left: 142px;">Sin Respuesta</sup>
+              <sup class="badge badge-pill badge-danger" style = "margin-left: 142px;">No responses</sup>
             <% end %>
             <h4 class="ticket-title"><%= ticket.title %></h4>
             <div class="date-info">
@@ -120,7 +120,7 @@
               </div>
             <% end %>
             <p class="ticket-details"> <%= ticket.description %></p>
-            <a href="<%= ticket_path(ticket) %>" class="btn btn-primary">Ver ticket</a>
+            <a href="<%= ticket_path(ticket) %>" class="btn btn-primary">See ticket</a>
           </div>
         <% end %>
       </div>

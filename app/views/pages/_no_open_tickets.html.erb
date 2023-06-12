@@ -1,0 +1,19 @@
+<h3 class="h3 mb-0 text-gray-800" style = "margin-top: 5px; margin-bottom: 20px;">Open Tickets</h3>
+<div id="content-wrapper" class="d-flex flex-column" style = "background-image: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);">
+    <div id="content">
+        <div class="container-fluid">
+            <div class="ticket-response-section">
+                <div class="card shadow mb-4 no-open-tickets">
+                    <div class="card-header py-3" style="margin-bottom: -8px; background-color: rgba( 248, 249, 252, 0.3);">
+                        <h6 class="m-0 font-weight-bold text-primary">There are no open tickets</h6>
+                    </div>
+
+                    <div class="card-body" style="display: flex; flex-direction: column;">
+                        <i class="bi bi-emoji-laughing" style = "margin-top: 5px; margin-bottom: 12px; margin-left: 8px;"></i>
+                        <a href="<%= user_tickets_path(current_user) %>" class="btn btn-primary" style="width: 180px;">See all my tickets</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
