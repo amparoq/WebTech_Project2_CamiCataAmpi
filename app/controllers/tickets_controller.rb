@@ -109,23 +109,38 @@ class TicketsController < ApplicationController
   
   # PATCH/PUT /tickets/1 or /tickets/1.json
   def update
-    
-    @ticket.tags.clear
-    selected_tag_ids = params[:ticket][:tag_ids].reject(&:empty?).map(&:to_i)
-
-    if selected_tag_ids.present?
-      selected_tag_ids.each do |tag_id|
-        TagsTicket.create(ticket_id: @ticket.id, tag_id: tag_id)
+    if params[:ticket][:commit] == "newInCharge"
+      executive_new = User.find(params[:ticket][:new_in_charge])
+      puts executive_new
+      @ticket.executive_id = executive_new.id
+      respond_to do |format|
+        if @ticket.save
+          format.html { redirect_to ticket_url(@ticket), notice: "Ticket was successfully updated." }
+          format.json { render :show, status: :ok, location: @ticket }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @ticket.errors, status: :unprocessable_entity }
+        end
       end
-    end
 
-    respond_to do |format|
-      if @ticket.update(ticket_params)
-        format.html { redirect_to ticket_url(@ticket), notice: "Ticket was successfully updated." }
-        format.json { render :show, status: :ok, location: @ticket }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @ticket.errors, status: :unprocessable_entity }
+    else
+      @ticket.tags.clear
+      selected_tag_ids = params[:ticket][:tag_ids].reject(&:empty?).map(&:to_i)
+
+      if selected_tag_ids.present?
+        selected_tag_ids.each do |tag_id|
+          TagsTicket.create(ticket_id: @ticket.id, tag_id: tag_id)
+        end
+      end
+
+      respond_to do |format|
+        if @ticket.update(ticket_params)
+          format.html { redirect_to ticket_url(@ticket), notice: "Ticket was successfully updated." }
+          format.json { render :show, status: :ok, location: @ticket }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @ticket.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

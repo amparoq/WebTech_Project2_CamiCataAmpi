@@ -12,11 +12,11 @@ class PagesController < ApplicationController
             @pending_responses = current_user.executive_responses.where(acceptance: false, rejected: false)
             @tickets_no_answer = @tickets.select { |ticket| ticket.state == "open" && !ticket.responses.any? }
         end
-        if current_user.supervisor?
+        if current_user.supervisor? || current_user.administrator?
             @tickets = Ticket.all
             @opened_tickets = @tickets.where(state: "open")
             @tickets_no_answer = @tickets.select { |ticket| ticket.state == "open" && !ticket.responses.any? }
-            @overdue_tickets = @tickets.where('deadline_date < ? OR (resolution_date IS NOT NULL AND deadline_date < resolution_date)', Date.today)
+            @overdue_tickets = @tickets.where('(resolution_date IS NULL AND deadline_date < ?) OR (resolution_date IS NOT NULL AND deadline_date < resolution_date)', Date.today)
         end
     end
 end

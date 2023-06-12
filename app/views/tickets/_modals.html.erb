@@ -1,0 +1,66 @@
+<!-- Modal de evaluación de respuesta -->
+    <div class="modal fade" id="evaluacionModal" tabindex="-1" role="dialog" aria-labelledby="evaluacionModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="evaluacionModalLabel">Evaluate Response</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- Formulario de evaluación de respuesta -->
+            <%= form_with(model: @response, url: ticket_response_path(@ticket), id: "response-form", method: :patch) do |form| %>
+              <div class="form-group">
+                <%= form.label :evaluation, "Calification" %>
+                <%= form.select :evaluation, options_for_select((1..5).step(0.5)), {}, class: "form-control" %>
+              </div>
+              <%= form.submit "Send evaluation", class: "btn btn-primary" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- Modal de rechazar respuesta -->
+    <div class="modal fade" id="rechazarModal" tabindex="-1" role="dialog" aria-labelledby="rechazarModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="evaluacionModalLabel">Reject Response</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              
+              </p>Are you sure you wish to reject the response? This action is irreversible </p>
+            <%= form_with(model: @response, url: ticket_response_path(@ticket), id: "response-form", method: :patch) do |form| %>
+              <div style = "text-align: center;">
+                <%= form.submit "Yes, I am sure", class: "btn btn-primary" %>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
+                  I am not sure
+                </button>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- Modal de cambiar ejecutivo a cargo -->  
+    <div class="modal fade" id="executiveModal" tabindex="-1" role="dialog" aria-labelledby="rechazarModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="evaluacionModalLabel">Change Executive</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              </p id="body"></p>
+          </div>
+        </div>
+      </div>
+    </div>

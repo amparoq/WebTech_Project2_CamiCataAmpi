@@ -48,6 +48,7 @@ class ResponsesController < ApplicationController
         response.evaluation = params[:evaluation]
         response.save
       end
+      @ticket.resolution_date = Date.today
       @ticket.state = "closed"
       @ticket.save
     end

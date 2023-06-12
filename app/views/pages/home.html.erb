@@ -199,7 +199,8 @@
             <% end %>
         </div>
         </div> 
-        <% elsif current_user.supervisor? %>
+
+        <% elsif current_user.supervisor? || current_user.administrator? %>
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="sidebar-brand-text" style = "color: #666666; margin-top: 30px; margin-bottom: -20px;">Dashboard</h1>
             </div>
@@ -212,7 +213,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        Tickets Abiertos Sin Responder</div>
+                                        Open Tickets with no response</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @tickets_no_answer.count %></div>
                                 </div>
                                 <div class="col-auto">
@@ -228,7 +229,7 @@
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Tickets Abiertos</div>
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Open Tickets</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @opened_tickets.count %></div>
                                 </div>
                                 <div class="col-auto">
@@ -240,13 +241,13 @@
                 </div>
             </div>
 
-            <h3 class="h3 mb-0 text-gray-800" style = "margin-top: 5px; margin-bottom: 20px;">Tickets tardíos</h3>
+            <h3 class="h3 mb-0 text-gray-800" style = "margin-top: 5px; margin-bottom: 20px;">Overdue Tickets</h3>
             <div id="content-wrapper" class="d-flex flex-column" style = "background-image: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);">
                 <div id="content">
                 <div class="container-fluid">
                     <div class="ticket-response-section">
                     <% if @overdue_tickets.present? %>
-                        <% @opened_tickets.each do |ticket| %>
+                        <% @overdue_tickets.each do |ticket| %>
                             <div class="card shadow mb-4">
                             <div class="card-header py-3" style = "color: #2a4454; margin-bottom: -8px;">
                                 <h6 class="m-0 font-weight-bold text-primary"><%= ticket.title %></h6>
@@ -254,11 +255,11 @@
                             <div class="card-body">
                                 <div class = "badges-priority">
                                     <% if ticket.priority == 1 %>
-                                    <sup><span class="badge rounded-pill red-nice">Prioridad Alta</span></sup>
+                                    <sup><span class="badge rounded-pill red-nice">High Priority</span></sup>
                                     <% elsif ticket.priority == 2 %>
-                                        <sup><span class="badge rounded-pill yellow-nice">Prioridad Media</span></sup>
+                                        <sup><span class="badge rounded-pill yellow-nice">Medium Priority</span></sup>
                                     <% elsif ticket.priority == 3 %>
-                                        <sup><span class="badge rounded-pill green-nice">Prioridad Baja</span></sup>
+                                        <sup><span class="badge rounded-pill green-nice">Low Baja</span></sup>
                                     <% end %>
                                 </div>
                             <div style = "display: flex; gap: 15px;">
@@ -286,21 +287,18 @@
                     <% else %>
                         <div class="card shadow mb-4 no-open-tickets">
                         <div class="card-header py-3" style="margin-bottom: -8px; background-color: rgba( 248, 249, 252, 0.3);">
-                            <h6 class="m-0 font-weight-bold text-primary">No hay tickets tardíos</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">There are no late tickets</h6>
                         </div>
 
                         <div class="card-body" style="display: flex; flex-direction: column;">
                             <i class="bi bi-emoji-laughing" style = "margin-top: 5px; margin-bottom: 12px; margin-left: 8px;"></i>
-                            <a href="<%= user_tickets_path(current_user) %>" class="btn btn-primary" style="width: 180px;">Ver todos mis tickets</a>
+                            <a href="<%= user_tickets_path(current_user) %>" class="btn btn-primary" style="width: 180px;">See all my tickets</a>
                         </div>
                     <% end %>
                     </div>
                 </div>
                 </div>
             </div>
-
-        <% elsif current_user.administrator? %>
-            <h1>No lo se</h1>
         <% end %>
 
     <!-- End of Page Wrapper -->

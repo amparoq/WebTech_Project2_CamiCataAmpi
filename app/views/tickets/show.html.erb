@@ -140,54 +140,8 @@
 
     <div id="wrapper">
 
-    <!-- Modal de evaluación de respuesta -->
-    <div class="modal fade" id="evaluacionModal" tabindex="-1" role="dialog" aria-labelledby="evaluacionModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="evaluacionModalLabel">Evaluate Response</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <!-- Formulario de evaluación de respuesta -->
-            <%= form_with(model: @response, url: ticket_response_path(@ticket), id: "response-form", method: :patch) do |form| %>
-              <div class="form-group">
-                <%= form.label :evaluation, "Calification" %>
-                <%= form.select :evaluation, options_for_select((1..5).step(0.5)), {}, class: "form-control" %>
-              </div>
-              <%= form.submit "Send evaluation", class: "btn btn-primary" %>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade" id="rechazarModal" tabindex="-1" role="dialog" aria-labelledby="rechazarModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="evaluacionModalLabel">Reject Response</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-              </p>Are you sure you wish to reject the response? This action is irreversible </p>
-            <%= form_with(model: @response, url: ticket_response_path(@ticket), id: "response-form", method: :patch) do |form| %>
-              <div style = "text-align: center;">
-                <%= form.submit "Yes, I am sure", class: "btn btn-primary" %>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
-                  I am not sure
-                </button>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </div>
-
+      <%= render partial: 'modals' %>
+    
       <%= render partial: 'layouts/sidebar' %>
 
       <div class="container my-5">
@@ -282,7 +236,7 @@
                   <% end %>
                   <% if @ticket.responses.any? { |response| !response.acceptance && !response.rejected } && current_user.requiring_user? %>
                     <div style="margin-bottom: 10px;">
-                      <a class="btn btn-primary" id = "aceptar-respuesta" onclick="acceptance_handler(event)" >Accept</a>
+                      <a class="btn btn-success" id = "aceptar-respuesta" onclick="acceptance_handler(event)" >Accept</a>
                       <a class="btn btn-danger" id = "rechazar-respuesta" onclick="denial_handler(event)">Reject</a>
                     </div>
                   <% else %>
@@ -322,13 +276,35 @@
           </div>
         </div>
       
-        <% if (current_user.id == @ticket.executive_id || current_user.id == @ticket.requiring_user_id || current_user.administrator? || current_user.supervisor?) %>
+        <% if (current_user.id == @ticket.executive_id || current_user.id == @ticket.requiring_user_id ) %>
           <div class="actions-container d-flex justify-content-end mt-4">
             <%= link_to "Edit this ticket", edit_ticket_path(@ticket), class: "btn btn-primary me-2" %>
             <%= button_to "Destroy this ticket", @ticket, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger", style: "margin-right: 10px;" %>
           </div>
         <% end %>
 
+        <% if (current_user.administrator? || current_user.supervisor? ) %>
+          <div class="actions-container d-flex justify-content-end mt-4">
+            <%= link_to "Edit this ticket", edit_ticket_path(@ticket), class: "btn btn-primary me-2" %>
+            <%= button_to "Destroy this ticket", @ticket, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger", style: "margin-right: 10px;" %>
+            <% executive_ids = User.where(role: :executive).pluck(:id) %>
+            <div class="dropdown me-2">
+                <button class="btn btn-warning dropdown-toggle" type="button" id="changeExecutiveDropdown" data-toggle="dropdown" aria-expanded="false">
+                  Change Executive
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="changeExecutiveDropdown">
+                  <% executive_ids.each do |executive_id| %>
+                    <li>
+                      <%= link_to "#", class: "dropdown-item", data: { executive_id: executive_id, actual_in_charge: @ticket.executive_id }, id: "#{executive_id}", onclick: "change_exec_handler(event, this.dataset)" do %>
+                        <%= "#{User.find(executive_id).name} #{User.find(executive_id).last_name}" %>
+                      <% end %>
+                    </li> 
+                  <% end %> 
+                </ul> 
+              </div>
+          </div>
+        <% end %>
+        
         <div class="text-center mt-4">
           <button class="btn btn-secondary" style = "margin-bottom: 10px;" onclick="history.back()">Back</button>
         </div>
@@ -385,6 +361,39 @@
   function denial_handler(event) {
     event.preventDefault();
     $("#rechazarModal").modal("show");
+  };
+
+  function change_exec_handler(event, data) {
+    event.preventDefault();
+    $("#executiveModal").modal("show");
+    let newInCharge = data.executiveId;
+
+    if (data.executiveId === data.actualInCharge) {
+      $("#executiveModal .modal-body").text("The executive selected is already in charge");
+    } 
+    else {
+      $("#executiveModal .modal-body").text("Are you sure you wish to change the executive in charge?");
+    
+      var formHTML =
+        '<p>Are you sure you wish to change the executive in charge?</p>' +
+        '<form id="response-form" action="<%= ticket_path(@ticket) %>" method="post">' +
+        '  <input type="hidden" name="_method" value="patch">' +
+        '  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">' +
+        '  <input type="hidden" name="ticket[commit]" id="commit">' +
+        '  <input type="hidden" name="ticket[new_in_charge]" id="new-in-charge-input">' +
+        '  <div style="text-align: center;">' +
+        '    <input type="submit" value="Yes, I am sure" class="btn btn-primary">' +
+        '    <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">' +
+        '      I am not sure' +
+        '    </button>' +
+        '  </div>' +
+        '</form>';
+    
+        $("#executiveModal .modal-body").html(formHTML);
+    
+        $("#new-in-charge-input").val(newInCharge);
+        $("#commit").val("newInCharge");
+    };
   };
   </script>
 </body>
