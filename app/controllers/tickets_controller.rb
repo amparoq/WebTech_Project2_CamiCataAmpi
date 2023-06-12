@@ -24,11 +24,15 @@ class TicketsController < ApplicationController
   def search
     query = params[:query]
     
-    # Perform search logic using the query to retrieve relevant ticket data
-    @search_results = Ticket.where('title LIKE ?', "%#{query}%")
+    if current_user.executive? || current_user.supervisor? || current_user.administrator?
+      @tickets = Ticket.where("title LIKE ?", "%#{query}%")
+    else
+      @tickets = Ticket.where("title LIKE ?", "%#{query}%").where(requiring_user_id: current_user.id)
+    end
     
-    render json: @search_results
+    render json: @tickets
   end
+  
 
   # GET /tickets/1 or /tickets/1.json
   def show
