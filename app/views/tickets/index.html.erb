@@ -122,6 +122,20 @@
         <button id="search-button" class="btn btn-primary">Search</button>
       </div>
 
+      
+
+  <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+   Sort</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li><a class="dropdown-item" onclick="sortByCreationDateAsc()">Ascending Creation</a></li>
+    <li><a class="dropdown-item" onclick="sortByCreationDateDesc()">Latest Creation</a></li>
+  </ul>
+</div>
+    
+
+
+
 
       <div class="ticket-cards">
         <% @tickets.each do |ticket| %>
@@ -161,6 +175,7 @@
       </div>
 
       </div>
+      
       <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
       </a>
@@ -283,4 +298,46 @@ document.getElementById('search-button').addEventListener('click', function() {
     var ticketList = document.querySelector('.ticket-cards');
     ticketList.innerHTML = '<p>No tickets found.</p>';
   }
+  
+  function toggleDropdown() {
+    var dropdownContent = document.getElementById('dropdownContent');
+    dropdownContent.classList.toggle('show');
+  }
+  
+  function sortByCreationDateAsc() {
+    var ticketList = document.querySelector('.ticket-cards');
+    var tickets = Array.from(ticketList.children);
+  
+    tickets.sort(function(a, b) {
+      var dateA = new Date(a.querySelector('.ticket-details').textContent.replace('Creation Date: ', ''));
+      var dateB = new Date(b.querySelector('.ticket-details').textContent.replace('Creation Date: ', ''));
+      
+      return dateA - dateB;
+    });
+  
+    tickets.forEach(function(ticket) {
+      ticketList.appendChild(ticket);
+    });
+  
+    toggleDropdown();
+  }
+  
+  function sortByCreationDateDesc() {
+    var ticketList = document.querySelector('.ticket-cards');
+    var tickets = Array.from(ticketList.children);
+  
+    tickets.sort(function(a, b) {
+      var dateA = new Date(a.querySelector('.ticket-details').textContent.replace('Creation Date: ', ''));
+      var dateB = new Date(b.querySelector('.ticket-details').textContent.replace('Creation Date: ', ''));
+      
+      return dateB - dateA;
+    });
+  
+    tickets.forEach(function(ticket) {
+      ticketList.appendChild(ticket);
+    });
+  
+    toggleDropdown();
+  }
+  
 </script>
