@@ -5,7 +5,7 @@
 <style>
 .user-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
     gap: 20px;
     margin-top: 20px;
 }
@@ -57,7 +57,7 @@
                 <div class = "user-cards">
                     <% if @supervisors.present? %>
                         <% @supervisors.each do |s| %>
-                            <div class="card" style="width: 18rem; display: inline-block; margin-bottom: 10px;">
+                            <div class="card" style="width: 20rem; display: inline-block; margin-bottom: 10px; box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);">
                                 <div class="card-body">
                                     <h5 class="card-title"><%= s.name %> <%= s.last_name %></h5>
                                     <h6 class="card-subtitle mb-2 text-muted">Supervisor</h6>
@@ -84,18 +84,29 @@
             <div class = "user-cards">
                 <% if @executives.present? %>
                     <% @executives.each do |e| %>
-                        <div class="card" style="width: 18rem; display: inline-block; margin-bottom: 10px;">
+                        <div class="card" style="width: 20rem; display: inline-block; margin-bottom: 10px; box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);">
                             <div class="card-body">
                                 <h5 class="card-title"><%= e.name %> <%= e.last_name %></h5>
                                 <h6 class="card-subtitle mb-2 text-muted">Executive</h6>
                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="card-link">See profile</a>
-                                <a href="#" class="card-link">Change Role</a>
+                                <div style = "display: flex; gap: 10px;">
+                                    <a href="<%= e.id %>" class="btn btn-primary">See profile</a>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Change role
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">Action</a></li>
+                                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     <% end %>
                 <% else %>
-                    <div class="card" style="width: 18rem;">
+                    <div class="card" style="width: 20rem;">
                         <h1> no hay </h1>
                     </div>
                 <%end%>
@@ -110,18 +121,27 @@
             <div class = "user-cards">
                 <% if @requiring_users.present? %>
                     <% @requiring_users.each do |u| %>
-                        <div class="card" style="width: 18rem; display: inline-block; margin-bottom: 10px;">
+                        <div class="card" style="width: 20rem; display: inline-block; margin-bottom: 10px; box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);">
                             <div class="card-body">
                                 <h5 class="card-title"><%= u.name %> <%= u.last_name %></h5>
                                 <h6 class="card-subtitle mb-2 text-muted">Requiring User</h6>
                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="#" class="card-link">See profile</a>
-                                <a href="#" class="card-link">Change Role</a>
+                                <div style = "display: flex; gap: 10px;">
+                                    <a href="<%= u.id %>" class="btn btn-primary">See profile</a>
+                                    <div class="dropdown me-2">
+                                        <button class="btn btn-warning dropdown-toggle" type="button" id="changeRoleDropdown" data-toggle="dropdown" aria-expanded="false">
+                                            Change Role
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="changeRoleDropdown">
+                                            <li>Executive</li> 
+                                        </ul> 
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     <% end %>
                 <% else %>
-                    <div class="card" style="width: 18rem;">
+                    <div class="card" style="width: 20rem;">
                         <h1> no hay </h1>
                     </div>
                 <%end%>

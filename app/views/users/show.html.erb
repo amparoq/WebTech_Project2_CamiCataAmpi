@@ -327,10 +327,12 @@
         </div>
       <% end %>
 
-    <div class="profile-actions">
-      <%= link_to 'Edit Profile', edit_user_path(@user), class: 'btn btn-primary' %>
-      <%= button_to 'Delete', @user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-    </div>
+    <% if current_user.id == @user.id %>
+      <div class="profile-actions">
+        <%= link_to 'Edit Profile', edit_user_path(@user), class: 'btn btn-primary' %>
+        <%= button_to 'Delete', @user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+      </div>
+    <% end %>
     <div class="profile-actions">
       <button class="btn btn-custom" style = "margin-bottom: 10px;" onclick="history.back()">Back</button>
     </div>
