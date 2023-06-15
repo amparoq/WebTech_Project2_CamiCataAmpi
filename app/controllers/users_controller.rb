@@ -20,6 +20,12 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def admin_board
+    @supervisors = User.supervisor
+    @executives = User.executive
+    @requiring_users = User.requiring_user
+  end
+
   # POST /users or /users.json
   def create
     @user = User.new(user_params)

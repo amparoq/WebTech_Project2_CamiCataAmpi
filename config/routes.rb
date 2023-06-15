@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root 'pages#home'
   # routes.rb
   get '/tickets/search', to: 'tickets#search'
+  get 'users/admin_board', to: 'users#admin_board'
 
 
   resources :users, only: [:index, :show, :create, :destroy, :update, :new, :edit] do
