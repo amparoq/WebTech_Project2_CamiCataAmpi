@@ -63,7 +63,15 @@
                                     <h6 class="card-subtitle mb-2 text-muted">Supervisor</h6>
                                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                     <a href="#" class="card-link">See profile</a>
-                                    <a href="#" class="card-link">Change Role</a>
+                                    <div class="dropdown">
+                                        <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Change role
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">Executive</a></li>
+                                            <li><a class="dropdown-item" href="#">Requiring User</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         <% end %>
@@ -73,9 +81,9 @@
                         </div>
                     <%end%>
                 </div>
-            <% end %>
 
-            <hr style = "background-color: #d0d0d0;"></hr>
+                <hr style = "background-color: #d0d0d0;"></hr>
+            <% end %>
             
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h2 class = "sidebar-brand-text" style = "color: #666666;">Executives</h1>
@@ -92,13 +100,14 @@
                                 <div style = "display: flex; gap: 10px;">
                                     <a href="<%= e.id %>" class="btn btn-primary">See profile</a>
                                     <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             Change role
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Action</a></li>
-                                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                            <% if current_user.administrator? %>
+                                                <li><a class="dropdown-item" href="#">Supervisor</a></li>
+                                            <% end %>
+                                            <li><a class="dropdown-item" href="#">Requiring User</a></li>
                                         </ul>
                                     </div>
                                 </div>
