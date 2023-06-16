@@ -64,7 +64,7 @@
                                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                     <a href="#" class="card-link">See profile</a>
                                     <div class="dropdown">
-                                        <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             Change role
                                         </button>
                                         <ul class="dropdown-menu">
@@ -100,7 +100,7 @@
                                 <div style = "display: flex; gap: 10px;">
                                     <a href="<%= e.id %>" class="btn btn-primary">See profile</a>
                                     <div class="dropdown">
-                                        <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             Change role
                                         </button>
                                         <ul class="dropdown-menu">
@@ -137,13 +137,16 @@
                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                 <div style = "display: flex; gap: 10px;">
                                     <a href="<%= u.id %>" class="btn btn-primary">See profile</a>
-                                    <div class="dropdown me-2">
-                                        <button class="btn btn-warning dropdown-toggle" type="button" id="changeRoleDropdown" data-toggle="dropdown" aria-expanded="false">
-                                            Change Role
+                                    <div class="dropdown">
+                                        <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Change role
                                         </button>
-                                        <ul class="dropdown-menu" aria-labelledby="changeRoleDropdown">
-                                            <li>Executive</li> 
-                                        </ul> 
+                                        <ul class="dropdown-menu">
+                                            <% if current_user.administrator? %>
+                                                <li><a class="dropdown-item" href="#">Supervisor</a></li>
+                                            <% end %>
+                                            <li><a class="dropdown-item" href="#">Executive</a></li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
