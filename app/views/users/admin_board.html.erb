@@ -3,12 +3,17 @@
 <html lang="en">
 
 <style>
-.user-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-}
+    .user-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .no-user {
+        background-color: transparent;
+        width: 20rem;
+    }
 </style>
 
 <head>
@@ -34,17 +39,20 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
 </head>
 
 <body id="page-top">
     
     <div id="wrapper">
+        <%= render partial: 'modal' %>
         <%= render partial: 'layouts/sidebar' %>
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column" style = "background-image: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);">
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class = "sidebar-brand-text" style = "color: #666666;">User Roles Board</h1>
+                <h1 class = "sidebar-brand-text" style = "color: #666666; margin-bottom: -15px; margin-top: 20px;">User Roles Board</h1>
             </div>
 
             <hr style = "background-color: #d0d0d0;"></hr>
@@ -62,22 +70,38 @@
                                     <h5 class="card-title"><%= s.name %> <%= s.last_name %></h5>
                                     <h6 class="card-subtitle mb-2 text-muted">Supervisor</h6>
                                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a href="#" class="card-link">See profile</a>
+                                    <div style = "display: flex; gap: 10px;">
+                                    <a href="<%= s.id %>" class="btn btn-primary">See profile</a>
                                     <div class="dropdown">
                                         <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             Change role
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Executive</a></li>
-                                            <li><a class="dropdown-item" href="#">Requiring User</a></li>
+                                            <% if current_user.administrator? %>
+                                                <li><a class="dropdown-item" data-name="<%= s.name %> <%= s.last_name %>" data-user="<%= s.id %>" onclick = "change_role_handler(event,this.dataset, 1)">Executive</a></li>
+                                            <% end %>
+                                            <li><a class="dropdown-item" data-name="<%= s.name %> <%= s.last_name %>" data-user="<%= s.id %>" onclick = "change_role_handler(event,this.dataset, 0)">Requiring User</a></li>
                                         </ul>
                                     </div>
+                                </div>
                                 </div>
                             </div>
                         <% end %>
                     <% else %>
-                        <div class="card" style="width: 18rem;">
-                            <h1> no hay </h1>
+                        <div class="card" style = "width: 20rem;">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center" >
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">There are no supervisors</div>
+                                            <i class="bi bi-emoji-smile-upside-down"></i>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="bi bi-file-earmark-person-fill fa-2x" style = "color: #c0c0c0;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     <%end%>
                 </div>
@@ -105,9 +129,9 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <% if current_user.administrator? %>
-                                                <li><a class="dropdown-item" href="#">Supervisor</a></li>
+                                                <li><a class="dropdown-item" data-name="<%= e.name %> <%= e.last_name %>" data-user="<%= e.id %>" onclick = "change_role_handler(event,this.dataset, 2)">Supervisor</a></li>
                                             <% end %>
-                                            <li><a class="dropdown-item" href="#">Requiring User</a></li>
+                                            <li><a class="dropdown-item" data-name="<%= e.name %> <%= e.last_name %>" data-user="<%= e.id %>" onclick = "change_role_handler(event,this.dataset, 0)">Requiring User</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -115,8 +139,20 @@
                         </div>
                     <% end %>
                 <% else %>
-                    <div class="card" style="width: 20rem;">
-                        <h1> no hay </h1>
+                    <div class="card no-user" style="width: 20rem;">
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">There are no executives</div>
+                                        <i class="bi bi-emoji-smile-upside-down"></i>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="bi bi-file-earmark-person-fill fa-2x" style = "color: #c0c0c0;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 <%end%>
             </div>
@@ -143,9 +179,9 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <% if current_user.administrator? %>
-                                                <li><a class="dropdown-item" href="#">Supervisor</a></li>
+                                                <li><a class="dropdown-item" data-name="<%= u.name %> <%= u.last_name %>" data-user="<%= u.id %>" onclick = "change_role_handler(event, this.dataset, 2)" >Supervisor</a></li>
                                             <% end %>
-                                            <li><a class="dropdown-item" href="#">Executive</a></li>
+                                            <li><a class="dropdown-item" data-name="<%= u.name %> <%= u.last_name %>" data-user="<%= u.id %>" onclick = "change_role_handler(event, this.dataset, 1)" >Executive</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -153,8 +189,20 @@
                         </div>
                     <% end %>
                 <% else %>
-                    <div class="card" style="width: 20rem;">
-                        <h1> no hay </h1>
+                    <div class="card no-user" style="width: 20rem;">
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">There are no requiring users</div>
+                                        <i class="bi bi-emoji-smile-upside-down"></i>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="bi bi-file-earmark-person-fill fa-2x" style = "color: #c0c0c0;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 <%end%>
             </div>
@@ -168,3 +216,33 @@
 </body>
 </html>
 
+<script>
+  function change_role_handler(event, data, role) {
+    event.preventDefault();
+    $("#roleModal").modal("show");
+    let newRole = role;
+    let name = data.name;
+    let user = data.user;
+    let path = "/users/" + user;
+    var formHTML = '';
+    formHTML += '<p>Are you sure you wish to change ' + name + '\'s role?</p>';
+    formHTML +=
+      '<form id="role-form" action="' + path + '" method="post">' +
+      '  <input type="hidden" name="_method" value="patch">' +
+      '  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">' +
+      '  <input type="hidden" name="user[commit]" id="commit">' +
+      '  <input type="hidden" name="user[role]" id="role">' +
+      '  <div style="text-align: center;">' +
+      '    <input type="submit" value="Yes, I am sure" class="btn btn-primary">' +
+      '    <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">' +
+      '      I am not sure' +
+      '    </button>' +
+      '  </div>' +
+      '</form>';
+
+    $("#roleModal .modal-body").html(formHTML);
+
+    $("#role").val(role);
+    $("#commit").val("role");
+  };
+</script>
