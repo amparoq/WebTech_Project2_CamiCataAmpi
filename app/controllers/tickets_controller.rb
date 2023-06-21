@@ -24,10 +24,16 @@ class TicketsController < ApplicationController
   def search
     query = params[:query]
     
+    @tickets = []
+
     if current_user.executive? || current_user.supervisor? || current_user.administrator?
-      @tickets = Ticket.where("title LIKE ?", "%#{query}%")
+      @tickets += Ticket.where("title LIKE ?", "%#{query}%")
+      @tickets += Ticket.where("description LIKE ?","%#{query}%")
+      @tickets += Ticket.joins(:requiring_user).where("email LIKE ?","%#{query}%")
     else
-      @tickets = Ticket.where("title LIKE ?", "%#{query}%").where(requiring_user_id: current_user.id)
+      @tickets += Ticket.where("title LIKE ?", "%#{query}%").where(requiring_user_id: current_user.id)
+      @tickets += Ticket.where("description LIKE ?","%#{query}%").where(requiring_user_id: current_user.id)
+      @tickets += Ticket.joins(:requiring_user).where("email LIKE ?","%#{query}%").where(requiring_user_id: current_user.id)
     end
     
     render json: @tickets
