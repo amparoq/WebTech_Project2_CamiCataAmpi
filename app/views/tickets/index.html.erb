@@ -14,6 +14,11 @@
     margin-right: 10px;
   }
 
+  .sort {
+    margin-top: 10px;
+    background-color: #a8d2e7;
+  }
+
   .ticket-card {
     position: relative;
     background-color: #f6efef;
@@ -105,41 +110,41 @@
     <div id="content-wrapper" class="d-flex flex-column" style = "background-image: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);">
       <% if current_user.requiring_user? %>
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="sidebar-brand-text" style = "color: #666666; margin-left: 10px; margin-top: 30px; margin-bottom: -20px;">My Tickets</h1>
-            <a href="<%= new_user_ticket_path(current_user) %>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" style = "margin-bottom: -40px; margin-right: 20px;">
-            <i class="bi bi-plus" text-white-50"></i> Crear Ticket</a>
+          <div class="d-flex align-items-center justify-content-between">
+            <h1 class="sidebar-brand-text" style="color: #666666; margin-left: 10px; margin-top: 30px; margin-bottom: -20px;">My Tickets</h1>
+            <%= render partial: 'sort_button' %>
+          </div>
+          <a href="<%= new_user_ticket_path(current_user) %>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" style="margin-bottom: -40px; margin-right: 20px;">
+            <i class="bi bi-plus text-white-50"></i> Crear Ticket
+          </a>
         </div>
-      <% end %>
-
-      <% if current_user.executive? %>
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="sidebar-brand-text" style = "color: #666666; margin-left: 10px; margin-top: 30px; margin-bottom: -20px;">Assigned Tickets</h1>
+    <% end %>
+    
+    <% if current_user.executive? %>
+      <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <div class="d-flex align-items-center justify-content-between">
+          <h1 class="sidebar-brand-text" style="color: #666666; margin-left: 10px; margin-top: 30px; margin-bottom: -20px;">Assigned Tickets</h1>
+          <%= render partial: 'sort_button' %>
         </div>
-      <% end %>
-
-      <% if current_user.supervisor?  || current_user.administrator? %>
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="sidebar-brand-text" style = "color: #666666; margin-left: 10px; margin-top: 30px; margin-bottom: -20px;">Tickets</h1>
+      </div>
+    <% end %>
+    
+    <% if current_user.supervisor? || current_user.administrator? %>
+      <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <div class="d-flex align-items-center justify-content-between">
+          <h1 class="sidebar-brand-text" style="color: #666666; margin-left: 10px; margin-top: 30px; margin-bottom: -20px;">Tickets</h1>
+          <%= render partial: 'sort_button' %>
         </div>
-      <% end %>
-
+      </div>
+    <% end %>
+  
       <hr style = "background-color: #d0d0d0;"></hr>
       
       <div id="search-container" class="d-flex">
-        <input type="text" id="search-input" class="form-control" placeholder="Search ticket...">
+        <input type="text" id="search-input" class="form-control" placeholder="Search ticket..." style = "margin-right: 10px;">
         <button id="search-button" class="btn btn-primary">Search</button>
       </div>
 
-      
-
-  <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-   Sort</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-    <li><a class="dropdown-item" onclick="sortByCreationDateAsc()">Ascending Creation</a></li>
-    <li><a class="dropdown-item" onclick="sortByCreationDateDesc()">Latest Creation</a></li>
-  </ul>
-</div>
       <div class="ticket-cards">
         <% @tickets.each do |ticket| %>
           <div class="ticket-card">
