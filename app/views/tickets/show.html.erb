@@ -25,6 +25,15 @@
     margin-bottom: 10px;
   }
 
+  .no-decorator {
+    text-decoration: none;
+  }
+
+  .no-decorator:hover {
+    text-decoration: none;
+    cursor: pointer;
+  }
+
   .no-comment {
     background-color: transparent;
   }
@@ -189,20 +198,24 @@
     
           <div class="row">
             <div class="col-md-6">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Created by:</h4>
-                  <p class="card-text" style="font-size: 20px;"><%= @ticket.requiring_user.name %> <%= @ticket.requiring_user.last_name %></p>
+              <%= link_to user_path(@ticket.requiring_user_id), class: "no-decorator" do %>
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Created by:</h4>
+                    <p class="card-text" style="font-size: 20px;"><%= @ticket.requiring_user.name %> <%= @ticket.requiring_user.last_name %></p>
+                  </div>
                 </div>
-              </div>
+              <% end %>            
             </div>
             <div class="col-md-6">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Executive in charge:</h4>
-                  <p class="card-text" style="font-size: 20px;"><%= @ticket.executive.name %> <%= @ticket.executive.last_name %></p>
+              <%= link_to user_path(@ticket.executive_id), class: "no-decorator" do %>
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Executive in charge:</h4>
+                    <p class="card-text" style="font-size: 20px;"><%= @ticket.executive.name %> <%= @ticket.executive.last_name %></p>
+                  </div>
                 </div>
-              </div>
+              <% end %>
             </div>
           </div>
     
