@@ -160,6 +160,26 @@ class TicketsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def report
+    if params[:start_date].present? && params[:end_date].present?
+      start_date = params[:start_date]
+      end_date = params[:end_date]
+
+      @start_date = start_date
+      @end_date = end_date
+
+      @tickets_created = Ticket.where(creation_date: start_date..end_date)
+      @tickets_open = Ticket.where(creation_date: start_date..end_date, state: 'open')
+      @tickets_closed = Ticket.where(creation_date: start_date..end_date, state: 'closed')
+    end
+  end
+
+  def generate_report
+    redirect_to tickets_report_path(start_date: params[:start_date], end_date: params[:end_date])
+  end
+  
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.

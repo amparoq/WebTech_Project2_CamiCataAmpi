@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   # routes.rb
   get '/tickets/search', to: 'tickets#search'
   get 'users/admin_board', to: 'users#admin_board'
+  get '/tickets/report', to: 'tickets#report', as: 'tickets_report'
+  post '/tickets/report', to: 'tickets#generate_report'
+
 
 
   resources :users, only: [:index, :show, :create, :destroy, :update, :new, :edit] do

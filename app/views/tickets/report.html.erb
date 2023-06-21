@@ -1,0 +1,19 @@
+<h1>Tickets Report</h1>
+<% if @start_date.present? && @end_date.present? %>
+  <p>Date Range: <%= @start_date %> to <%= @end_date %></p>
+  <p>Total Tickets Created: <%= @tickets_created.count %></p>
+  <p>Total Open Tickets: <%= @tickets_open.count %></p>
+  <p>Total Closed Tickets: <%= @tickets_closed.count %></p>
+<% else %>
+  <p>Please select a date range to generate the report.</p>
+<% end %>
+
+<%= form_tag(tickets_report_path, method: 'post') do %>
+  <%= label_tag(:start_date, 'Start Date:') %>
+  <%= text_field_tag(:start_date, params[:start_date]) %>
+
+  <%= label_tag(:end_date, 'End Date:') %>
+  <%= text_field_tag(:end_date, params[:end_date]) %>
+
+  <%= submit_tag('Generate Report') %>
+<% end %>
