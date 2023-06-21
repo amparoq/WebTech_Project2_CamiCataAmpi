@@ -5,3 +5,4 @@
 //= link_tree ../js
 //= link_tree ../bootstrap
 //= link my_styles.css
+//= link index_functions.js
