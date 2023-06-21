@@ -94,7 +94,8 @@
             </div>
 
             <hr style = "background-color: #d0d0d0;"></hr>
-            
+
+            <h3 class="h3 mb-0 text-gray-800" style = "margin-top: 5px; margin-bottom: 20px;">Open Tickets</h3>
             <% if @opened_tickets.present? %>
                 <%= render partial: "pages/open_ticket", collection: @opened_tickets %>
             <% else %>
@@ -192,6 +193,7 @@
                 </div>
             </div>
 
+            <h3 class="h3 mb-0 text-gray-800" style = "margin-top: 5px; margin-bottom: 20px;">Open Tickets</h3>
             <% if @opened_tickets.present? %>
                 <%= render partial: "pages/open_ticket", collection: @opened_tickets %>
             <% else %>

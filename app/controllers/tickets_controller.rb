@@ -74,7 +74,7 @@ class TicketsController < ApplicationController
       deadline_date = creation_date + 7
     end
   
-    executive_users = User.executive.joins(:executive_tickets).group('users.id').order('COUNT(tickets.id) ASC')
+    executive_users = User.executive.left_outer_joins(:executive_tickets).group('users.id').order('COUNT(tickets.id) ASC')
     executive = executive_users.first
     executive_id = executive.present? ? executive.id : nil
     @ticket = Ticket.new(title: title, description: description, creation_date: creation_date, deadline_date: deadline_date, state: "open", priority: priority, executive_id: executive_id, requiring_user_id: requiring_user_id)

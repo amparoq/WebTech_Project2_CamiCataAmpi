@@ -7,9 +7,7 @@ Rails.application.routes.draw do
   get '/tickets/report', to: 'tickets#report', as: 'tickets_report'
   post '/tickets/report', to: 'tickets#generate_report'
 
-
-
-  resources :users, only: [:index, :show, :create, :destroy, :update, :new, :edit] do
+  resources :users, only: [:index, :show, :create, :update, :new, :edit] do
     resources :tickets, only: [:index, :show, :create, :destroy, :update, :new, :edit]
   end
   resources :tickets do

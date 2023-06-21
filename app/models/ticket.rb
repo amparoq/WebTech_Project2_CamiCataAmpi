@@ -7,7 +7,6 @@ class Ticket < ApplicationRecord
     has_many :executive_metrics
     has_many :tags_tickets
     has_many :tags, through: :tags_tickets
-    validate :resolution_date_greater_than_creation_date
 
     after_create do
         creation_executive_metric
@@ -28,12 +27,6 @@ class Ticket < ApplicationRecord
     end
     
     private
-    def resolution_date_greater_than_creation_date
-        return unless resolution_date && creation_date
-    
-        errors.add(:resolution_date, "Resolution date must be greater than creation date") if resolution_date <= creation_date
-    end
-
     def creation_executive_metric
         ExecutiveMetric.create(executive_id: self.executive_id, date: Date.today, type_of_metric: "create", ticket_id: self.id)
     end
