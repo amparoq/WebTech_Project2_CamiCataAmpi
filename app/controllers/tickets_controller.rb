@@ -162,6 +162,7 @@ class TicketsController < ApplicationController
   end
   
   def report
+    @ticket_tags_data = Ticket.joins(:tags).group('tags.name').count
     if params[:start_date].present? && params[:end_date].present?
       start_date = params[:start_date]
       end_date = params[:end_date]
