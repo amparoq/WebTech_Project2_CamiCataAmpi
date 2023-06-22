@@ -16,7 +16,7 @@ class PagesController < ApplicationController
             @tickets = Ticket.all
             @opened_tickets = @tickets.where(state: "open")
             @tickets_no_answer = @tickets.select { |ticket| ticket.state == "open" && !ticket.responses.any? }
-            @overdue_tickets = @tickets.where('(resolution_date IS NULL AND deadline_date < ?) OR (resolution_date IS NOT NULL AND deadline_date < resolution_date)', Date.today)
+            @overdue_tickets = @tickets.where('(resolution_date IS NULL AND deadline_date < ?) OR (resolution_date IS NOT NULL AND deadline_date < resolution_date)', Date.today).order(deadline_date: :asc)
         end
     end
 end

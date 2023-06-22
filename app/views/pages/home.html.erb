@@ -30,6 +30,27 @@
     .no-response {
         background-color: transparent;
     }
+
+    .red-nice {
+    background-color: #ff6f69;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 3px;
+  }
+
+  .yellow-nice {
+    background-color: #ffcc5c;
+    color: #0f0c0c;
+    padding: 5px 10px;
+    border-radius: 3px;
+  }
+
+  .green-nice {
+    background-color: #88d8b0;
+    color: #0f0c0c;
+    padding: 5px 10px;
+    border-radius: 3px;
+  }
 </style>
 
 <body id="page-top">
@@ -103,7 +124,6 @@
             <% end %>
 
         </div>
-            <!-- End of Content Wrapper -->
         <% elsif current_user.executive? %>
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="sidebar-brand-text" style = "color: #666666; margin-top: 30px; margin-bottom: -20px;">Dashboard</h1>
@@ -193,6 +213,8 @@
                 </div>
             </div>
 
+            <hr style = "background-color: #d0d0d0;"></hr>
+
             <h3 class="h3 mb-0 text-gray-800" style = "margin-top: 5px; margin-bottom: 20px;">Open Tickets</h3>
             <% if @opened_tickets.present? %>
                 <%= render partial: "pages/open_ticket", collection: @opened_tickets %>
@@ -243,7 +265,22 @@
                 </div>
             </div>
 
-            <h3 class="h3 mb-0 text-gray-800" style = "margin-top: 5px; margin-bottom: 20px;">Overdue Tickets</h3>
+            <hr style = "background-color: #d0d0d0;"></hr>
+
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h3 class="h3 mb-0 text-gray-800" style = "margin-top: 5px; margin-bottom: 20px; margin-right: 20px;">Overdue Tickets</h3>
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle" style="background-color: #af9dda; color: white;" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            Sort</button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" onclick="sortByDeadlineDateAsc()">Ascending Deadline</a></li>
+                            <li><a class="dropdown-item" onclick="sortByDeadlineDateDesc()">Latest Deadline</a></li>
+                            <li><a class="dropdown-item" onclick="sortByPriority()">Priority</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
             <div id="content-wrapper" class="d-flex flex-column" style = "background-image: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);">
                 <div id="content">
                 <div class="container-fluid">
@@ -255,15 +292,13 @@
                                 <h6 class="m-0 font-weight-bold text-primary"><%= ticket.title %></h6>
                             </div>
                             <div class="card-body">
-                                <div class = "badges-priority">
-                                    <% if ticket.priority == 1 %>
-                                    <sup><span class="badge rounded-pill red-nice">High Priority</span></sup>
-                                    <% elsif ticket.priority == 2 %>
-                                        <sup><span class="badge rounded-pill yellow-nice">Medium Priority</span></sup>
-                                    <% elsif ticket.priority == 3 %>
-                                        <sup><span class="badge rounded-pill green-nice">Low Baja</span></sup>
-                                    <% end %>
-                                </div>
+                                <% if ticket.priority == 1 %>
+                                    <sup><span class="badge rounded-pill red-nice priority">High Priority</span></sup>
+                                <% elsif ticket.priority == 2 %>
+                                    <sup><span class="badge rounded-pill yellow-nice priority">Medium Priority</span></sup>
+                                <% elsif ticket.priority == 3 %>
+                                    <sup><span class="badge rounded-pill green-nice priority">Low Priority</span></sup>
+                                <% end %>
                             <div style = "display: flex; gap: 15px;">
                                 <div style = "display: flex;">
                                     <span class="icon me-1"><i class="far fa-calendar-alt"></i></span>
@@ -271,7 +306,7 @@
                                 </div>
                                 <div style = "display: flex;">
                                     <span class="icon me-1"><i class="bi bi-calendar-x" style = "color: #da4e4e;"></i></span>
-                                    <p class="ticket-details" style = "color: #da4e4e;">Deadline Date: <%= ticket.deadline_date %></p>
+                                    <p class="ticket-details deadline-date" style = "color: #da4e4e;">Deadline Date: <%= ticket.deadline_date %></p>
                                 </div>
                             </div>
                         <% if ticket.resolution_date %>
@@ -321,4 +356,87 @@
 
 </body>
 
+<script>
+     
+    function toggleDropdown() {
+    var dropdownContent = document.getElementById('dropdownContent');
+    dropdownContent.classList.toggle('show');
+    }
+
+    function sortByDeadlineDateAsc() {
+    var ticketList = document.querySelector('.ticket-response-section');
+    var tickets = Array.from(ticketList.children);
+
+        tickets.sort(function(a, b) {
+        var dateA = new Date(a.querySelector('.deadline-date').textContent.replace('Deadline Date: ', ''));
+        var dateB = new Date(b.querySelector('.deadline-date').textContent.replace('Deadline Date: ', ''));
+        
+        return dateA - dateB;
+    });
+
+    tickets.forEach(function(ticket) {
+        ticketList.appendChild(ticket);
+    });
+
+    toggleDropdown();
+    }
+
+    function sortByDeadlineDateDesc() {
+    var ticketList = document.querySelector('.ticket-response-section');
+    var tickets = Array.from(ticketList.children);
+
+        tickets.sort(function(a, b) {
+        var dateA = new Date(a.querySelector('.deadline-date').textContent.replace('Deadline Date: ', ''));
+        var dateB = new Date(b.querySelector('.deadline-date').textContent.replace('Deadline Date: ', ''));
+        
+        return dateB - dateA;
+    });
+
+    tickets.forEach(function(ticket) {
+        ticketList.appendChild(ticket);
+    });
+
+    toggleDropdown();
+    }
+
+    function sortByPriority() {
+      var ticketList = document.querySelector('.ticket-response-section');
+      var tickets = Array.from(ticketList.children);
+
+      tickets.forEach(function(ticket) {
+            console.log(ticket.querySelector('.priority'));
+        });
+    
+      tickets.sort(function(a, b) {
+        var priorityA = getPriorityValue(a);
+        var priorityB = getPriorityValue(b);
+        
+        return priorityA - priorityB;
+      });
+
+      tickets.forEach(function(ticket) {
+        ticketList.appendChild(ticket);
+      });
+    
+      toggleDropdown();
+    }
+    
+    function getPriorityValue(ticket) {
+      var priorityElement = ticket.querySelector('.priority');
+      var priorityText = priorityElement.textContent.trim();
+      
+      if (priorityText === "High Priority") {
+        return 1;
+      } else if (priorityText === "Medium Priority") {
+        return 2;
+      } else if (priorityText === "Low Priority") {
+        return 3;
+      } else {
+        return 0;
+      }
+    }
+
+</script>
+
 </html>
+
