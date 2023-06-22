@@ -34,6 +34,14 @@
     cursor: pointer;
   }
 
+  .btn-reopen {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 10px;
+    margin-right: 10px; 
+  }
+
   .no-comment {
     background-color: transparent;
   }
@@ -180,11 +188,14 @@
             </div>
           </div>
     
-          <div class="date-info d-flex align-items-center">
+          <div class="date-info d-flex align-items-center" style = "position: relative;">
             <h6 class="mb-0">Created on <%= @ticket.creation_date %></h6> 
             <% if @ticket.resolution_date %>
               <h6 class="sep">|</h6>
               <h6 class="mb-0">Closed on <%= @ticket.resolution_date %></h6>
+            <% end %>
+            <% if @ticket.state == "closed" && current_user.executive? && current_user.id == @ticket.executive_id %>
+              <span><a class="btn btn-info btn-reopen" onclick="reopenTicket(<%= @ticket.id %>)">Reopen</a></span>
             <% end %>
           </div>
     
@@ -253,7 +264,7 @@
                       <a class="btn btn-danger" id = "rechazar-respuesta" onclick="denial_handler(event)">Reject</a>
                     </div>
                   <% else %>
-                    <% if @ticket.responses.any? { |response| !response.acceptance} && current_user.executive? && current_user.id == @ticket.executive_id%>
+                    <% if (@ticket.state == "open" || @ticket.state == "reopened") && current_user.executive? && current_user.id == @ticket.executive_id%>
                       <%= button_to 'Answer', new_ticket_response_path(@ticket), method: :get, class: "btn btn-primary" %>
                     <% end %>
                   <% end %>
@@ -408,6 +419,30 @@
         $("#commit").val("newInCharge");
     };
   };
+
+  function reopenTicket(id) {
+    var xhr = new XMLHttpRequest();
+    var url = '/tickets/' + id + '/reopen';
+    xhr.open('POST', url, true); 
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    xhr.setRequestHeader('X-CSRF-Token', csrfToken);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          var response = JSON.parse(xhr.responseText);
+          if (response.status === 'success') {
+            console.log("Ticket reopened successfully!");
+          } else {
+            console.log("Failed to reopen ticket.");
+          }
+        } else {
+          console.log('Failed to send the request.');
+        }
+      }
+    };
+    xhr.send(JSON.stringify({ state: 'reopened' }));
+  }
   </script>
 </body>
 
