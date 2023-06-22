@@ -1,19 +1,34 @@
-<h1>Tickets Report</h1>
-<% if @start_date.present? && @end_date.present? %>
-  <p>Date Range: <%= @start_date %> to <%= @end_date %></p>
-  <p>Total Tickets Created: <%= @tickets_created.count %></p>
-  <p>Total Open Tickets: <%= @tickets_open.count %></p>
-  <p>Total Closed Tickets: <%= @tickets_closed.count %></p>
-<% else %>
-  <p>Please select a date range to generate the report.</p>
-<% end %>
+<div id="wrapper">
+<%= render partial:'layouts/sidebar' %>
+<div class="container">
+  <h1 class="display-4">Tickets Report</h1>
 
-<%= form_tag(tickets_report_path, method: 'post') do %>
-  <%= label_tag(:start_date, 'Start Date:') %>
-  <%= text_field_tag(:start_date, params[:start_date]) %>
+  <%= form_tag(tickets_report_path, method: 'post', class: "mt-4") do %>
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <%= label_tag(:start_date, 'Start Date:') %>
+        <%= text_field_tag(:start_date, params[:start_date], class: "form-control", type: "date") %>
+      </div>
+      <div class="col-md-4 mb-3">
+        <%= label_tag(:end_date, 'End Date:') %>
+        <%= text_field_tag(:end_date, params[:end_date], class: "form-control", type: "date") %>
+      </div>
+      <div class="col-md-4 mb-3 align-self-end">
+        <%= submit_tag('Generate Report', class: "btn btn-primary") %>
+      </div>
+    </div>
+  <% end %>
 
-  <%= label_tag(:end_date, 'End Date:') %>
-  <%= text_field_tag(:end_date, params[:end_date]) %>
+  <% if @start_date.present? && @end_date.present? %>
+    <p>Date Range: <%= @start_date %> to <%= @end_date %></p>
+    <p>Total Tickets Created: <%= @tickets_created.count %></p>
+    <p>Total Open Tickets: <%= @tickets_open.count %></p>
+    <p>Total Closed Tickets: <%= @tickets_closed.count %></p>
 
-  <%= submit_tag('Generate Report') %>
-<% end %>
+    <%= link_to 'Back', request.referer || tickets_report_path, class: "btn btn-primary" %>
+  <% else %>
+    <p>Please select a date range to generate the report.</p>
+    <%= link_to 'Back', tickets_path, class: "btn btn-primary" %>
+  <% end %>
+</div>
+</div>
