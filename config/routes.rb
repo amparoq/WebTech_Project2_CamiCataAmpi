@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       get :index_others
     end
     resources :responses, only: [:new, :create, :edit, :update]
+    post 'responses/:id', to: 'responses#update'
     resources :comments, only: [:new, :create]
     resources :attachments, only: [:index, :show, :create, :destroy, :update, :new, :edit]
   end
